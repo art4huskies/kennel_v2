@@ -290,6 +290,25 @@ button.secondary{
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .legend span{font-size:12px;color:var(--muted)}
+.next-event-card{
+  background:rgba(255,255,255,.075);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:10px 12px;
+  margin:0 0 12px;
+}
+.next-event-card summary{cursor:pointer;list-style:none;font-weight:800}
+.next-event-card summary::-webkit-details-marker{display:none}
+.next-event-card summary:before{content:'▸ ';color:var(--aurora)}
+.next-event-card[open] summary:before{content:'▾ '}
+.calendar-filters{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+.calendar-filters label{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:5px 8px;font-size:12px;color:var(--muted);cursor:pointer}
+.calendar-filters input{width:auto;accent-color:var(--aurora)}
+.weight-insight{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.weight-insight .badge{font-size:12px}
+.weight-insight .ok{background:rgba(46,230,166,.12)}
+.weight-insight .watch{background:rgba(255,209,102,.16);border-color:rgba(255,209,102,.26)}
+
 @media(max-width:1100px){.app{grid-template-columns:1fr}.panel{min-width:0}}
 
 .brand-edit{
@@ -366,7 +385,7 @@ header{position:relative;min-height:190px;padding:24px 28px;overflow:hidden;bord
 }
 .team-form{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr 1fr;
+  grid-template-columns:1fr .9fr 1.25fr .55fr .75fr;
   gap:10px;
 }
 .team-dog-picker{
@@ -401,16 +420,37 @@ header{position:relative;min-height:190px;padding:24px 28px;overflow:hidden;bord
 }
 
 .team-musher-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.team-dog-role-row{grid-template-columns:auto 1fr auto;min-height:48px}
-.team-dog-role-row .team-dog-name{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.team-role-select{width:64px;min-width:64px;padding:6px 8px;font-weight:800;text-align:center;border-radius:12px}
+/* Team dog selector: keep dog names readable on mobile */
+.team-dog-role-row{
+  grid-template-columns:24px minmax(110px,1fr) 68px;
+  min-height:48px;
+  column-gap:8px;
+}
+.team-dog-role-row .team-dog-name{
+  min-width:0;
+  overflow:visible;
+  text-overflow:clip;
+  white-space:normal;
+  line-height:1.2;
+}
+.team-role-select{width:68px;min-width:68px;padding:6px 8px;font-weight:800;text-align:center;border-radius:12px}
 .team-role-select[data-role="L"]{color:#ff4d5d;border-color:rgba(255,77,93,.55);background:rgba(255,77,93,.12)}
 .team-role-select[data-role="T"]{color:#a6d82e;border-color:rgba(166,216,46,.55);background:rgba(166,216,46,.12)}
 .team-role-select[data-role="W"]{color:#9fe7ff;border-color:rgba(159,231,255,.55);background:rgba(159,231,255,.12)}
 .role-legend{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
 .role-pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;border-radius:999px;padding:4px 8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
 .role-pill.lead{color:#ff4d5d}.role-pill.team{color:#a6d82e}.role-pill.wheel{color:#9fe7ff}
-@media(max-width:760px){.team-musher-row{grid-template-columns:1fr}.team-role-select{width:58px;min-width:58px}}
+@media(max-width:760px){
+  .team-musher-row{grid-template-columns:1fr}
+  .team-dog-picker{grid-template-columns:1fr}
+  .team-dog-role-row{grid-template-columns:24px minmax(0,1fr) 64px}
+  .team-role-select{width:64px;min-width:64px}
+}
+
+
+.team-form #teamKm{min-width:90px}
+.team-form #teamTime{min-width:120px}
+@media(max-width:900px){.team-form #teamKm,.team-form #teamTime{min-width:0}}
 
 @media(max-width:900px){
   .team-form{grid-template-columns:1fr 1fr}
@@ -519,6 +559,24 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
 .sidebar-main-actions{margin-bottom:12px}
 .dog-sidebar .dog-list{max-height:48vh;overflow:auto;padding-right:4px}
 @media(max-width:760px){.dog-sidebar .dog-list{max-height:42vh}.sidebar-main-actions button{width:100%}}
+
+
+/* --- Subtle team trend chart --- */
+.team-history-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;align-items:start;margin-top:10px}
+.team-log-list-compact{min-width:0}
+.team-mini-chart{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:10px;max-width:360px}
+.team-mini-chart h3{margin:0 0 6px;font-size:13px;color:var(--muted)}
+.team-chart-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.team-chart-toggle{display:flex;gap:4px;flex-wrap:wrap}
+.team-chart-toggle button{padding:5px 7px;font-size:11px;border-radius:9px}
+.team-chart-toggle button.active{background:linear-gradient(135deg,var(--aurora),var(--aurora2));color:#03202a}
+.team-chart-svg{display:block;width:100%;height:128px}
+.team-chart-value{font-size:12px;color:var(--muted);margin-top:4px}
+.team-log-entry.selected-log{outline:2px solid var(--aurora);background:rgba(255,255,255,.10)}
+.older-team-logs{margin-top:10px}
+.older-team-logs summary{cursor:pointer;font-weight:800;color:#03202a;background:linear-gradient(135deg,var(--aurora),var(--aurora2));border-radius:12px;padding:8px 12px;max-width:260px;text-align:center}
+@media(max-width:900px){.team-history-grid{grid-template-columns:1fr}.team-mini-chart{max-width:none}.team-chart-svg{height:118px}}
+@media(max-width:760px){.older-team-logs summary{max-width:none;width:100%}.team-mini-chart{padding:8px}.team-chart-svg{height:105px}.team-chart-top{display:block}.team-chart-toggle{margin-top:6px}.team-chart-toggle button{flex:1 1 auto}}
 
 </style>
 </head>
@@ -642,6 +700,8 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
       <h2 id="monthTitle"></h2>
       <button class="secondary" onclick="changeMonth(1)">›</button>
     </div>
+    <div id="nextEventCard"></div>
+    <div id="calendarFilters" class="calendar-filters"></div>
     <div class="calendar" id="calendar"></div>
     <div class="legend">
       <span>🟢 očkování</span><span>🟤 odčervení</span><span>🔴 záchvat/akutní</span>
@@ -675,7 +735,7 @@ const translations = {
     phTeamKm: "Km", phTeamTime: "Čas na trati, např. 1:12", phTeamTitle: "Název / místo, např. ranní trénink, Šediváčkův long", phTeamNote: "Poznámka: teplota, trať, tempo, krmení, počasí...",
     phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se ukládají jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON",
     legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky",
-    dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Kdo trénoval / jel", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest"
+    dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Musher", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest"
   },
   en: {
     dogs: "My team", activeDogs: "Active dogs", archivedDogs: "Archive", addDog: "Add dog", dogCard: "Dog card",
@@ -691,7 +751,7 @@ const translations = {
     phTeamKm: "Km", phTeamTime: "Time on trail, e.g. 1:12", phTeamTitle: "Title / place, e.g. morning training, long-distance race", phTeamNote: "Note: temperature, trail, pace, feeding, weather...",
     phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are saved as small thumbnails. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
     legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication",
-    dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Who trained / drove", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest"
+    dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Musher", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest"
   }
 };
 let currentLang = localStorage.getItem("kennelAuroraLang") || "cs";
@@ -741,6 +801,8 @@ let editingEventId = null;
 let shown = new Date();
 let selectedDate = null;
 let massSelection = new Set();
+let selectedTeamLogId = null;
+let teamChartMetric = localStorage.getItem("kennelTeamChartMetric") || "km";
 
 function migrateData(){
   if(!data || typeof data !== "object") data = createDemoData();
@@ -771,6 +833,48 @@ function age(birth){
   return y>=0 ? (currentLang==="en" ? y+" years" : y+" let") : "";
 }
 function eventsAll(){ return data.dogs.flatMap(d => (d.events||[]).map(e => ({...e, dogName:d.name, dogId:d.id, dogStatus:d.status}))); }
+const CALENDAR_FILTER_TYPES=["training","race","vaccination","deworming","acute","seizure","heat","breeding","meds","note"];
+function ensureCalendarFilters(){
+  data.settings=data.settings||{};
+  if(!data.settings.calendarFilters || typeof data.settings.calendarFilters!=="object"){
+    data.settings.calendarFilters={};
+    CALENDAR_FILTER_TYPES.forEach(t=>data.settings.calendarFilters[t]=true);
+  }
+  CALENDAR_FILTER_TYPES.forEach(t=>{ if(data.settings.calendarFilters[t]===undefined) data.settings.calendarFilters[t]=true; });
+}
+function calendarFilterLabel(type){
+  const custom={acute:currentLang==='en'?'Acute':'Akutní',seizure:currentLang==='en'?'Seizure':'Záchvat',meds:currentLang==='en'?'Meds':'Léky'};
+  return custom[type] || trEvent(type);
+}
+function isCalendarTypeVisible(type){ ensureCalendarFilters(); return data.settings.calendarFilters[type]!==false; }
+function filteredEventsAll(){ return eventsAll().filter(e=>isCalendarTypeVisible(e.type)); }
+function setCalendarFilter(type, checked){ ensureCalendarFilters(); data.settings.calendarFilters[type]=checked; saveData(); renderCalendar(); renderDayEvents(); renderNextEvent(); }
+function renderCalendarFilters(){
+  ensureCalendarFilters();
+  const box=document.getElementById('calendarFilters'); if(!box) return;
+  box.innerHTML=CALENDAR_FILTER_TYPES.map(type=>`<label><input type="checkbox" ${isCalendarTypeVisible(type)?'checked':''} onchange="setCalendarFilter('${type}', this.checked)"><span class="dot ${type}"></span>${escapeHtml(calendarFilterLabel(type))}</label>`).join('');
+}
+function groupCalendarEvents(events){
+  const groups=new Map();
+  events.forEach(e=>{
+    const key=[e.date,e.type,e.title||trEvent(e.type)].join('|');
+    if(!groups.has(key)) groups.set(key,{date:e.date,type:e.type,title:e.title||trEvent(e.type),items:[]});
+    groups.get(key).items.push(e);
+  });
+  return [...groups.values()].sort((a,b)=>a.date.localeCompare(b.date));
+}
+function renderNextEvent(){
+  const box=document.getElementById('nextEventCard'); if(!box) return;
+  const today=new Date().toISOString().slice(0,10);
+  const groups=groupCalendarEvents(filteredEventsAll().filter(e=>e.date>=today));
+  if(!groups.length){ box.innerHTML=`<div class="next-event-card"><b>🔔 ${currentLang==='en'?'Next event':'Nejbližší událost'}</b><br><span class="small">${currentLang==='en'?'No upcoming events.':'Žádná nadcházející událost.'}</span></div>`; return; }
+  const g=groups[0];
+  const diffDays=Math.round((new Date(g.date+'T00:00:00')-new Date(today+'T00:00:00'))/86400000);
+  const when=diffDays===0?(currentLang==='en'?'today':'dnes'):(diffDays===1?(currentLang==='en'?'tomorrow':'zítra'):(currentLang==='en'?`in ${diffDays} days`:`za ${diffDays} dní`));
+  const names=[...new Set(g.items.map(i=>i.dogName).filter(Boolean))];
+  box.innerHTML=`<details class="next-event-card"><summary>🔔 ${currentLang==='en'?'Next event':'Nejbližší událost'}: ${escapeHtml(trEvent(g.type))} · ${escapeHtml(when)}</summary><div style="margin-top:7px"><b>${fmt(g.date)}</b><br>${escapeHtml(g.title||'')}<br><span class="small">${names.length} ${currentLang==='en'?'dogs':'psů'}${names.length?': '+names.map(escapeHtml).join(', '):''}</span></div></details>`;
+}
+
 function latest(type){ const d=dog(); if(!d) return null; return [...(d.events||[])].filter(e=>e.type===type).sort((a,b)=>b.date.localeCompare(a.date))[0]; }
 function escapeHtml(str){ return String(str || "").replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s])); }
 function escapeAttr(str){ return escapeHtml(str).replace(/`/g, "&#96;"); }
@@ -1045,7 +1149,35 @@ function renderWeightTab(d){
   const last=weights[weights.length-1], prev=weights[weights.length-2];
   const diff=last&&prev ? parseFloat(last.weight)-parseFloat(prev.weight) : null;
   const seven=weights.slice(-7); const weekDiff=seven.length>=2 ? parseFloat(seven[seven.length-1].weight)-parseFloat(seven[0].weight) : null;
-  return `<h3>${currentLang==='en'?'Weight diary':'Váhový deník'}</h3><div class="weight-summary"><span class="badge">${currentLang==='en'?'Last weight':'Poslední váha'}: ${last?last.weight+" kg ("+fmt(last.date)+")":"—"}</span><span class="badge ${diff!==null&&diff<-0.5?'warning':''}">${currentLang==='en'?'Since previous':'Od minula'}: ${diff!==null?diff.toFixed(1)+" kg":"—"}</span><span class="badge ${weekDiff!==null&&weekDiff<-1?'warning':''}">${currentLang==='en'?'Last 7 records':'Posledních 7 záznamů'}: ${weekDiff!==null?weekDiff.toFixed(1)+" kg":"—"}</span></div><div class="weight-chart">${renderWeightChart(weights)}</div>${renderWeightTable(weights)}<h3>${currentLang==='en'?'Add weight':'Přidat váhu'}</h3><div class="formgrid"><input id="weightDate" type="date" value="${new Date().toISOString().slice(0,10)}"><input id="weightValue" type="number" step="0.1" placeholder="${currentLang==='en'?'Weight in kg':'Váha v kg'}"><select id="weightContext"><option>${currentLang==='en'?'after training':'po tréninku'}</option><option>${currentLang==='en'?'morning':'ráno'}</option><option>${currentLang==='en'?'before race':'před závodem'}</option><option>${currentLang==='en'?'after race':'po závodě'}</option><option>${currentLang==='en'?'recovery':'rekonvalescence'}</option><option>${currentLang==='en'?'other':'jiné'}</option></select><textarea class="full" id="weightNote" placeholder="${currentLang==='en'?'Note: appetite, stool, willingness to run...':'Poznámka: chuť k jídlu, trus, ochota běžet, regenerace...'}"></textarea><button class="full" onclick="addWeight()">${currentLang==='en'?'Add weight':'Přidat váhu'}</button></div>`;
+  const trend=calculateWeightTrend(weights);
+  const trendHtml=renderWeightTrendSummary(trend);
+  return `<h3>${currentLang==='en'?'Weight diary':'Váhový deník'}</h3><div class="weight-summary"><span class="badge">${currentLang==='en'?'Last weight':'Poslední váha'}: ${last?last.weight+" kg ("+fmt(last.date)+")":"—"}</span><span class="badge ${diff!==null&&diff<-0.5?'warning':''}">${currentLang==='en'?'Since previous':'Od minula'}: ${diff!==null?diff.toFixed(1)+" kg":"—"}</span><span class="badge ${weekDiff!==null&&weekDiff<-1?'warning':''}">${currentLang==='en'?'Last 7 records':'Posledních 7 záznamů'}: ${weekDiff!==null?weekDiff.toFixed(1)+" kg":"—"}</span></div>${trendHtml}<div class="weight-chart">${renderWeightChart(weights)}</div>${renderWeightTable(weights)}<h3>${currentLang==='en'?'Add weight':'Přidat váhu'}</h3><div class="formgrid"><input id="weightDate" type="date" value="${new Date().toISOString().slice(0,10)}"><input id="weightValue" type="number" step="0.1" placeholder="${currentLang==='en'?'Weight in kg':'Váha v kg'}"><select id="weightContext"><option>${currentLang==='en'?'after training':'po tréninku'}</option><option>${currentLang==='en'?'morning':'ráno'}</option><option>${currentLang==='en'?'before race':'před závodem'}</option><option>${currentLang==='en'?'after race':'po závodě'}</option><option>${currentLang==='en'?'recovery':'rekonvalescence'}</option><option>${currentLang==='en'?'other':'jiné'}</option></select><textarea class="full" id="weightNote" placeholder="${currentLang==='en'?'Note: appetite, stool, willingness to run...':'Poznámka: chuť k jídlu, trus, ochota běžet, regenerace...'}"></textarea><button class="full" onclick="addWeight()">${currentLang==='en'?'Add weight':'Přidat váhu'}</button></div>`;
+}
+function calculateWeightTrend(weights){
+  const clean=weights.map(e=>({date:e.date,value:parseFloat(e.weight)})).filter(x=>x.date && Number.isFinite(x.value)).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!clean.length) return null;
+  const last=clean[clean.length-1];
+  const first=clean[0];
+  const overall=last.value-first.value;
+  const values=clean.map(x=>x.value);
+  const min=Math.min(...values), max=Math.max(...values);
+  const start30=new Date(last.date+'T00:00:00'); start30.setDate(start30.getDate()-30);
+  const from30=start30.toISOString().slice(0,10);
+  const recent=clean.filter(x=>x.date>=from30);
+  const base=recent.length>=2?recent[0]:first;
+  const change30=last.value-base.value;
+  const recentVals=recent.map(x=>x.value);
+  const min30=recentVals.length?Math.min(...recentVals):last.value;
+  const max30=recentVals.length?Math.max(...recentVals):last.value;
+  return {last:first?last:null, overall, min, max, change30, min30, max30, count:clean.length, recentCount:recent.length};
+}
+function renderWeightTrendSummary(trend){
+  if(!trend || trend.count<2) return `<div class="weight-insight"><span class="badge">${currentLang==='en'?'Weight trend':'Trend váhy'}: —</span></div>`;
+  const fluct=trend.max30-trend.min30;
+  const trendLabel=Math.abs(trend.change30)<0.2?(currentLang==='en'?'stable':'stabilní'):(trend.change30>0?(currentLang==='en'?'rising':'roste'):(currentLang==='en'?'falling':'klesá'));
+  const fluctLabel=fluct<0.7?(currentLang==='en'?'low fluctuation':'nízké výkyvy'):(fluct<1.5?(currentLang==='en'?'moderate fluctuation':'střední výkyvy'):(currentLang==='en'?'high fluctuation':'výrazné výkyvy'));
+  const cls=fluct>=1.5?'watch':'ok';
+  return `<div class="weight-insight"><span class="badge">${currentLang==='en'?'Overall change':'Celková změna'}: ${trend.overall>=0?'+':''}${trend.overall.toFixed(1)} kg</span><span class="badge">${currentLang==='en'?'30 days':'30 dní'}: ${trend.change30>=0?'+':''}${trend.change30.toFixed(1)} kg · ${trendLabel}</span><span class="badge ${cls}">${currentLang==='en'?'Range 30 days':'Rozmezí 30 dní'}: ${trend.min30.toFixed(1)}–${trend.max30.toFixed(1)} kg · ${fluctLabel}</span><span class="badge">${currentLang==='en'?'Overall range':'Celkové rozmezí'}: ${trend.min.toFixed(1)}–${trend.max.toFixed(1)} kg</span></div>`;
 }
 function addWeight(){ const d=dog(), date=document.getElementById("weightDate").value, weight=document.getElementById("weightValue").value, context=document.getElementById("weightContext").value, note=document.getElementById("weightNote").value.trim(); if(!date) return alert(t('needDate')); if(!weight) return alert(currentLang==='en'?'Enter weight.':'Zadej váhu.'); d.events.push({id:crypto.randomUUID(), type:"weight", date, title:t('weight'), weight:parseFloat(weight).toFixed(1), note:(context?context+". ":"")+note}); d.weight=parseFloat(weight).toFixed(1)+" kg"; save(); }
 function renderWeightTable(weights){ if(!weights.length) return `<p class="small">${currentLang==='en'?'No weight records yet.':'Zatím bez váhových záznamů.'}</p>`; const rows=[...weights].sort((a,b)=>b.date.localeCompare(a.date)); return `<table class="table"><tr><th>${t('date')}</th><th>${t('weight')}</th><th>${t('note')}</th><th></th></tr>${rows.map(e=>`<tr><td>${fmt(e.date)}</td><td>${e.weight||""} kg</td><td>${escapeHtml(e.note||"")}</td><td><button class="secondary" onclick="deleteEvent('${e.id}')">${t('delete')}</button></td></tr>`).join("")}</table>`; }
@@ -1071,20 +1203,28 @@ function openArchiveDialog(){ const d=dog(); if(!d) return; const reason=prompt(
 function restoreDog(){ const d=dog(); if(!d || !confirm(t('confirmRestore'))) return; d.status='active'; dogListMode='active'; selectedDogId=d.id; save(); }
 
 function renderCalendar(){
+  renderCalendarFilters();
+  renderNextEvent();
   const cal=document.getElementById("calendar"); if(!cal) return; const y=shown.getFullYear(), m=shown.getMonth();
   document.getElementById("monthTitle").textContent=shown.toLocaleDateString(currentLang==="en"?"en-GB":"cs-CZ",{month:"long",year:"numeric"});
   const first=new Date(y,m,1), start=(first.getDay()+6)%7, days=new Date(y,m+1,0).getDate(); const names=currentLang==="en"?["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]:["Po","Út","St","Čt","Pá","So","Ne"];
-  let html=names.map(n=>`<div class="dayname">${n}</div>`).join(""); for(let i=0;i<start;i++) html+=`<div></div>`; const all=eventsAll(); const today=new Date().toISOString().slice(0,10);
-  for(let day=1;day<=days;day++){
-    const iso=`${y}-${String(m+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
-    const ev=all.filter(e=>e.date===iso);
-    const uniqueTypes=[...new Set(ev.map(e=>e.type))];
-    html+=`<div class="day ${iso===today?'today':''}" onclick="selectedDate='${iso}';renderDayEvents()"><div class="num">${day}</div><div class="dots">${uniqueTypes.map(type=>`<span class="dot ${type}"></span>`).join("")}</div><div class="small">${ev.length?ev.length+(currentLang==='en'?" events":" udál."):""}</div></div>`;
-  }
+  let html=names.map(n=>`<div class="dayname">${n}</div>`).join(""); for(let i=0;i<start;i++) html+=`<div></div>`; const all=filteredEventsAll(); const today=new Date().toISOString().slice(0,10);
+  for(let day=1;day<=days;day++){ const iso=`${y}-${String(m+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`; const ev=all.filter(e=>e.date===iso); const types=[...new Set(ev.map(e=>e.type))].slice(0,8); const groups=groupCalendarEvents(ev); html+=`<div class="day ${iso===today?'today':''}" onclick="selectedDate='${iso}';renderDayEvents()"><div class="num">${day}</div><div class="dots">${types.map(type=>`<span class="dot ${type}"></span>`).join("")}</div><div class="small">${groups.length?groups.length+(currentLang==='en'?" items":" záz."):""}</div></div>`; }
   cal.innerHTML=html;
 }
 function changeMonth(delta){ shown.setMonth(shown.getMonth()+delta); renderCalendar(); }
-function renderDayEvents(){ const box=document.getElementById("dayEvents"); if(!box) return; const ev=eventsAll().filter(e=>e.date===selectedDate); if(!ev.length){ box.innerHTML=`${fmt(selectedDate)} – ${currentLang==='en'?'no events':'bez událostí'}.`; return; } box.innerHTML=`<b>${fmt(selectedDate)}</b><br><br>`+ev.map(e=>`<div class="eventline ${e.type}"><b>${escapeHtml(e.dogName)}</b> – ${trEvent(e.type)}<br>${escapeHtml(e.title||"")}<br><span class="small">${escapeHtml(e.note||"")}</span></div>`).join(""); }
+function renderDayEvents(){
+  const box=document.getElementById("dayEvents"); if(!box) return;
+  if(!selectedDate){ box.innerHTML=currentLang==='en'?'Click a day in the calendar.':'Klikni na den v kalendáři.'; return; }
+  const ev=filteredEventsAll().filter(e=>e.date===selectedDate);
+  if(!ev.length){ box.innerHTML=`${fmt(selectedDate)} – ${currentLang==='en'?'no visible events':'bez zobrazených událostí'}.`; return; }
+  const groups=groupCalendarEvents(ev);
+  box.innerHTML=`<b>${fmt(selectedDate)}</b><br><br>`+groups.map(g=>{
+    const names=[...new Set(g.items.map(i=>i.dogName).filter(Boolean))];
+    const notes=[...new Set(g.items.map(i=>i.note).filter(Boolean))];
+    return `<details class="eventline ${g.type}" open><summary><b>${trEvent(g.type)}</b> – ${escapeHtml(g.title||"")} <span class="small">(${names.length} ${currentLang==='en'?'dogs':'psů'})</span></summary><div style="margin-top:6px"><span class="small">${names.map(escapeHtml).join(', ')}</span>${notes.length?`<br><span class="small">${notes.map(escapeHtml).join(' · ')}</span>`:''}</div></details>`;
+  }).join("");
+}
 function exportData(){ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="kennel-book-zaloha.json"; a.click(); }
 function importData(ev){ const file=ev.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ try{ data=JSON.parse(reader.result); migrateData(); selectedDogId=activeDogs()[0]?.id || data.dogs[0]?.id || null; save(); }catch(e){ alert(currentLang==='en'?'File could not be loaded.':'Soubor se nepodařilo načíst.'); } }; reader.readAsText(file); }
 
@@ -1169,7 +1309,68 @@ function saveTeamLog(){
   dogIds.forEach(id=>{ const d=data.dogs.find(x=>x.id===id); if(!d) return; d.events.push({id:crypto.randomUUID(), type:type==="race"?"race":"training", date, title:`${title} – ${log.km} km${time?", "+time:""}`, note:`${type==="race"?trEvent("race"):trEvent("training")} ${currentLang==='en'?'team':'v sestavě'}: ${dogNames.join(", ")}.${musherName?` ${currentLang==='en'?'Musher':'Musher'}: ${musherName}.`:''}${roleText?` ${currentLang==='en'?'Roles':'Role'}: ${roleText}.`:''}${note?" "+note:""}`, teamLogId:log.id, km:log.km, time, musherName, roles}); });
   save(); clearTeamForm();
 }
-function renderTeamLogList(){ ensureTeamLogData(); const box=document.getElementById("teamLogList"); if(!box) return; const logs=[...data.teamLogs].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8); if(!logs.length){ box.innerHTML=t('noRecords'); return; } box.innerHTML=logs.map(l=>{ const roleText=formatTeamRoles(l.roles||[]); return `<div class="team-log-entry ${l.type==='race'?'race':''}"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`; }).join(""); }
+function parseTeamTimeToMinutes(time){
+  if(!time) return NaN;
+  const raw=String(time).trim().replace(',', '.');
+  const parts=raw.split(':').map(x=>parseFloat(x));
+  if(parts.length===2 && parts.every(Number.isFinite)) return parts[0]*60 + parts[1];
+  if(parts.length===3 && parts.every(Number.isFinite)) return parts[0]*60 + parts[1] + parts[2]/60;
+  const n=parseFloat(raw);
+  return Number.isFinite(n) ? n : NaN;
+}
+function getTeamMetricValue(log, metric){
+  const km=parseFloat(log.km);
+  const minutes=parseTeamTimeToMinutes(log.time);
+  if(metric==='time') return Number.isFinite(minutes) ? minutes : NaN;
+  if(metric==='speed') return Number.isFinite(km) && Number.isFinite(minutes) && minutes>0 ? km/(minutes/60) : NaN;
+  return Number.isFinite(km) ? km : NaN;
+}
+function formatTeamMetricValue(value, metric){
+  if(!Number.isFinite(value)) return '—';
+  if(metric==='time') return Math.round(value) + ' min';
+  if(metric==='speed') return value.toFixed(1) + ' km/h';
+  return value.toFixed(1) + ' km';
+}
+function setTeamChartMetric(metric){
+  teamChartMetric=metric;
+  localStorage.setItem('kennelTeamChartMetric', metric);
+  renderTeamLogList();
+}
+function selectTeamLog(id){ selectedTeamLogId=id; renderTeamLogList(); }
+function renderTeamMiniChart(logs){
+  const metric=teamChartMetric;
+  const title=metric==='time'?(currentLang==='en'?'Time':'Čas'):(metric==='speed'?(currentLang==='en'?'Speed':'Rychlost'):'Km');
+  const points=[...logs].sort((a,b)=>a.date.localeCompare(b.date)).map(l=>({log:l,value:getTeamMetricValue(l, metric)})).filter(p=>Number.isFinite(p.value));
+  const selected = selectedTeamLogId ? points.find(p=>p.log.id===selectedTeamLogId) : points[points.length-1];
+  if(points.length<2){
+    return `<aside class="team-mini-chart"><div class="team-chart-top"><h3>${currentLang==='en'?'Training trend':'Trend tréninků'}</h3><div class="team-chart-toggle"><button type="button" class="secondary ${metric==='km'?'active':''}" onclick="setTeamChartMetric('km')">Km</button><button type="button" class="secondary ${metric==='time'?'active':''}" onclick="setTeamChartMetric('time')">${currentLang==='en'?'Time':'Čas'}</button><button type="button" class="secondary ${metric==='speed'?'active':''}" onclick="setTeamChartMetric('speed')">${currentLang==='en'?'Avg':'Průměr'}</button></div></div><div class="small">${currentLang==='en'?'Add at least two trainings for a chart.':'Graf se zobrazí po dvou trénincích.'}</div></aside>`;
+  }
+  const w=360,h=128,pad=12;
+  const vals=points.map(p=>p.value);
+  const min=Math.min(...vals), max=Math.max(...vals);
+  const range=(max-min)||1;
+  const coords=points.map((p,i)=>({p,x:pad+(i/(points.length-1))*(w-pad*2),y:h-pad-((p.value-min)/range)*(h-pad*2)}));
+  const poly=coords.map(c=>`${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(' ');
+  const area=`${pad},${h-pad} ${poly} ${w-pad},${h-pad}`;
+  const sel=selected ? coords.find(c=>c.p.log.id===selected.log.id) : coords[coords.length-1];
+  const valueLine=selected ? `${fmt(selected.log.date)} · ${formatTeamMetricValue(selected.value, metric)}` : '';
+  return `<aside class="team-mini-chart"><div class="team-chart-top"><h3>${currentLang==='en'?'Training trend':'Trend tréninků'}</h3><div class="team-chart-toggle"><button type="button" class="secondary ${metric==='km'?'active':''}" onclick="setTeamChartMetric('km')">Km</button><button type="button" class="secondary ${metric==='time'?'active':''}" onclick="setTeamChartMetric('time')">${currentLang==='en'?'Time':'Čas'}</button><button type="button" class="secondary ${metric==='speed'?'active':''}" onclick="setTeamChartMetric('speed')">${currentLang==='en'?'Avg':'Průměr'}</button></div></div><svg class="team-chart-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-label="${escapeAttr(title)}"><defs><linearGradient id="miniTeamChartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--aurora)" stop-opacity=".34"/><stop offset="1" stop-color="var(--aurora)" stop-opacity=".03"/></linearGradient></defs><rect x="0" y="0" width="${w}" height="${h}" rx="12" fill="rgba(0,0,0,.14)"/><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="rgba(255,255,255,.12)"/><polygon points="${area}" fill="url(#miniTeamChartFill)"/><polyline points="${poly}" fill="none" stroke="var(--aurora)" stroke-width="2.76" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>${sel?`<circle cx="${sel.x.toFixed(1)}" cy="${sel.y.toFixed(1)}" r="5" fill="var(--aurora2)" stroke="#fff" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`:''}</svg><div class="team-chart-value">${escapeHtml(valueLine)}</div></aside>`;
+}
+function renderTeamLogEntry(l){
+  const roleText=formatTeamRoles(l.roles||[]);
+  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
+}
+function renderTeamLogList(){
+  ensureTeamLogData();
+  const box=document.getElementById("teamLogList"); if(!box) return;
+  const logs=[...data.teamLogs].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!logs.length){ box.innerHTML=t('noRecords'); return; }
+  if(!selectedTeamLogId || !logs.some(l=>l.id===selectedTeamLogId)) selectedTeamLogId=logs[0].id;
+  const latest=logs.slice(0,2);
+  const older=logs.slice(2);
+  const olderHtml=older.length ? `<details class="older-team-logs"><summary>${currentLang==='en'?'Older trainings':'Starší tréninky'} (${older.length})</summary><div style="margin-top:8px">${older.map(renderTeamLogEntry).join("")}</div></details>` : '';
+  box.innerHTML=`<div class="team-history-grid"><div class="team-log-list-compact">${latest.map(renderTeamLogEntry).join("")}${olderHtml}</div>${renderTeamMiniChart(logs)}</div>`;
+}
 function deleteTeamLog(id){ ensureTeamLogData(); if(!confirm(currentLang==='en'?'Delete team log? Dog card records will stay.':'Smazat team log? Záznamy z karet psů zůstanou zachované.')) return; data.teamLogs=data.teamLogs.filter(l=>l.id!==id); save(); }
 function renderTeamLog(){ renderTeamMusherSelect(); renderTeamDogPicker(); renderTeamLogList(); }
 

@@ -250,7 +250,9 @@ button.secondary{
 .table th{text-align:left;color:#cde}
 .table button{padding:4px 7px;font-size:12px;margin:2px}
 .formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin:10px 0 8px}
+.calendar-month-nav{margin-top:10px}
+.calendar-head h2{margin:0;font-weight:650;letter-spacing:.01em}
 .calendar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
@@ -268,13 +270,17 @@ button.secondary{
 .day .num{font-size:12px;color:#eaf}
 .dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px}
 .dot{width:9px;height:9px;border-radius:50%}
-.vaccination{background:#43d17a}
-.deworming{background:var(--worm)}
-.seizure,.acute{background:var(--danger)}
+.vaccination{background:#ffffff}
+.deworming{background:#8c929a}
+.seizure{background:#ff4d5d}
+.acute{background:#ffd166}
 .training{background:var(--train)}
-.heat,.breeding{background:var(--heat)}
+.heat{background:#ffc2e8}
+.breeding{background:#c93a8d}
 .note{background:var(--note)}
-.meds{background:#ffd166}
+.meds{background:#2f80ed}
+.vet{background:#ff9f1c}
+.physio{background:#35d07f}
 .eventline{
   border-left:4px solid var(--note);
   padding:8px 10px;
@@ -282,11 +288,15 @@ button.secondary{
   border-radius:10px;
   margin-bottom:8px;
 }
-.eventline.vaccination{border-left-color:#43d17a;background:rgba(67,209,122,.12)}
-.eventline.deworming{border-left-color:var(--worm);background:rgba(155,106,60,.13)}
-.eventline.seizure,.eventline.acute{border-left-color:var(--danger);background:rgba(255,91,110,.12)}
+.eventline.vaccination{border-left-color:#ffffff;background:rgba(255,255,255,.10)}
+.eventline.deworming{border-left-color:#8c929a;background:rgba(140,146,154,.14)}
+.eventline.seizure{border-left-color:#ff4d5d;background:rgba(255,77,93,.13)}
+.eventline.acute{border-left-color:#ffd166;background:rgba(255,209,102,.13)}
 .eventline.training{border-left-color:var(--train);background:rgba(58,167,255,.12)}
-.eventline.heat,.eventline.breeding{border-left-color:var(--heat);background:rgba(182,120,255,.12)}
+.eventline.heat{border-left-color:#ffc2e8;background:rgba(255,194,232,.13)}
+.eventline.breeding{border-left-color:#c93a8d;background:rgba(201,58,141,.13)}
+.eventline.vet{border-left-color:#ff9f1c;background:rgba(255,159,28,.13)}
+.eventline.physio{border-left-color:#35d07f;background:rgba(53,208,127,.12)}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .legend span{font-size:12px;color:var(--muted)}
@@ -297,13 +307,50 @@ button.secondary{
   padding:10px 12px;
   margin:0 0 12px;
 }
-.next-event-card summary{cursor:pointer;list-style:none;font-weight:800}
+.next-event-soft-title{font-weight:600;font-size:14px;color:#d9edf2}
+.next-event-card summary{cursor:pointer;list-style:none;font-weight:600;font-size:14px;line-height:1.35;color:#d9edf2}
 .next-event-card summary::-webkit-details-marker{display:none}
 .next-event-card summary:before{content:'▸ ';color:var(--aurora)}
 .next-event-card[open] summary:before{content:'▾ '}
-.calendar-filters{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
-.calendar-filters label{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:5px 8px;font-size:12px;color:var(--muted);cursor:pointer}
+.calendar-filter-panel{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);border-radius:16px;margin:8px 0 12px;overflow:hidden}
+.calendar-filter-panel summary{cursor:pointer;list-style:none;padding:8px 11px;font-weight:600;font-size:14px;line-height:1.35;color:#d9edf2;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.calendar-filter-panel summary::-webkit-details-marker{display:none}
+.calendar-filter-panel summary:after{content:'▾';color:var(--muted);font-size:12px}
+.calendar-filter-panel:not([open]) summary:after{content:'▸'}
+.calendar-filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px;padding:0 10px 10px;margin:0}
+.calendar-filters label{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:7px 8px;font-size:12px;color:var(--muted);cursor:pointer}
 .calendar-filters input{width:auto;accent-color:var(--aurora)}
+.calendar-marker{display:inline-grid;place-items:center;width:15px;height:15px;min-width:15px;font-size:12px;line-height:1;color:var(--marker-color,#fff)}
+.calendar-marker.circle::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--marker-color,#fff);display:block}
+.calendar-marker.heart{font-size:13px}
+.calendar-marker.medal{font-size:14px}
+.calendar-marker.lightning{font-size:14px;font-weight:900;text-shadow:0 0 5px rgba(255,255,255,.18)}
+.cal-training{--marker-color:#3aa7ff}      /* trénink – modré kolečko */
+.cal-race{--marker-color:#f4c542}          /* závod – medaile */
+.cal-vet{--marker-color:#ff9f1c}           /* veterina – oranžové srdíčko */
+.cal-physio{--marker-color:#35d07f}        /* fyzio – zelené srdíčko */
+.cal-vaccination{--marker-color:#ffffff}   /* očkování – bílé srdíčko */
+.cal-deworming{--marker-color:#8c929a}     /* odčervení – šedé srdíčko */
+.cal-meds{--marker-color:#2f80ed}          /* léky – modré srdíčko */
+.cal-acute{--marker-color:#ffd166}         /* akutní – blesk */
+.cal-seizure{--marker-color:#ff4d5d}       /* záchvat – blesk */
+.cal-heat{--marker-color:#ffc2e8}          /* hárání – světle růžové srdíčko */
+.cal-breeding{--marker-color:#c93a8d}      /* krytí – tmavší růžové srdíčko */
+.cal-note{--marker-color:#d5dbe0}          /* poznámka – světle šedé kolečko */
+.cal-chiplist{--marker-color:#9fe7ff}
+.cal-weight{--marker-color:#f8e6b3}
+.eventline.vet{border-left-color:#ff9f1c;background:rgba(255,159,28,.13)}
+.eventline.physio{border-left-color:#35d07f;background:rgba(53,208,127,.12)}
+.eventline.vaccination{border-left-color:#ffffff;background:rgba(255,255,255,.10)}
+.eventline.deworming{border-left-color:#8c929a;background:rgba(140,146,154,.14)}
+.eventline.meds{border-left-color:#2f80ed;background:rgba(47,128,237,.12)}
+.eventline.acute{border-left-color:#ffd166;background:rgba(255,209,102,.13)}
+.eventline.seizure{border-left-color:#ff4d5d;background:rgba(255,77,93,.13)}
+.eventline.heat{border-left-color:#ffc2e8;background:rgba(255,194,232,.13)}
+.eventline.breeding{border-left-color:#c93a8d;background:rgba(201,58,141,.13)}
+.eventline.race{border-left-color:#f4c542;background:rgba(244,197,66,.14)}
+.calendar-quick-actions{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px 8px}
+.calendar-quick-actions button{padding:5px 8px;font-size:12px;border-radius:9px}
 .weight-insight{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
 .weight-insight .badge{font-size:12px}
 .weight-insight .ok{background:rgba(46,230,166,.12)}
@@ -336,9 +383,9 @@ button.secondary{
 button,.tab.active{background:linear-gradient(135deg,var(--aurora),var(--aurora2));}
 .dog-item.active{outline:2px solid var(--aurora)}
 .day.today{outline:2px solid var(--aurora2)}
-.race{background:#ff6fb7}
-.eventline.race{border-left-color:#ff6fb7;background:rgba(255,111,183,.14)}
-.meds{background:#2EE6A6}
+.race{background:#f4c542}
+.eventline.race{border-left-color:#f4c542;background:rgba(244,197,66,.14)}
+.meds{background:#2f80ed}
 header{position:relative;min-height:190px;padding:24px 28px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08);}
 .brand-wrap-clean{position:relative;z-index:5;display:grid;grid-template-columns:145px minmax(260px,1fr);gap:34px;align-items:center;max-width:930px;min-height:145px;}
 .brand-logo-clean{width:138px;height:138px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(255,255,255,.18));}
@@ -488,10 +535,10 @@ body[data-theme="forest"] .brand-text-clean h1{color:#efffe9;text-shadow:0 0 18p
 body[data-theme="forest"] .brand-subtitle-clean{color:#d9f2bf}
 body[data-theme="aurora"] .brand-text-clean h1{color:#eaffff;text-shadow:0 0 18px rgba(66,217,255,.34)}
 body[data-theme="aurora"] .brand-subtitle-clean{color:#9fe7ff}
-body[data-theme="aurora"] .race{background:#7d7cff}
-body[data-theme="aurora"] .eventline.race{border-left-color:#7d7cff;background:rgba(125,124,255,.14)}
-body[data-theme="forest"] .race{background:#d6b56d}
-body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:rgba(214,181,109,.14)}
+body[data-theme="aurora"] .race{background:#f4c542}
+body[data-theme="aurora"] .eventline.race{border-left-color:#f4c542;background:rgba(244,197,66,.14)}
+body[data-theme="forest"] .race{background:#f4c542}
+body[data-theme="forest"] .eventline.race{border-left-color:#f4c542;background:rgba(244,197,66,.14)}
 
 
 /* --- Sidebar usability + chiplist output --- */
@@ -578,6 +625,375 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
 @media(max-width:900px){.team-history-grid{grid-template-columns:1fr}.team-mini-chart{max-width:none}.team-chart-svg{height:118px}}
 @media(max-width:760px){.older-team-logs summary{max-width:none;width:100%}.team-mini-chart{padding:8px}.team-chart-svg{height:105px}.team-chart-top{display:block}.team-chart-toggle{margin-top:6px}.team-chart-toggle button{flex:1 1 auto}}
 
+
+
+/* --- Compact dog sidebar layout --- */
+.dog-sidebar #dogSidebarTitle{
+  margin:0 0 10px;
+  font-size:23px;
+}
+.dog-sidebar .sidebar-main-actions{
+  margin:0 0 18px;
+}
+.dog-sidebar .sidebar-main-actions button{
+  min-height:42px;
+}
+.quick-add-dog{
+  margin-bottom:12px;
+}
+.quick-add-dog #myDogsTitle{
+  margin:0 0 9px;
+  color:#dff;
+}
+.quick-add-form{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+}
+.quick-add-form button{
+  width:100%;
+}
+.dog-sidebar #dogList.compact-dog-list{
+  display:block;
+  max-height:52vh;
+  overflow:auto;
+  padding-right:4px;
+}
+.compact-dog-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
+}
+.compact-dog-item{
+  display:grid;
+  grid-template-columns:24px minmax(0,1fr);
+  gap:7px;
+  align-items:center;
+  min-height:42px;
+  padding:8px 9px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:13px;
+  cursor:pointer;
+}
+.compact-dog-item.active{
+  outline:2px solid var(--aurora);
+  background:rgba(255,255,255,.11);
+}
+.compact-dog-item.archived-dog{
+  opacity:.72;
+}
+.compact-dog-item .mass-select-box{
+  width:18px!important;
+  height:18px;
+  margin:0;
+  transform:none;
+  accent-color:var(--aurora);
+}
+.compact-dog-item .mass-select-placeholder{
+  width:18px;
+  height:18px;
+}
+.compact-dog-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-weight:800;
+  line-height:1.15;
+}
+.dog-list-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:4px 0 10px;
+}
+.dog-list-tabs button{
+  min-height:42px;
+  padding:8px 10px;
+}
+@media(max-width:760px){
+  .dog-sidebar #dogList.compact-dog-list{max-height:46vh}
+  .compact-dog-grid{grid-template-columns:1fr 1fr;gap:7px}
+  .compact-dog-item{padding:8px 8px;min-height:40px}
+  .dog-list-tabs button{font-size:14px}
+}
+
+
+
+/* --- Visible top sidebar actions: Musheři + Kontakty --- */
+.dog-sidebar .sidebar-main-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin:0 0 18px;
+}
+.dog-sidebar .sidebar-main-actions button{
+  width:100%;
+  min-height:46px;
+  padding:9px 10px;
+}
+#openContactsBtn{
+  background:rgba(255,111,183,.16);
+  color:#ffeaf6;
+  border:1px solid rgba(255,111,183,.46);
+}
+#openContactsBtn:hover{
+  background:rgba(255,111,183,.24);
+}
+@media(max-width:420px){
+  .dog-sidebar .sidebar-main-actions{grid-template-columns:1fr}
+}
+
+/* --- Important contacts microsite --- */
+.contacts-card-clean{
+  width:min(820px,96vw);
+  max-height:92vh;
+  overflow:auto;
+}
+.contacts-intro{
+  margin:0 0 12px;
+}
+.contacts-preview-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin:12px 0 14px;
+}
+.contact-view-card{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:12px;
+  min-height:132px;
+}
+.contact-view-card.emergency{
+  border-color:rgba(255,91,110,.34);
+  background:rgba(255,91,110,.10);
+}
+.contact-view-title{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:5px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.contact-view-name{
+  font-weight:900;
+  font-size:18px;
+  color:#eaffff;
+  margin-bottom:6px;
+}
+.contact-line{
+  color:var(--muted);
+  font-size:13px;
+  margin:3px 0;
+  word-break:break-word;
+}
+.contact-link-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:8px;
+}
+.contact-link-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14);
+  color:var(--ice);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:800;
+}
+.emergency-phone-link{
+  display:block;
+  margin-top:10px;
+  padding:11px 12px;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--aurora),var(--aurora2));
+  color:#03202a;
+  text-align:center;
+  text-decoration:none;
+  font-size:25px;
+  line-height:1.1;
+  font-weight:950;
+  letter-spacing:.02em;
+}
+.contacts-edit-panel{
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  padding:10px 12px;
+  margin-top:10px;
+}
+.contacts-edit-panel summary{
+  cursor:pointer;
+  list-style:none;
+  font-weight:900;
+  color:#eaffff;
+}
+.contacts-edit-panel summary::-webkit-details-marker{display:none}
+.contacts-edit-panel summary:before{content:'▸ ';color:var(--aurora)}
+.contacts-edit-panel[open] summary:before{content:'▾ '}
+.contacts-form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.contact-form-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:16px;
+  padding:10px;
+}
+.contact-form-card h3{
+  margin:0 0 8px;
+}
+.contact-form-card label{
+  display:block;
+  margin:7px 0;
+  font-size:12px;
+  color:var(--muted);
+}
+.contact-form-card input{
+  margin-top:4px;
+}
+@media(max-width:760px){
+  .contacts-preview-grid,.contacts-form-grid{grid-template-columns:1fr}
+  .emergency-phone-link{font-size:22px}
+  .contacts-card-clean{padding:15px}
+}
+
+
+
+/* --- Training import bridge + mobile polish --- */
+.track-import-panel{
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  margin:12px 0 4px;
+  overflow:hidden;
+}
+.track-import-panel summary{
+  cursor:pointer;
+  list-style:none;
+  padding:10px 12px;
+  font-weight:900;
+  color:#eaffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.track-import-panel summary::-webkit-details-marker{display:none}
+.track-import-panel summary:after{content:'▸';color:var(--muted);font-size:12px}
+.track-import-panel[open] summary:after{content:'▾'}
+.track-import-body{padding:0 12px 12px}
+.track-import-grid{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  align-items:center;
+}
+.track-file-label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:9px 12px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--aurora),var(--aurora2));
+  color:#03202a;
+  font-weight:900;
+  cursor:pointer;
+  text-align:center;
+}
+.track-import-status{
+  margin-top:9px;
+  background:rgba(0,0,0,.12);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:8px 10px;
+}
+.track-import-status.ok{border-color:rgba(46,230,166,.35);background:rgba(46,230,166,.10)}
+.track-import-status.warn{border-color:rgba(255,209,102,.38);background:rgba(255,209,102,.10)}
+.track-import-status.err{border-color:rgba(255,91,110,.38);background:rgba(255,91,110,.10)}
+#teamSource{
+  opacity:.82;
+}
+.cloud-structure-note{
+  margin-top:8px;
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+@media(max-width:760px){
+  body{font-size:16px}
+  header{min-height:128px;padding:18px 14px}
+  .brand-wrap-clean{grid-template-columns:76px 1fr;gap:14px;min-height:86px}
+  .brand-logo-clean{width:74px;height:74px}
+  .brand-text-clean h1{font-size:23px;letter-spacing:.035em}
+  .brand-subtitle-clean{font-size:15px}
+  .brand-settings-button-clean{top:14px;right:14px;width:42px;height:42px}
+  .team-log-panel{margin:12px;padding:14px;border-radius:18px}
+  .team-log-head{display:block}
+  .team-log-head button{width:100%;margin-top:10px;min-height:44px}
+  .team-form{grid-template-columns:1fr 1fr;gap:8px}
+  .team-form .full{grid-column:1/-1}
+  .track-import-grid{grid-template-columns:1fr}
+  .track-import-grid button{width:100%;min-height:42px}
+  .app{padding:12px;gap:12px}
+  .panel{padding:14px;border-radius:18px}
+  .dog-sidebar #dogSidebarTitle{font-size:24px}
+  .dog-sidebar .sidebar-main-actions{grid-template-columns:1fr 1fr}
+  .dog-sidebar .sidebar-main-actions button{min-height:44px;font-size:14px}
+  .compact-dog-grid{grid-template-columns:1fr 1fr}
+  .compact-dog-name{font-size:15px}
+  .card-top{grid-template-columns:82px 1fr;gap:12px}
+  .portrait{height:82px;border-radius:18px}
+  .portrait img{border-radius:18px}
+  .card-top .row,.formgrid,.row{grid-template-columns:1fr}
+  .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .tab{white-space:nowrap;min-height:42px}
+  .table{display:block;width:100%;overflow-x:auto;white-space:nowrap}
+  .badges{gap:6px}
+  .badge{font-size:11px}
+  .calendar-head h2{font-size:22px}
+  .calendar-head button{min-width:44px;min-height:44px}
+  .calendar-month-nav{margin-top:8px;margin-bottom:7px}
+  .calendar-head h2{font-size:19px;font-weight:650}
+  .calendar-filter-panel summary{font-size:13px;font-weight:600;padding:8px 10px}
+  .next-event-card summary,.next-event-soft-title{font-size:13px;font-weight:600}
+
+  .calendar{gap:5px}
+  .dayname{font-size:11px;padding:3px}
+  .day{min-height:56px;border-radius:13px;padding:6px}
+  .day .num{font-size:12px}
+  .dots{gap:2px;margin-top:4px}
+  .calendar-marker{width:13px;height:13px;min-width:13px;font-size:11px}
+  .calendar-marker.circle::before{width:9px;height:9px}
+  .calendar-filters{grid-template-columns:1fr 1fr;gap:6px;padding:0 8px 9px}
+  .calendar-filters label{font-size:12px;padding:6px 7px}
+  .next-event-card{padding:9px 10px;border-radius:15px}
+  .contacts-preview-grid,.contacts-form-grid{grid-template-columns:1fr}
+  .contacts-card-clean{width:96vw;max-height:92vh;padding:14px}
+}
+@media(max-width:420px){
+  .team-form{grid-template-columns:1fr}
+  .dog-sidebar .sidebar-main-actions{grid-template-columns:1fr}
+  .compact-dog-grid{grid-template-columns:1fr 1fr}
+  .dog-list-tabs button{font-size:13px;padding:7px 8px}
+  .calendar-filters{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -621,6 +1037,22 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
       </div>
     </div>
   </div>
+
+  <div id="importantContactsModal" class="brand-settings-clean" aria-hidden="true">
+    <div class="brand-settings-card-clean contacts-card-clean">
+      <h2 id="contactsModalTitle">Důležité kontakty</h2>
+      <p id="contactsModalHelp" class="small contacts-intro">Rychlý seznam veterin, specialistů a pohotovostí pro jeden kennel.</p>
+      <div id="contactsPreview" class="contacts-preview-grid"></div>
+      <details id="contactsEditPanel" class="contacts-edit-panel" open>
+        <summary id="contactsEditSummary">Upravit kontakty</summary>
+        <div id="contactsSettingsGrid" class="contacts-form-grid"></div>
+      </details>
+      <div class="brand-settings-actions-clean">
+        <button type="button" onclick="saveImportantContactsFromForm()" id="saveContactsBtn">Uložit kontakty</button>
+        <button type="button" class="secondary" onclick="closeImportantContactsModal()" id="closeContactsBtn">Zavřít</button>
+      </div>
+    </div>
+  </div>
 </header>
 
 <section class="team-log-panel panel">
@@ -640,10 +1072,26 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
     </select>
     <select id="teamMusher"></select>
     <input id="teamKm" type="number" step="0.1" placeholder="Km">
-    <input id="teamTime" type="text" placeholder="Čas na trati, např. 1:12">
+    <input id="teamTime" type="text" placeholder="Čas na trati, např. 1:12:00">
+    <input id="teamElevation" type="number" step="1" placeholder="Převýšení m">
+    <input id="teamAvgSpeed" type="number" step="0.1" placeholder="Průměr km/h">
+    <input id="teamSource" type="text" placeholder="Zdroj dat: ručně / GPX / TCX / FIT" readonly>
     <input id="teamTitle" class="full" placeholder="Název / místo, např. ranní trénink, Šediváčkův long">
     <textarea id="teamNote" class="full" placeholder="Poznámka: teplota, trať, tempo, krmení, počasí..."></textarea>
   </div>
+
+  <details id="trackImportPanel" class="track-import-panel">
+    <summary id="trackImportSummary">⌚ Import GPX / TCX / FIT z hodinek</summary>
+    <div class="track-import-body">
+      <div class="track-import-grid">
+        <label class="track-file-label" id="trackImportLabel">Vybrat soubor
+          <input id="trackImportFile" type="file" accept=".gpx,.tcx,.fit,.xml,application/gpx+xml,application/xml,text/xml" hidden onchange="importTrainingTrack(event)">
+        </label>
+        <button class="secondary" type="button" id="clearTrackImportBtn" onclick="clearImportedTrack()">Vyčistit import</button>
+      </div>
+      <div id="trackImportStatus" class="track-import-status small">GPX a TCX se načtou přímo. FIT je připravený jako první most; u běžných FIT souborů se pokusí načíst souhrnná data.</div>
+    </div>
+  </details>
 
   <h3>Sestava</h3>
   <div id="teamRoleHelp" class="small">Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.</div>
@@ -661,20 +1109,19 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
 
 <main class="app">
   <aside class="panel dog-sidebar">
-    <div class="actions sidebar-main-actions">
-      <button class="secondary" type="button" onclick="openMusherProfilesModal()" id="openMushersBtn">Musheři</button>
+    <h2 id="dogSidebarTitle">Můj tým</h2>
+    <div class="actions sidebar-main-actions" aria-label="Rychlé nastavení týmu">
+      <button class="secondary" type="button" onclick="openMusherProfilesModal()" id="openMushersBtn">👥 Musheři</button>
+      <button class="secondary contacts-shortcut-btn" type="button" onclick="openImportantContactsModal()" id="openContactsBtn">☎️ Kontakty</button>
     </div>
-    <h2>Můj tým</h2>
     <div class="quick-add-dog">
-      <h3>Přidat psa</h3>
-      <div class="row">
+      <h3 id="myDogsTitle">Moji psi</h3>
+      <div class="quick-add-form">
         <input id="newName" placeholder="Jméno psa">
-        <input id="newBreed" placeholder="Plemeno">
-        <button class="full" onclick="addDog()">Přidat psa</button>
+        <button id="addDogBtn" onclick="addDog()">Přidat psa</button>
       </div>
     </div>
-    <h3>Seznam psů</h3>
-    <div id="dogList" class="dog-list"></div>
+    <div id="dogList" class="dog-list compact-dog-list"></div>
     <div id="massActionBox"></div>
     <div id="cloudReadyNote" class="small" style="margin-top:10px"></div>
     <div class="sidebar-tools">
@@ -695,18 +1142,21 @@ body[data-theme="forest"] .eventline.race{border-left-color:#d6b56d;background:r
   </section>
 
   <section class="panel">
-    <div class="calendar-head">
+    <div id="nextEventCard"></div>
+    <details id="calendarFilterPanel" class="calendar-filter-panel">
+      <summary id="calendarFilterSummary">Vysvětlivky a filtry</summary>
+      <div class="calendar-quick-actions">
+        <button class="secondary" onclick="setAllCalendarFilters(true)">Zobrazit vše</button>
+        <button class="secondary" onclick="setAllCalendarFilters(false)">Skrýt vše</button>
+      </div>
+      <div id="calendarFilters" class="calendar-filters"></div>
+    </details>
+    <div class="calendar-head calendar-month-nav">
       <button class="secondary" onclick="changeMonth(-1)">‹</button>
       <h2 id="monthTitle"></h2>
       <button class="secondary" onclick="changeMonth(1)">›</button>
     </div>
-    <div id="nextEventCard"></div>
-    <div id="calendarFilters" class="calendar-filters"></div>
     <div class="calendar" id="calendar"></div>
-    <div class="legend">
-      <span>🟢 očkování</span><span>🟤 odčervení</span><span>🔴 záchvat/akutní</span>
-      <span>🔵 trénink</span><span>🟣 hárání/krytí</span><span>🩷 závod</span><span>🟢 léky</span>
-    </div>
     <h3>Události vybraného dne</h3>
     <div id="dayEvents" class="small">Klikni na den v kalendáři.</div>
   </section>
@@ -717,12 +1167,27 @@ const APP_CONFIG = {
   storageMode: "local", // později "firebase"
   authMode: "local",    // později "firebase"
   billingMode: "none",  // později "stripe" nebo "revenuecat"
-  platform: "web"
+  platform: "web",
+  schemaVersion: 3,
+  clientVersion: "2.3-cloud-ready",
+  firebase: {
+    projectId: "",
+    collections: {
+      users: "users",
+      kennels: "kennels",
+      kennelMembers: "kennelMembers",
+      dogs: "dogs",
+      teamLogs: "teamLogs",
+      contacts: "contacts",
+      imports: "imports",
+      backups: "backups"
+    }
+  }
 };
 
 const translations = {
   cs: {
-    dogs: "Můj tým", activeDogs: "Aktivní psi", archivedDogs: "Archiv", addDog: "Přidat psa", dogCard: "Karta psa",
+    dogs: "Můj tým", myDogs: "Moji psi", activeDogs: "Aktivní psi", archivedDogs: "Archiv", addDog: "Přidat psa", dogCard: "Karta psa",
     massAction: "Hromadná akce", addMassRecord: "Přidat hromadný záznam", createChiplist: "Vytvořit chiplist", chiplist: "Chiplist IFSS", selectedDogs: "Vybraní psi", selectAll: "Vybrat vše", clearSelection: "Zrušit výběr",
     noDogs: "Nejdřív přidej psa.", noRecords: "Zatím bez záznamů.", archiveDog: "Archivovat psa", restoreDog: "Vrátit mezi aktivní", removeDog: "Odstranit psa",
     archiveReason: "Důvod archivace", archiveDate: "Datum archivace", archiveNote: "Poznámka k archivu", save: "Uložit", close: "Zavřít", resetDefault: "Vrátit výchozí",
@@ -734,11 +1199,16 @@ const translations = {
     teamLog: "Deník smečky", teamLogHelp: "Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.", clearForm: "Vyčistit formulář", team: "Sestava", saveTeamLog: "Uložit záznam", latestTeamLogs: "Poslední záznamy smečky",
     phTeamKm: "Km", phTeamTime: "Čas na trati, např. 1:12", phTeamTitle: "Název / místo, např. ranní trénink, Šediváčkův long", phTeamNote: "Poznámka: teplota, trať, tempo, krmení, počasí...",
     phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se ukládají jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON",
-    legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky",
-    dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Musher", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest"
+    legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky", legendVet: "veterina", legendPhysio: "fyzio",
+    dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Musher", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
+    importantContacts: "Kontakty", importantContactsTitle: "Důležité kontakty", importantContactsHelp: "Rychlý seznam veterin, specialistů a pohotovostí pro jeden kennel.", editContacts: "Upravit kontakty", saveContacts: "Uložit kontakty", noContactFilled: "Zatím nevyplněno",
+    contactPrimaryVet: "1. hlavní veterina", contactSecondVet: "2. druhá veterina", contactSpecialist: "3. specialista", contactPhysio: "Fyzioterapie", contactEmergency1: "1. pohotovost", contactEmergency2: "2. pohotovost",
+    contactName: "Název", contactPhone1: "1. telefon", contactPhone2: "2. telefon", contactPhone: "Telefon", contactEmail: "E-mail", contactWeb: "Webovky", contactBooking: "Rezervační systém", contactAddress: "Adresa", callNow: "Volat", openWeb: "Web", openBooking: "Rezervace", writeEmail: "E-mail",
+    importTrack: "Import GPX / TCX / FIT z hodinek", chooseTrackFile: "Vybrat soubor", clearTrackImport: "Vyčistit import", importTrackHelp: "GPX a TCX se načtou přímo. FIT je připravený jako první most; u běžných FIT souborů se pokusí načíst souhrnná data.",
+    phTeamElevation: "Převýšení m", phTeamAvgSpeed: "Průměr km/h", phTeamSource: "Zdroj dat: ručně / GPX / TCX / FIT"
   },
   en: {
-    dogs: "My team", activeDogs: "Active dogs", archivedDogs: "Archive", addDog: "Add dog", dogCard: "Dog card",
+    dogs: "My team", myDogs: "My dogs", activeDogs: "Active dogs", archivedDogs: "Archive", addDog: "Add dog", dogCard: "Dog card",
     massAction: "Mass action", addMassRecord: "Add mass record", createChiplist: "Create chiplist", chiplist: "IFSS chiplist", selectedDogs: "Selected dogs", selectAll: "Select all", clearSelection: "Clear selection",
     noDogs: "Add a dog first.", noRecords: "No records yet.", archiveDog: "Archive dog", restoreDog: "Restore to active", removeDog: "Remove dog",
     archiveReason: "Archive reason", archiveDate: "Archive date", archiveNote: "Archive note", save: "Save", close: "Close", resetDefault: "Reset default",
@@ -750,8 +1220,13 @@ const translations = {
     teamLog: "Team log", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save team log", latestTeamLogs: "Latest team logs",
     phTeamKm: "Km", phTeamTime: "Time on trail, e.g. 1:12", phTeamTitle: "Title / place, e.g. morning training, long-distance race", phTeamNote: "Note: temperature, trail, pace, feeding, weather...",
     phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are saved as small thumbnails. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
-    legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication",
-    dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Musher", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest"
+    legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication", legendVet: "vet", legendPhysio: "physio",
+    dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Musher", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
+    importantContacts: "Contacts", importantContactsTitle: "Important contacts", importantContactsHelp: "Quick list of vets, specialists and emergency clinics for one kennel.", editContacts: "Edit contacts", saveContacts: "Save contacts", noContactFilled: "Not filled in yet",
+    contactPrimaryVet: "1st main vet", contactSecondVet: "2nd vet", contactSpecialist: "3rd specialist", contactPhysio: "Physiotherapy", contactEmergency1: "1st emergency", contactEmergency2: "2nd emergency",
+    contactName: "Name", contactPhone1: "1st phone", contactPhone2: "2nd phone", contactPhone: "Phone", contactEmail: "Email", contactWeb: "Website", contactBooking: "Booking system", contactAddress: "Address", callNow: "Call", openWeb: "Website", openBooking: "Booking", writeEmail: "Email",
+    importTrack: "Import GPX / TCX / FIT from watches", chooseTrackFile: "Choose file", clearTrackImport: "Clear import", importTrackHelp: "GPX and TCX are loaded directly. FIT is prepared as a first bridge; common FIT files are parsed for summary data when possible.",
+    phTeamElevation: "Elevation gain m", phTeamAvgSpeed: "Average km/h", phTeamSource: "Data source: manual / GPX / TCX / FIT"
   }
 };
 let currentLang = localStorage.getItem("kennelAuroraLang") || "cs";
@@ -760,26 +1235,112 @@ function trEvent(type){ return eventLabels[type] || type; }
 
 const eventLabelsCS = {
   vaccination:"Očkování", deworming:"Odčervení", seizure:"Epileptický záchvat", acute:"Akutní zdravotní událost",
-  meds:"Léky", race:"Závod", heat:"Hárání", breeding:"Krytí", training:"Trénink", note:"Poznámka", chiplist:"Chiplist IFSS"
+  meds:"Léky", vet:"Veterina", physio:"Fyzio", race:"Závod", heat:"Hárání", breeding:"Krytí", training:"Trénink", note:"Poznámka", chiplist:"Chiplist IFSS"
 };
 const eventLabelsEN = {
   vaccination:"Vaccination", deworming:"Deworming", seizure:"Seizure", acute:"Acute health event",
-  meds:"Medication", race:"Race", heat:"Heat", breeding:"Breeding", training:"Training", note:"Note", chiplist:"IFSS chiplist"
+  meds:"Medication", vet:"Vet", physio:"Physio", race:"Race", heat:"Heat", breeding:"Breeding", training:"Training", note:"Note", chiplist:"IFSS chiplist"
 };
 let eventLabels = currentLang === "en" ? eventLabelsEN : eventLabelsCS;
 
+
+const DATA_SCHEMA_VERSION = 3;
+function makeId(prefix){
+  const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36)+"-"+Math.random().toString(36).slice(2));
+  return prefix ? `${prefix}_${id}` : id;
+}
+function getLocalDeviceId(){
+  let id = localStorage.getItem("kennelDeviceId");
+  if(!id){
+    id = makeId("device");
+    localStorage.setItem("kennelDeviceId", id);
+  }
+  return id;
+}
+function createCloudMeta(){
+  const now = new Date().toISOString();
+  return {
+    syncStatus: "local",
+    kennelId: localStorage.getItem("kennelCloudKennelId") || makeId("kennel"),
+    ownerUid: null,
+    deviceId: getLocalDeviceId(),
+    createdAt: now,
+    updatedAt: now,
+    lastSyncedAt: null,
+    schemaVersion: DATA_SCHEMA_VERSION,
+    clientVersion: APP_CONFIG.clientVersion
+  };
+}
+function createDefaultKennel(){
+  const now = new Date().toISOString();
+  return {
+    id: localStorage.getItem("kennelCloudKennelId") || makeId("kennel"),
+    name: localStorage.getItem("kennelAuroraName") || "Kennel",
+    subtitle: localStorage.getItem("kennelAuroraSubtitle") || "",
+    logo: localStorage.getItem("kennelAuroraLogo") || "",
+    createdAt: now,
+    updatedAt: now
+  };
+}
+function ensureCloudShape(){
+  data.version = Math.max(Number(data.version || 0), 3);
+  data.schemaVersion = DATA_SCHEMA_VERSION;
+  if(!data.cloud || typeof data.cloud !== "object") data.cloud = createCloudMeta();
+  data.cloud.schemaVersion = DATA_SCHEMA_VERSION;
+  data.cloud.clientVersion = APP_CONFIG.clientVersion;
+  data.cloud.deviceId = data.cloud.deviceId || getLocalDeviceId();
+  data.cloud.kennelId = data.cloud.kennelId || localStorage.getItem("kennelCloudKennelId") || makeId("kennel");
+  localStorage.setItem("kennelCloudKennelId", data.cloud.kennelId);
+  if(!data.kennel || typeof data.kennel !== "object") data.kennel = createDefaultKennel();
+  data.kennel.id = data.kennel.id || data.cloud.kennelId;
+  data.kennel.name = data.kennel.name || localStorage.getItem("kennelAuroraName") || "Kennel";
+  data.kennel.subtitle = data.kennel.subtitle || localStorage.getItem("kennelAuroraSubtitle") || "";
+  data.kennel.updatedAt = data.kennel.updatedAt || data.cloud.updatedAt || new Date().toISOString();
+  if(!Array.isArray(data.members)) data.members = [];
+  if(!Array.isArray(data.imports)) data.imports = [];
+  if(!Array.isArray(data.syncQueue)) data.syncQueue = [];
+}
+function touchCloudMeta(){
+  if(!data || typeof data !== "object") return;
+  const now = new Date().toISOString();
+  if(!data.cloud || typeof data.cloud !== "object") data.cloud = createCloudMeta();
+  data.cloud.updatedAt = now;
+  data.cloud.syncStatus = APP_CONFIG.storageMode === "firebase" ? "cloud" : "local";
+  data.cloud.schemaVersion = DATA_SCHEMA_VERSION;
+  data.cloud.clientVersion = APP_CONFIG.clientVersion;
+  if(data.kennel){
+    data.kennel.updatedAt = now;
+  }
+}
+function buildFirebasePayload(){
+  migrateData();
+  return {
+    schemaVersion: DATA_SCHEMA_VERSION,
+    clientVersion: APP_CONFIG.clientVersion,
+    kennel: data.kennel,
+    settings: data.settings,
+    contacts: data.contacts,
+    members: data.members,
+    dogs: data.dogs,
+    teamLogs: data.teamLogs,
+    imports: data.imports,
+    updatedAt: data.cloud?.updatedAt || new Date().toISOString()
+  };
+}
+
 const STORAGE_KEY = "kennelAurora";
 function createDemoData(){
-  return { version:2, settings:{language:"cs", theme:"classic"}, dogs:[
+  return { version:3, schemaVersion:DATA_SCHEMA_VERSION, kennel:createDefaultKennel(), cloud:createCloudMeta(), members:[], syncQueue:[], settings:{language:"cs", theme:"classic"}, dogs:[
     {id: crypto.randomUUID(), name:"Baldr", breed:"sibiřský husky", birth:"", chip:"", weight:"", sex:"pes", color:"", photo:"", status:"active", events:[{id:crypto.randomUUID(), type:"seizure", date:new Date().toISOString().slice(0,10), title:"Epileptický záchvat", note:"Ukázkový záznam – uprav nebo smaž."}]},
     {id: crypto.randomUUID(), name:"Eisa", breed:"sibiřský husky", birth:"", chip:"", weight:"", sex:"fena", color:"", photo:"", status:"active", events:[]}
-  ], teamLogs:[] };
+  ], teamLogs:[], imports:[] };
 }
 function loadData(){
   if(APP_CONFIG.storageMode === "firebase") return loadDataFromCloud();
   return loadDataLocally();
 }
 function saveData(){
+  touchCloudMeta();
   if(APP_CONFIG.storageMode === "firebase") return saveDataToCloud();
   return saveDataLocally();
 }
@@ -803,6 +1364,7 @@ let selectedDate = null;
 let massSelection = new Set();
 let selectedTeamLogId = null;
 let teamChartMetric = localStorage.getItem("kennelTeamChartMetric") || "km";
+let importedTrackMeta = null;
 
 function migrateData(){
   if(!data || typeof data !== "object") data = createDemoData();
@@ -811,6 +1373,8 @@ function migrateData(){
   if(!data.settings) data.settings = {};
   data.settings.language = data.settings.language || localStorage.getItem("kennelAuroraLang") || "cs";
   data.settings.theme = data.settings.theme || localStorage.getItem("kennelAuroraTheme") || "classic";
+  ensureCloudShape();
+  data.contacts = normalizeImportantContacts(data.contacts);
   data.dogs.forEach(d => {
     if(!d.id) d.id = crypto.randomUUID();
     if(!Array.isArray(d.events)) d.events = [];
@@ -833,7 +1397,16 @@ function age(birth){
   return y>=0 ? (currentLang==="en" ? y+" years" : y+" let") : "";
 }
 function eventsAll(){ return data.dogs.flatMap(d => (d.events||[]).map(e => ({...e, dogName:d.name, dogId:d.id, dogStatus:d.status}))); }
-const CALENDAR_FILTER_TYPES=["training","race","vaccination","deworming","acute","seizure","heat","breeding","meds","note"];
+const CALENDAR_DOT_ORDER=["training","race","vet","physio","vaccination","deworming","meds","acute","seizure","heat","breeding","note","chiplist","weight"];
+const CALENDAR_FILTER_TYPES=["training","race","vet","physio","vaccination","deworming","meds","acute","seizure","heat","breeding","note"];
+const CALENDAR_HEART_TYPES=new Set(["vet","physio","vaccination","deworming","meds","heat","breeding"]);
+const CALENDAR_LIGHTNING_TYPES=new Set(["acute","seizure"]);
+function calendarMarker(type){
+  if(type==="race") return `<span class="calendar-marker medal cal-${type}" title="${escapeAttr(calendarFilterLabel(type))}">🏅</span>`;
+  if(CALENDAR_LIGHTNING_TYPES.has(type)) return `<span class="calendar-marker lightning cal-${type}" title="${escapeAttr(calendarFilterLabel(type))}">⚡</span>`;
+  if(CALENDAR_HEART_TYPES.has(type)) return `<span class="calendar-marker heart cal-${type}" title="${escapeAttr(calendarFilterLabel(type))}">♥</span>`;
+  return `<span class="calendar-marker circle cal-${type}" title="${escapeAttr(calendarFilterLabel(type))}"></span>`;
+}
 function ensureCalendarFilters(){
   data.settings=data.settings||{};
   if(!data.settings.calendarFilters || typeof data.settings.calendarFilters!=="object"){
@@ -843,7 +1416,7 @@ function ensureCalendarFilters(){
   CALENDAR_FILTER_TYPES.forEach(t=>{ if(data.settings.calendarFilters[t]===undefined) data.settings.calendarFilters[t]=true; });
 }
 function calendarFilterLabel(type){
-  const custom={acute:currentLang==='en'?'Acute':'Akutní',seizure:currentLang==='en'?'Seizure':'Záchvat',meds:currentLang==='en'?'Meds':'Léky'};
+  const custom={acute:currentLang==='en'?'Acute':'Akutní',seizure:currentLang==='en'?'Seizure':'Záchvat',meds:currentLang==='en'?'Meds':'Léky',vet:currentLang==='en'?'Vet':'Veterina',physio:currentLang==='en'?'Physio':'Fyzio'};
   return custom[type] || trEvent(type);
 }
 function isCalendarTypeVisible(type){ ensureCalendarFilters(); return data.settings.calendarFilters[type]!==false; }
@@ -852,7 +1425,19 @@ function setCalendarFilter(type, checked){ ensureCalendarFilters(); data.setting
 function renderCalendarFilters(){
   ensureCalendarFilters();
   const box=document.getElementById('calendarFilters'); if(!box) return;
-  box.innerHTML=CALENDAR_FILTER_TYPES.map(type=>`<label><input type="checkbox" ${isCalendarTypeVisible(type)?'checked':''} onchange="setCalendarFilter('${type}', this.checked)"><span class="dot ${type}"></span>${escapeHtml(calendarFilterLabel(type))}</label>`).join('');
+  const summary=document.getElementById('calendarFilterSummary');
+  if(summary) summary.textContent=currentLang==='en'?'Legend and filters':'Vysvětlivky a filtry';
+  const quick=document.querySelector('.calendar-quick-actions');
+  if(quick){
+    quick.querySelectorAll('button')[0].textContent=currentLang==='en'?'Show all':'Zobrazit vše';
+    quick.querySelectorAll('button')[1].textContent=currentLang==='en'?'Hide all':'Skrýt vše';
+  }
+  box.innerHTML=CALENDAR_FILTER_TYPES.map(type=>`<label><input type="checkbox" ${isCalendarTypeVisible(type)?'checked':''} onchange="setCalendarFilter('${type}', this.checked)">${calendarMarker(type)}<span>${escapeHtml(calendarFilterLabel(type))}</span></label>`).join('');
+}
+function setAllCalendarFilters(checked){
+  ensureCalendarFilters();
+  CALENDAR_FILTER_TYPES.forEach(type=>data.settings.calendarFilters[type]=checked);
+  saveData(); renderCalendar(); renderDayEvents(); renderNextEvent();
 }
 function groupCalendarEvents(events){
   const groups=new Map();
@@ -867,12 +1452,12 @@ function renderNextEvent(){
   const box=document.getElementById('nextEventCard'); if(!box) return;
   const today=new Date().toISOString().slice(0,10);
   const groups=groupCalendarEvents(filteredEventsAll().filter(e=>e.date>=today));
-  if(!groups.length){ box.innerHTML=`<div class="next-event-card"><b>🔔 ${currentLang==='en'?'Next event':'Nejbližší událost'}</b><br><span class="small">${currentLang==='en'?'No upcoming events.':'Žádná nadcházející událost.'}</span></div>`; return; }
+  if(!groups.length){ box.innerHTML=`<div class="next-event-card"><span class="next-event-soft-title">🔔 ${currentLang==='en'?'Next event':'Nejbližší událost'}</span><br><span class="small">${currentLang==='en'?'No upcoming events.':'Žádná nadcházející událost.'}</span></div>`; return; }
   const g=groups[0];
   const diffDays=Math.round((new Date(g.date+'T00:00:00')-new Date(today+'T00:00:00'))/86400000);
   const when=diffDays===0?(currentLang==='en'?'today':'dnes'):(diffDays===1?(currentLang==='en'?'tomorrow':'zítra'):(currentLang==='en'?`in ${diffDays} days`:`za ${diffDays} dní`));
   const names=[...new Set(g.items.map(i=>i.dogName).filter(Boolean))];
-  box.innerHTML=`<details class="next-event-card"><summary>🔔 ${currentLang==='en'?'Next event':'Nejbližší událost'}: ${escapeHtml(trEvent(g.type))} · ${escapeHtml(when)}</summary><div style="margin-top:7px"><b>${fmt(g.date)}</b><br>${escapeHtml(g.title||'')}<br><span class="small">${names.length} ${currentLang==='en'?'dogs':'psů'}${names.length?': '+names.map(escapeHtml).join(', '):''}</span></div></details>`;
+  box.innerHTML=`<details class="next-event-card"><summary>🔔 ${currentLang==='en'?'Next event':'Nejbližší událost'}: ${calendarMarker(g.type)} ${escapeHtml(trEvent(g.type))} · ${escapeHtml(when)}</summary><div style="margin-top:7px"><b>${fmt(g.date)}</b><br>${escapeHtml(g.title||'')}<br><span class="small">${names.length} ${currentLang==='en'?'dogs':'psů'}${names.length?': '+names.map(escapeHtml).join(', '):''}</span></div></details>`;
 }
 
 function latest(type){ const d=dog(); if(!d) return null; return [...(d.events||[])].filter(e=>e.type===type).sort((a,b)=>b.date.localeCompare(a.date))[0]; }
@@ -887,12 +1472,11 @@ function renderDogList(){
       <button class="secondary ${dogListMode==='active'?'mini-active':''}" onclick="dogListMode='active'; selectedDogId=activeDogs()[0]?.id||null; activeTab='overview'; render()">${t('activeDogs')} (${activeDogs().length})</button>
       <button class="secondary ${dogListMode==='archived'?'mini-active':''}" onclick="dogListMode='archived'; selectedDogId=visibleDogs()[0]?.id||null; activeTab='overview'; render()">${t('archivedDogs')} (${data.dogs.filter(d=>d.status==='archived').length})</button>
     </div>
-    ${dogs.length ? dogs.map(d=>`
-    <div class="dog-item ${d.id===selectedDogId?'active':''} ${d.status==='archived'?'archived-dog':''}" onclick="selectedDogId='${d.id}';activeTab='overview';render()">
-      ${d.status!=='archived' ? `<input class="mass-select-box" type="checkbox" title="${currentLang==='en'?'Select for mass action':'Vybrat pro hromadnou akci'}" ${massSelection.has(d.id)?'checked':''} onclick="event.stopPropagation()" onchange="toggleMassDog('${d.id}',this.checked)">` : ''}
-      <div class="thumb">${d.photo ? `<img src="${d.photo}">` : "🐺"}</div>
-      <div><b>${escapeHtml(d.name)}</b>${d.status==='archived'?' <span class="badge">ARCHIV</span>':''}<br><span class="small">${escapeHtml(d.breed || (currentLang==='en'?'no breed':'bez plemene'))} ${d.birth ? "• "+age(d.birth):""}</span></div>
-    </div>`).join("") : `<p class="small">${dogListMode==='archived' ? (currentLang==='en'?'Archive is empty.':'Archiv je prázdný.') : t('noDogs')}</p>`}`;
+    ${dogs.length ? `<div class="compact-dog-grid">${dogs.map(d=>`
+      <div class="compact-dog-item ${d.id===selectedDogId?'active':''} ${d.status==='archived'?'archived-dog':''}" onclick="selectedDogId='${d.id}';activeTab='overview';render()" title="${escapeAttr(d.name)}">
+        ${d.status!=='archived' ? `<input class="mass-select-box" type="checkbox" title="${currentLang==='en'?'Select for mass action':'Vybrat pro hromadnou akci'}" ${massSelection.has(d.id)?'checked':''} onclick="event.stopPropagation()" onchange="toggleMassDog('${d.id}',this.checked)">` : `<span class="mass-select-placeholder"></span>`}
+        <div class="compact-dog-name">${escapeHtml(d.name)}${d.status==='archived'?' <span class="badge">ARCHIV</span>':''}</div>
+      </div>`).join("")}</div>` : `<p class="small">${dogListMode==='archived' ? (currentLang==='en'?'Archive is empty.':'Archiv je prázdný.') : t('noDogs')}</p>`}`;
   renderMassActionPanel();
 }
 function renderMassActionPanel(){
@@ -909,7 +1493,7 @@ function renderMassActionPanel(){
     <div class="mass-selected-summary">${summary}</div>
     <div class="formgrid mass-form">
       <input id="massDate" type="date" value="${new Date().toISOString().slice(0,10)}">
-      <select id="massType" onchange="updateMassFormMode()">${["vaccination","deworming","meds","acute","note","chiplist"].map(k=>`<option value="${k}">${trEvent(k)}</option>`).join("")}</select>
+      <select id="massType" onchange="updateMassFormMode()">${["vaccination","deworming","vet","physio","meds","acute","note","chiplist"].map(k=>`<option value="${k}">${trEvent(k)}</option>`).join("")}</select>
       <input id="massTitle" class="full" placeholder="${currentLang==='en'?'Vaccine / product / title':'Vakcína / přípravek / název'}">
       <textarea id="massNote" class="full" placeholder="${currentLang==='en'?'Note, dose, batch, vet...':'Poznámka, dávka, šarže, veterinář...'}"></textarea>
       <button id="massSubmitBtn" class="full" onclick="addMassRecord()">${t('addMassRecord')}</button>
@@ -1078,11 +1662,14 @@ function exportChiplistXls(){
 }
 
 function addDog(){
-  const name=document.getElementById("newName").value.trim();
+  const nameEl=document.getElementById("newName");
+  const breedEl=document.getElementById("newBreed");
+  const name=(nameEl?.value||"").trim();
+  const breed=(breedEl?.value||"").trim();
   if(!name) return alert(t('needName'));
-  data.dogs.push({id:crypto.randomUUID(), name, breed:document.getElementById("newBreed").value.trim(), birth:"", chip:"", weight:"", sex:"", color:"", photo:"", status:"active", events:[]});
+  data.dogs.push({id:crypto.randomUUID(), name, breed, birth:"", chip:"", weight:"", sex:"", color:"", photo:"", status:"active", events:[]});
   selectedDogId=data.dogs[data.dogs.length-1].id; dogListMode="active";
-  document.getElementById("newName").value=""; document.getElementById("newBreed").value="";
+  if(nameEl) nameEl.value=""; if(breedEl) breedEl.value="";
   save();
 }
 function renderCard(){
@@ -1209,7 +1796,7 @@ function renderCalendar(){
   document.getElementById("monthTitle").textContent=shown.toLocaleDateString(currentLang==="en"?"en-GB":"cs-CZ",{month:"long",year:"numeric"});
   const first=new Date(y,m,1), start=(first.getDay()+6)%7, days=new Date(y,m+1,0).getDate(); const names=currentLang==="en"?["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]:["Po","Út","St","Čt","Pá","So","Ne"];
   let html=names.map(n=>`<div class="dayname">${n}</div>`).join(""); for(let i=0;i<start;i++) html+=`<div></div>`; const all=filteredEventsAll(); const today=new Date().toISOString().slice(0,10);
-  for(let day=1;day<=days;day++){ const iso=`${y}-${String(m+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`; const ev=all.filter(e=>e.date===iso); const types=[...new Set(ev.map(e=>e.type))].slice(0,8); const groups=groupCalendarEvents(ev); html+=`<div class="day ${iso===today?'today':''}" onclick="selectedDate='${iso}';renderDayEvents()"><div class="num">${day}</div><div class="dots">${types.map(type=>`<span class="dot ${type}"></span>`).join("")}</div><div class="small">${groups.length?groups.length+(currentLang==='en'?" items":" záz."):""}</div></div>`; }
+  for(let day=1;day<=days;day++){ const iso=`${y}-${String(m+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`; const ev=all.filter(e=>e.date===iso); const typeSet=new Set(ev.map(e=>e.type)); const types=CALENDAR_DOT_ORDER.filter(type=>typeSet.has(type)).slice(0,8); const groups=groupCalendarEvents(ev); html+=`<div class="day ${iso===today?'today':''}" onclick="selectedDate='${iso}';renderDayEvents()"><div class="num">${day}</div><div class="dots">${types.map(type=>calendarMarker(type)).join("")}</div><div class="small">${groups.length?groups.length+(currentLang==='en'?" items":" záz."):""}</div></div>`; }
   cal.innerHTML=html;
 }
 function changeMonth(delta){ shown.setMonth(shown.getMonth()+delta); renderCalendar(); }
@@ -1222,7 +1809,7 @@ function renderDayEvents(){
   box.innerHTML=`<b>${fmt(selectedDate)}</b><br><br>`+groups.map(g=>{
     const names=[...new Set(g.items.map(i=>i.dogName).filter(Boolean))];
     const notes=[...new Set(g.items.map(i=>i.note).filter(Boolean))];
-    return `<details class="eventline ${g.type}" open><summary><b>${trEvent(g.type)}</b> – ${escapeHtml(g.title||"")} <span class="small">(${names.length} ${currentLang==='en'?'dogs':'psů'})</span></summary><div style="margin-top:6px"><span class="small">${names.map(escapeHtml).join(', ')}</span>${notes.length?`<br><span class="small">${notes.map(escapeHtml).join(' · ')}</span>`:''}</div></details>`;
+    return `<details class="eventline ${g.type}" open><summary>${calendarMarker(g.type)} <b>${trEvent(g.type)}</b> – ${escapeHtml(g.title||"")} <span class="small">(${names.length} ${currentLang==='en'?'dogs':'psů'})</span></summary><div style="margin-top:6px"><span class="small">${names.map(escapeHtml).join(', ')}</span>${notes.length?`<br><span class="small">${notes.map(escapeHtml).join(' · ')}</span>`:''}</div></details>`;
   }).join("");
 }
 function exportData(){ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="kennel-book-zaloha.json"; a.click(); }
@@ -1285,13 +1872,290 @@ function formatTeamRoles(roles){
   if(grouped.W.length) parts.push(`W: ${grouped.W.join(', ')}`);
   return parts.join(' • ');
 }
-function clearTeamForm(){ ["teamDate","teamKm","teamTime","teamTitle","teamNote"].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=""; }); const type=document.getElementById("teamType"); if(type) type.value="training"; const date=document.getElementById("teamDate"); if(date) date.value=new Date().toISOString().slice(0,10); document.querySelectorAll(".teamDogCheck").forEach(ch=>ch.checked=false); document.querySelectorAll(".teamRoleSelect").forEach(sel=>{sel.value=""; sel.dataset.role="";}); renderTeamMusherSelect(); }
+
+function setTrackImportStatus(message, state){
+  const box=document.getElementById("trackImportStatus");
+  if(!box) return;
+  box.textContent=message;
+  box.classList.remove("ok","warn","err");
+  if(state) box.classList.add(state);
+}
+function clearImportedTrack(){
+  importedTrackMeta=null;
+  ["teamElevation","teamAvgSpeed","teamSource"].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=""; });
+  const file=document.getElementById("trackImportFile"); if(file) file.value="";
+  setTrackImportStatus(t('importTrackHelp'), "");
+}
+function xmlElements(root, localName){
+  return Array.from(root.getElementsByTagName("*")).filter(el => (el.localName || el.nodeName.split(":").pop()) === localName);
+}
+function xmlText(parent, localName){
+  const el=xmlElements(parent, localName)[0];
+  return el ? (el.textContent || "").trim() : "";
+}
+function haversineMeters(a,b){
+  if(!a || !b || !Number.isFinite(a.lat) || !Number.isFinite(a.lon) || !Number.isFinite(b.lat) || !Number.isFinite(b.lon)) return 0;
+  const R=6371000, toRad=x=>x*Math.PI/180;
+  const dLat=toRad(b.lat-a.lat), dLon=toRad(b.lon-a.lon);
+  const lat1=toRad(a.lat), lat2=toRad(b.lat);
+  const h=Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.min(1,Math.sqrt(h)));
+}
+function summarizeTrackPoints(points, fallbackDistanceM){
+  const clean=points.filter(p=>Number.isFinite(p.lat) && Number.isFinite(p.lon) || p.time || Number.isFinite(p.ele) || Number.isFinite(p.distanceM));
+  if(!clean.length) throw new Error(currentLang==='en'?'No track points found.':'V souboru nejsou čitelné body trasy.');
+  let distanceM=Number.isFinite(fallbackDistanceM) && fallbackDistanceM>0 ? fallbackDistanceM : 0;
+  if(!distanceM){
+    for(let i=1;i<clean.length;i++) distanceM += haversineMeters(clean[i-1], clean[i]);
+  }
+  const distances=clean.map(p=>p.distanceM).filter(Number.isFinite);
+  if(distances.length) distanceM=Math.max(distanceM, Math.max(...distances));
+  const times=clean.map(p=>p.time).filter(Boolean).map(x=>new Date(x)).filter(d=>!Number.isNaN(d.getTime()));
+  const start=times[0] || null, end=times[times.length-1] || null;
+  const durationSeconds=start&&end ? Math.max(0,(end-start)/1000) : 0;
+  let ascentM=0;
+  const elevs=clean.map(p=>p.ele).filter(Number.isFinite);
+  for(let i=1;i<elevs.length;i++){
+    const diff=elevs[i]-elevs[i-1];
+    if(diff>0.5) ascentM += diff;
+  }
+  const avgSpeedKmh=durationSeconds>0 && distanceM>0 ? (distanceM/1000)/(durationSeconds/3600) : NaN;
+  return {distanceKm:distanceM/1000,durationSeconds,ascentM,avgSpeedKmh,startDate:start?start.toISOString().slice(0,10):new Date().toISOString().slice(0,10)};
+}
+function parseGpxTrack(textContent){
+  const xml=new DOMParser().parseFromString(textContent,"application/xml");
+  if(xml.querySelector("parsererror")) throw new Error(currentLang==='en'?'The GPX file could not be parsed.':'GPX soubor se nepodařilo přečíst.');
+  const pts=xmlElements(xml,"trkpt").map(pt=>({
+    lat:parseFloat(pt.getAttribute("lat")),
+    lon:parseFloat(pt.getAttribute("lon")),
+    ele:parseFloat(xmlText(pt,"ele")),
+    time:xmlText(pt,"time")
+  }));
+  const summary=summarizeTrackPoints(pts);
+  summary.source="GPX";
+  summary.name=xmlText(xml,"name") || "GPX";
+  return summary;
+}
+function parseTcxTrack(textContent){
+  const xml=new DOMParser().parseFromString(textContent,"application/xml");
+  if(xml.querySelector("parsererror")) throw new Error(currentLang==='en'?'The TCX file could not be parsed.':'TCX soubor se nepodařilo přečíst.');
+  const pts=xmlElements(xml,"Trackpoint").map(tp=>{
+    const pos=xmlElements(tp,"Position")[0];
+    return {
+      lat:pos ? parseFloat(xmlText(pos,"LatitudeDegrees")) : NaN,
+      lon:pos ? parseFloat(xmlText(pos,"LongitudeDegrees")) : NaN,
+      ele:parseFloat(xmlText(tp,"AltitudeMeters")),
+      time:xmlText(tp,"Time"),
+      distanceM:parseFloat(xmlText(tp,"DistanceMeters"))
+    };
+  });
+  const summary=summarizeTrackPoints(pts);
+  const totalTime=xmlElements(xml,"TotalTimeSeconds").map(e=>parseFloat(e.textContent)).filter(Number.isFinite).pop();
+  const totalDistance=xmlElements(xml,"DistanceMeters").map(e=>parseFloat(e.textContent)).filter(Number.isFinite).pop();
+  const totalAscent=xmlElements(xml,"TotalAscentMeters").map(e=>parseFloat(e.textContent)).filter(Number.isFinite).pop();
+  if(Number.isFinite(totalDistance) && totalDistance>0) summary.distanceKm=totalDistance/1000;
+  if(Number.isFinite(totalTime) && totalTime>0) summary.durationSeconds=totalTime;
+  if(Number.isFinite(totalAscent)) summary.ascentM=totalAscent;
+  summary.avgSpeedKmh=summary.durationSeconds>0 && summary.distanceKm>0 ? summary.distanceKm/(summary.durationSeconds/3600) : summary.avgSpeedKmh;
+  summary.source="TCX";
+  summary.name=xmlText(xml,"Name") || "TCX";
+  return summary;
+}
+function readFitValue(view, offset, size, baseType, little){
+  const base=baseType & 0x1F;
+  const readOne=(off)=>{
+    try{
+      if(base===0 || base===2 || base===10 || base===13) return view.getUint8(off);
+      if(base===1) return view.getInt8(off);
+      if(base===3) return view.getInt16(off,little);
+      if(base===4 || base===11) return view.getUint16(off,little);
+      if(base===5) return view.getInt32(off,little);
+      if(base===6 || base===12) return view.getUint32(off,little);
+      if(base===8) return view.getFloat32(off,little);
+      if(base===9) return view.getFloat64(off,little);
+      return NaN;
+    }catch(e){ return NaN; }
+  };
+  if(base===7){
+    let out="";
+    for(let i=0;i<size;i++){
+      const c=view.getUint8(offset+i);
+      if(!c) break;
+      out += String.fromCharCode(c);
+    }
+    return out.trim();
+  }
+  const scalarSize={0:1,1:1,2:1,3:2,4:2,5:4,6:4,8:4,9:8,10:1,11:2,12:4,13:1}[base] || size;
+  return readOne(offset + Math.max(0, size - scalarSize));
+}
+function fitDate(raw){
+  if(!Number.isFinite(raw) || raw<=0) return null;
+  return new Date((raw + 631065600) * 1000);
+}
+function parseFitTrack(buffer){
+  const view=new DataView(buffer);
+  if(view.byteLength<14) throw new Error(currentLang==='en'?'FIT file is too short.':'FIT soubor je příliš krátký.');
+  const headerSize=view.getUint8(0);
+  const dataSize=view.getUint32(4,true);
+  const signature=String.fromCharCode(view.getUint8(8),view.getUint8(9),view.getUint8(10),view.getUint8(11));
+  if(signature!==".FIT") throw new Error(currentLang==='en'?'This does not look like a FIT file.':'Soubor nevypadá jako FIT.');
+  const end=Math.min(view.byteLength-2, headerSize+dataSize);
+  let off=headerSize;
+  const defs={};
+  const records=[], sessions=[];
+  while(off<end){
+    const header=view.getUint8(off++);
+    const compressed=!!(header & 0x80);
+    let local=compressed ? ((header>>5)&0x03) : (header & 0x0F);
+    const isDef=!compressed && !!(header & 0x40);
+    if(isDef){
+      const devFields=!!(header & 0x20);
+      off++; // reserved
+      const arch=view.getUint8(off++); const little=arch===0;
+      const global=view.getUint16(off,little); off+=2;
+      const count=view.getUint8(off++);
+      const fields=[];
+      for(let i=0;i<count;i++){
+        const num=view.getUint8(off++), size=view.getUint8(off++), base=view.getUint8(off++);
+        fields.push({num,size,base});
+      }
+      if(devFields){
+        const devCount=view.getUint8(off++);
+        off += devCount*3;
+      }
+      defs[local]={global,little,fields};
+      continue;
+    }
+    const def=defs[local];
+    if(!def) break;
+    const values={};
+    for(const f of def.fields){
+      values[f.num]=readFitValue(view, off, f.size, f.base, def.little);
+      off += f.size;
+    }
+    if(def.global===20){ // record
+      const ts=fitDate(values[253]);
+      const rec={
+        time:ts ? ts.toISOString() : "",
+        lat:Number.isFinite(values[0]) ? values[0] * (180/2147483648) : NaN,
+        lon:Number.isFinite(values[1]) ? values[1] * (180/2147483648) : NaN,
+        ele:Number.isFinite(values[78]) ? values[78]/5-500 : (Number.isFinite(values[2]) ? values[2]/5-500 : NaN),
+        distanceM:Number.isFinite(values[5]) ? values[5]/100 : NaN,
+        speedMps:Number.isFinite(values[73]) ? values[73]/1000 : (Number.isFinite(values[6]) ? values[6]/1000 : NaN)
+      };
+      records.push(rec);
+    }else if(def.global===18 || def.global===19){ // session or lap summary
+      const ts=fitDate(values[2] || values[253]);
+      sessions.push({
+        start:ts ? ts.toISOString() : "",
+        totalTimerTime:Number.isFinite(values[8]) ? values[8]/1000 : (Number.isFinite(values[7]) ? values[7]/1000 : NaN),
+        totalDistance:Number.isFinite(values[9]) ? values[9]/100 : NaN,
+        avgSpeed:Number.isFinite(values[14]) ? values[14]/1000 : NaN,
+        totalAscent:Number.isFinite(values[21]) ? values[21] : NaN
+      });
+    }
+  }
+  if(!records.length && !sessions.length) throw new Error(currentLang==='en'?'No readable FIT training summary was found.':'Ve FIT souboru se nepodařilo najít čitelný souhrn tréninku.');
+  const session=sessions.find(s=>Number.isFinite(s.totalDistance) || Number.isFinite(s.totalTimerTime)) || sessions[0] || {};
+  const summary=records.length ? summarizeTrackPoints(records, session.totalDistance) : {
+    distanceKm:Number.isFinite(session.totalDistance) ? session.totalDistance/1000 : 0,
+    durationSeconds:Number.isFinite(session.totalTimerTime) ? session.totalTimerTime : 0,
+    ascentM:Number.isFinite(session.totalAscent) ? session.totalAscent : NaN,
+    avgSpeedKmh:Number.isFinite(session.avgSpeed) ? session.avgSpeed*3.6 : NaN,
+    startDate:session.start ? session.start.slice(0,10) : new Date().toISOString().slice(0,10)
+  };
+  if(Number.isFinite(session.totalDistance) && session.totalDistance>0) summary.distanceKm=session.totalDistance/1000;
+  if(Number.isFinite(session.totalTimerTime) && session.totalTimerTime>0) summary.durationSeconds=session.totalTimerTime;
+  if(Number.isFinite(session.totalAscent)) summary.ascentM=session.totalAscent;
+  if(Number.isFinite(session.avgSpeed)) summary.avgSpeedKmh=session.avgSpeed*3.6;
+  if(session.start) summary.startDate=session.start.slice(0,10);
+  summary.source="FIT";
+  summary.name="FIT";
+  return summary;
+}
+function formatSecondsAsTeamTime(seconds){
+  seconds=Math.max(0,Math.round(seconds || 0));
+  const h=Math.floor(seconds/3600);
+  const m=Math.floor((seconds%3600)/60);
+  const s=seconds%60;
+  return `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+function applyImportedTrack(summary, fileName){
+  const km=Number.isFinite(summary.distanceKm) ? summary.distanceKm : 0;
+  const duration=Number.isFinite(summary.durationSeconds) ? summary.durationSeconds : 0;
+  const ascent=Number.isFinite(summary.ascentM) ? summary.ascentM : NaN;
+  const avg=Number.isFinite(summary.avgSpeedKmh) ? summary.avgSpeedKmh : (duration>0 ? km/(duration/3600) : NaN);
+  const date=document.getElementById("teamDate"); if(date) date.value=summary.startDate || new Date().toISOString().slice(0,10);
+  const type=document.getElementById("teamType"); if(type) type.value="training";
+  const kmEl=document.getElementById("teamKm"); if(kmEl && km) kmEl.value=km.toFixed(1);
+  const timeEl=document.getElementById("teamTime"); if(timeEl && duration) timeEl.value=formatSecondsAsTeamTime(duration);
+  const elevEl=document.getElementById("teamElevation"); if(elevEl && Number.isFinite(ascent)) elevEl.value=Math.round(ascent);
+  const avgEl=document.getElementById("teamAvgSpeed"); if(avgEl && Number.isFinite(avg)) avgEl.value=avg.toFixed(1);
+  const sourceEl=document.getElementById("teamSource"); if(sourceEl) sourceEl.value=summary.source || "";
+  const titleEl=document.getElementById("teamTitle");
+  if(titleEl && !titleEl.value) titleEl.value=(summary.name && summary.name!=="GPX" && summary.name!=="TCX" && summary.name!=="FIT") ? summary.name : (fileName || `${summary.source} import`);
+  importedTrackMeta={
+    id:makeId("import"),
+    source:summary.source,
+    fileName:fileName || "",
+    importedAt:new Date().toISOString(),
+    distanceKm:km ? Number(km.toFixed(3)) : null,
+    durationSeconds:duration || null,
+    elevationGainM:Number.isFinite(ascent) ? Math.round(ascent) : null,
+    avgSpeedKmh:Number.isFinite(avg) ? Number(avg.toFixed(2)) : null
+  };
+  setTrackImportStatus(`${summary.source}: ${km?km.toFixed(1)+" km":"km —"}${duration?" · "+formatSecondsAsTeamTime(duration):""}${Number.isFinite(ascent)?" · ↗ "+Math.round(ascent)+" m":""}${Number.isFinite(avg)?" · Ø "+avg.toFixed(1)+" km/h":""}`, "ok");
+}
+function importTrainingTrack(ev){
+  const file=ev.target.files && ev.target.files[0];
+  if(!file) return;
+  const ext=(file.name.split(".").pop() || "").toLowerCase();
+  setTrackImportStatus(currentLang==='en'?'Reading file…':'Načítám soubor…', "");
+  const reader=new FileReader();
+  reader.onerror=()=>setTrackImportStatus(currentLang==='en'?'The file could not be read.':'Soubor se nepodařilo načíst.',"err");
+  if(ext==="fit"){
+    reader.onload=()=>{
+      try{ applyImportedTrack(parseFitTrack(reader.result), file.name); }
+      catch(e){ setTrackImportStatus(`${currentLang==='en'?'FIT import failed':'FIT import se nepodařil'}: ${e.message}. ${currentLang==='en'?'Try exporting GPX/TCX from Garmin, Strava or QPaws.':'Zkus export GPX/TCX z Garminu, Stravy nebo QPaws.'}`,"warn"); }
+    };
+    reader.readAsArrayBuffer(file);
+    return;
+  }
+  reader.onload=()=>{
+    try{
+      const content=reader.result;
+      const summary=ext==="tcx" ? parseTcxTrack(content) : parseGpxTrack(content);
+      applyImportedTrack(summary,file.name);
+    }catch(e){
+      setTrackImportStatus(`${currentLang==='en'?'Import failed':'Import se nepodařil'}: ${e.message}`,"err");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function clearTeamForm(){
+  ["teamDate","teamKm","teamTime","teamElevation","teamAvgSpeed","teamSource","teamTitle","teamNote"].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=""; });
+  importedTrackMeta=null;
+  const type=document.getElementById("teamType"); if(type) type.value="training";
+  const date=document.getElementById("teamDate"); if(date) date.value=new Date().toISOString().slice(0,10);
+  const file=document.getElementById("trackImportFile"); if(file) file.value="";
+  setTrackImportStatus(t('importTrackHelp'), "");
+  document.querySelectorAll(".teamDogCheck").forEach(ch=>ch.checked=false);
+  document.querySelectorAll(".teamRoleSelect").forEach(sel=>{sel.value=""; sel.dataset.role="";});
+  renderTeamMusherSelect();
+}
 function saveTeamLog(){
   ensureTeamLogData();
   const date=document.getElementById("teamDate")?.value;
   const type=document.getElementById("teamType")?.value||"training";
-  const km=document.getElementById("teamKm")?.value;
+  const kmRaw=document.getElementById("teamKm")?.value;
+  const kmNum=parseFloat(kmRaw);
   const time=document.getElementById("teamTime")?.value.trim();
+  const elevationRaw=document.getElementById("teamElevation")?.value;
+  const elevationNum=parseFloat(elevationRaw);
+  const avgSpeedRaw=document.getElementById("teamAvgSpeed")?.value;
+  const avgSpeedNum=parseFloat(avgSpeedRaw);
+  const source=document.getElementById("teamSource")?.value.trim() || (importedTrackMeta?.source || "manual");
   const title=document.getElementById("teamTitle")?.value.trim()||(type==="race"?trEvent("race"):trEvent("training"));
   const note=document.getElementById("teamNote")?.value.trim();
   const dogIds=getSelectedTeamDogIds();
@@ -1300,13 +2164,40 @@ function saveTeamLog(){
   const roles=collectTeamRoles();
   if(!date) return alert(t('needDate'));
   if(!dogIds.length) return alert(currentLang==='en'?'Select dogs in the team.':'Vyber psy v sestavě.');
-  if(!km) return alert(currentLang==='en'?'Enter kilometers.':'Zadej kilometry.');
+  if(!Number.isFinite(kmNum) || kmNum<=0) return alert(currentLang==='en'?'Enter kilometers.':'Zadej kilometry.');
   localStorage.setItem('kennelLastTeamMusherIndex', musherIndex);
   const dogNames=dogIds.map(id=>data.dogs.find(d=>d.id===id)?.name).filter(Boolean);
-  const log={id:crypto.randomUUID(),date,type,km:parseFloat(km).toFixed(1),time,title,note,dogIds,dogNames,musherIndex,musherName,roles};
+  const minutes=parseTeamTimeToMinutes(time);
+  const computedAvg=Number.isFinite(avgSpeedNum) ? avgSpeedNum : (Number.isFinite(minutes) && minutes>0 ? kmNum/(minutes/60) : NaN);
+  const elevation=Number.isFinite(elevationNum) ? String(Math.round(elevationNum)) : "";
+  const avgSpeed=Number.isFinite(computedAvg) ? computedAvg.toFixed(1) : "";
+  const importMeta=importedTrackMeta ? {...importedTrackMeta} : null;
+  const log={id:crypto.randomUUID(),date,type,km:kmNum.toFixed(1),time,elevation,avgSpeed,source,title,note,dogIds,dogNames,musherIndex,musherName,roles,importMeta};
   data.teamLogs.push(log);
+  if(importMeta){
+    if(!Array.isArray(data.imports)) data.imports=[];
+    data.imports.push({id:importMeta.id,teamLogId:log.id,type:"trainingTrack",...importMeta});
+  }
   const roleText=formatTeamRoles(roles);
-  dogIds.forEach(id=>{ const d=data.dogs.find(x=>x.id===id); if(!d) return; d.events.push({id:crypto.randomUUID(), type:type==="race"?"race":"training", date, title:`${title} – ${log.km} km${time?", "+time:""}`, note:`${type==="race"?trEvent("race"):trEvent("training")} ${currentLang==='en'?'team':'v sestavě'}: ${dogNames.join(", ")}.${musherName?` ${currentLang==='en'?'Musher':'Musher'}: ${musherName}.`:''}${roleText?` ${currentLang==='en'?'Roles':'Role'}: ${roleText}.`:''}${note?" "+note:""}`, teamLogId:log.id, km:log.km, time, musherName, roles}); });
+  const extraBits=[elevation?`↗ ${elevation} m`:"",avgSpeed?`Ø ${avgSpeed} km/h`:"",source&&source!=="manual"?`Zdroj: ${source}`:""].filter(Boolean).join(" · ");
+  dogIds.forEach(id=>{
+    const d=data.dogs.find(x=>x.id===id); if(!d) return;
+    d.events.push({
+      id:crypto.randomUUID(),
+      type:type==="race"?"race":"training",
+      date,
+      title:`${title} – ${log.km} km${time?", "+time:""}${elevation?", ↗ "+elevation+" m":""}`,
+      note:`${type==="race"?trEvent("race"):trEvent("training")} ${currentLang==='en'?'team':'v sestavě'}: ${dogNames.join(", ")}.${musherName?` ${currentLang==='en'?'Musher':'Musher'}: ${musherName}.`:''}${roleText?` ${currentLang==='en'?'Roles':'Role'}: ${roleText}.`:''}${extraBits?` ${extraBits}.`:''}${note?" "+note:""}`,
+      teamLogId:log.id,
+      km:log.km,
+      time,
+      elevation,
+      avgSpeed,
+      source,
+      musherName,
+      roles
+    });
+  });
   save(); clearTeamForm();
 }
 function parseTeamTimeToMinutes(time){
@@ -1322,7 +2213,11 @@ function getTeamMetricValue(log, metric){
   const km=parseFloat(log.km);
   const minutes=parseTeamTimeToMinutes(log.time);
   if(metric==='time') return Number.isFinite(minutes) ? minutes : NaN;
-  if(metric==='speed') return Number.isFinite(km) && Number.isFinite(minutes) && minutes>0 ? km/(minutes/60) : NaN;
+  if(metric==='speed'){
+    const stored=parseFloat(log.avgSpeed);
+    if(Number.isFinite(stored)) return stored;
+    return Number.isFinite(km) && Number.isFinite(minutes) && minutes>0 ? km/(minutes/60) : NaN;
+  }
   return Number.isFinite(km) ? km : NaN;
 }
 function formatTeamMetricValue(value, metric){
@@ -1358,7 +2253,10 @@ function renderTeamMiniChart(logs){
 }
 function renderTeamLogEntry(l){
   const roleText=formatTeamRoles(l.roles||[]);
-  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
+  const elevation=l.elevation?` • ↗ ${escapeHtml(l.elevation)} m`:"";
+  const avg=l.avgSpeed?` • Ø ${escapeHtml(l.avgSpeed)} km/h`:"";
+  const source=l.source&&l.source!=="manual"?` • ${escapeHtml(l.source)}`:"";
+  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${elevation}${avg}${source}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
 }
 function renderTeamLogList(){
   ensureTeamLogData();
@@ -1382,6 +2280,19 @@ function setLabelTextFor(controlId, text){
   const el=document.getElementById(controlId); const label=el?.closest('label');
   if(label && label.firstChild && label.firstChild.nodeType===Node.TEXT_NODE) label.firstChild.nodeValue=text;
 }
+
+function ensureImportantContactsButton(){
+  const mushersBtn=document.getElementById('openMushersBtn');
+  if(!mushersBtn || document.getElementById('openContactsBtn')) return;
+  const btn=document.createElement('button');
+  btn.className='secondary contacts-shortcut-btn';
+  btn.type='button';
+  btn.id='openContactsBtn';
+  btn.onclick=openImportantContactsModal;
+  btn.textContent='☎️ '+t('importantContacts');
+  mushersBtn.insertAdjacentElement('afterend', btn);
+}
+
 function applyLanguageToStatic(){
   document.documentElement.lang=currentLang;
   document.title=currentLang==="en"?"Kennel v2 – Team Log":"Kennel v2 – Deník smečky";
@@ -1415,29 +2326,36 @@ function applyLanguageToStatic(){
     const km=document.getElementById('teamKm'); if(km) km.placeholder=t('phTeamKm');
     const musher=document.getElementById('teamMusher'); if(musher) renderTeamMusherSelect();
     const time=document.getElementById('teamTime'); if(time) time.placeholder=t('phTeamTime');
+    const elev=document.getElementById('teamElevation'); if(elev) elev.placeholder=t('phTeamElevation');
+    const avg=document.getElementById('teamAvgSpeed'); if(avg) avg.placeholder=t('phTeamAvgSpeed');
+    const source=document.getElementById('teamSource'); if(source) source.placeholder=t('phTeamSource');
     const title=document.getElementById('teamTitle'); if(title) title.placeholder=t('phTeamTitle');
     const note=document.getElementById('teamNote'); if(note) note.placeholder=t('phTeamNote');
-    const h3s=teamPanel.querySelectorAll('h3'); if(h3s[0]) h3s[0].textContent=t('team'); if(h3s[1]) h3s[1].textContent=t('sledPositions'); if(h3s[2]) h3s[2].textContent=t('latestTeamLogs');
-    const spHelp=document.getElementById('sledPositionsHelp'); if(spHelp) spHelp.textContent=t('sledPositionsHelp');
-    const buildPos=document.getElementById('buildSledPositionsBtn'); if(buildPos) buildPos.textContent=t('buildSledPositions');
-    const clearPos=document.getElementById('clearSledPositionsBtn'); if(clearPos) clearPos.textContent=t('clearSledPositions');
+    const importSummary=document.getElementById('trackImportSummary'); if(importSummary) importSummary.textContent='⌚ '+t('importTrack');
+    const importLabel=document.getElementById('trackImportLabel'); if(importLabel && importLabel.firstChild) importLabel.firstChild.nodeValue=t('chooseTrackFile')+' ';
+    const importClear=document.getElementById('clearTrackImportBtn'); if(importClear) importClear.textContent=t('clearTrackImport');
+    const importStatus=document.getElementById('trackImportStatus'); if(importStatus && !importedTrackMeta && !importStatus.classList.contains('ok') && !importStatus.classList.contains('warn') && !importStatus.classList.contains('err')) importStatus.textContent=t('importTrackHelp');
+    const h3s=teamPanel.querySelectorAll('h3'); if(h3s[0]) h3s[0].textContent=t('team'); if(h3s[1]) h3s[1].textContent=t('latestTeamLogs');
     const saveBtn=teamPanel.querySelector('.actions button'); if(saveBtn) saveBtn.textContent=t('saveTeamLog');
   }
 
-  const h2=[...document.querySelectorAll("aside.panel h2")][0]; if(h2) h2.textContent=t('dogs');
-  const openMushersBtn=document.getElementById('openMushersBtn'); if(openMushersBtn) openMushersBtn.textContent=t('musherProfiles');
-  const addH3=[...document.querySelectorAll("aside.panel h3")][0]; if(addH3) addH3.textContent=t('addDog');
+  ensureImportantContactsButton();
+  const h2=document.getElementById('dogSidebarTitle') || [...document.querySelectorAll("aside.panel h2")][0]; if(h2) h2.textContent=t('dogs');
+  const openMushersBtn=document.getElementById('openMushersBtn'); if(openMushersBtn) openMushersBtn.textContent='👥 '+t('musherProfiles');
+  const openContactsBtn=document.getElementById('openContactsBtn'); if(openContactsBtn) openContactsBtn.textContent='☎️ '+t('importantContacts');
+  renderImportantContactsModal();
+  const myDogsTitle=document.getElementById('myDogsTitle'); if(myDogsTitle) myDogsTitle.textContent=t('myDogs');
   const newName=document.getElementById('newName'); if(newName) newName.placeholder=t('phDogName');
   const newBreed=document.getElementById('newBreed'); if(newBreed) newBreed.placeholder=t('phBreed');
-  const addDogBtn=document.querySelector('aside.panel .row button'); if(addDogBtn) addDogBtn.textContent=t('addDog');
+  const addDogBtn=document.getElementById('addDogBtn') || document.querySelector('aside.panel .row button'); if(addDogBtn) addDogBtn.textContent=t('addDog');
   const exportNote=document.querySelector('aside.panel .actions .small.full'); if(exportNote) exportNote.textContent=t('exportNote');
   const importLabel=[...document.querySelectorAll('aside.panel label.secondary')].find(l=>l.querySelector('#importFile')); if(importLabel && importLabel.firstChild) importLabel.firstChild.nodeValue=t('importJson')+' ';
 
   const cardTitle=[...document.querySelectorAll("main.app section.panel h2")][0]; if(cardTitle) cardTitle.textContent=t('dogCard');
-  const cloud=document.getElementById("cloudReadyNote"); if(cloud) cloud.textContent=t('cloudReady');
+  const cloud=document.getElementById("cloudReadyNote"); if(cloud) cloud.innerHTML=`${escapeHtml(t('cloudReady'))}<div class="cloud-structure-note">${currentLang==='en'?'Prepared schema: kennel / dogs / teamLogs / contacts / imports / members.':'Připravená struktura: kennel / dogs / teamLogs / contacts / imports / members.'}</div>`;
 
   const legend=document.querySelector('main.app section.panel .legend');
-  if(legend) legend.innerHTML=`<span>🟢 ${t('legendVaccination')}</span><span>🟤 ${t('legendDeworming')}</span><span>🔴 ${t('legendAcute')}</span><span>🔵 ${t('legendTraining')}</span><span>🟣 ${t('legendHeatBreeding')}</span><span>🩷 ${t('legendRace')}</span><span>🟢 ${t('legendMeds')}</span>`;
+  if(legend) legend.innerHTML=`<span>🔵 ${t('legendTraining')}</span><span>🩷 ${t('legendRace')}</span><span>🔴 ${t('legendVet')}</span><span>🟣 ${t('legendPhysio')}</span><span>🟢 ${t('legendVaccination')}</span><span>🟤 ${t('legendDeworming')}</span><span>🟢 ${t('legendMeds')}</span><span>🔴 ${t('legendAcute')}</span><span>🟣 ${t('legendHeatBreeding')}</span>`;
   const calendarPanel=[...document.querySelectorAll('main.app section.panel')][1];
   if(calendarPanel){ const h3=calendarPanel.querySelector('h3'); if(h3) h3.textContent=t('dayEventsTitle'); }
   const dayEvents=document.getElementById('dayEvents'); if(dayEvents && !selectedDate) dayEvents.textContent=t('clickCalendarDay');
@@ -1573,6 +2491,130 @@ function serializeChiplistTemplate(){
     if(original){ el.setAttribute('value', original.value || ''); el.value = original.value || ''; }
   });
   return clone.outerHTML;
+}
+
+
+// --- Important contacts microsite ---
+function normalizeImportantContacts(source){
+  const fullFields=['name','phone1','phone2','email','web','booking'];
+  const emergencyFields=['name','address','phone'];
+  const makeFull=()=>Object.fromEntries(fullFields.map(f=>[f,'']));
+  const makeEmergency=()=>Object.fromEntries(emergencyFields.map(f=>[f,'']));
+  const base={
+    primaryVet: makeFull(),
+    secondVet: makeFull(),
+    specialist: makeFull(),
+    physio: makeFull(),
+    emergency1: makeEmergency(),
+    emergency2: makeEmergency()
+  };
+  source = (source && typeof source === 'object') ? source : {};
+  Object.keys(base).forEach(key=>{
+    const incoming = source[key] && typeof source[key] === 'object' ? source[key] : {};
+    Object.keys(base[key]).forEach(field=>{ base[key][field] = String(incoming[field] || ''); });
+  });
+  return base;
+}
+function contactDefinitions(){
+  return [
+    {key:'primaryVet', title:t('contactPrimaryVet'), kind:'full'},
+    {key:'secondVet', title:t('contactSecondVet'), kind:'full'},
+    {key:'specialist', title:t('contactSpecialist'), kind:'full'},
+    {key:'physio', title:t('contactPhysio'), kind:'full'},
+    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency'},
+    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency'}
+  ];
+}
+function contactFieldDefinitions(kind){
+  return kind === 'emergency'
+    ? [{key:'name', label:t('contactName'), type:'text'}, {key:'address', label:t('contactAddress'), type:'text'}, {key:'phone', label:t('contactPhone'), type:'tel'}]
+    : [{key:'name', label:t('contactName'), type:'text'}, {key:'phone1', label:t('contactPhone1'), type:'tel'}, {key:'phone2', label:t('contactPhone2'), type:'tel'}, {key:'email', label:t('contactEmail'), type:'email'}, {key:'web', label:t('contactWeb'), type:'url'}, {key:'booking', label:t('contactBooking'), type:'url'}];
+}
+function getImportantContacts(){
+  data.contacts = normalizeImportantContacts(data.contacts);
+  return data.contacts;
+}
+function sanitizePhoneHref(phone){
+  const clean=String(phone||'').replace(/[^0-9+]/g,'');
+  return clean ? `tel:${clean}` : '#';
+}
+function normalizeUrl(url){
+  url=String(url||'').trim();
+  if(!url) return '';
+  if(/^https?:\/\//i.test(url)) return url;
+  return `https://${url}`;
+}
+function hasAnyContactValue(c){
+  return c && Object.values(c).some(v=>String(v||'').trim());
+}
+function renderContactPreviewCard(def, contacts){
+  const c=contacts[def.key] || {};
+  if(def.kind === 'emergency'){
+    const has=hasAnyContactValue(c);
+    return `<div class="contact-view-card emergency">
+      <div class="contact-view-title">${escapeHtml(def.title)}</div>
+      <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
+      ${c.address?`<div class="contact-line">📍 ${escapeHtml(c.address)}</div>`:''}
+      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:(has?'':`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`)}
+    </div>`;
+  }
+  const web=normalizeUrl(c.web), booking=normalizeUrl(c.booking);
+  const links=[];
+  if(c.phone1) links.push(`<a class="contact-link-pill" href="${escapeAttr(sanitizePhoneHref(c.phone1))}">☎ ${escapeHtml(t('callNow'))} 1</a>`);
+  if(c.phone2) links.push(`<a class="contact-link-pill" href="${escapeAttr(sanitizePhoneHref(c.phone2))}">☎ ${escapeHtml(t('callNow'))} 2</a>`);
+  if(c.email) links.push(`<a class="contact-link-pill" href="mailto:${escapeAttr(c.email)}">✉ ${escapeHtml(t('writeEmail'))}</a>`);
+  if(web) links.push(`<a class="contact-link-pill" href="${escapeAttr(web)}" target="_blank" rel="noopener">🌐 ${escapeHtml(t('openWeb'))}</a>`);
+  if(booking) links.push(`<a class="contact-link-pill" href="${escapeAttr(booking)}" target="_blank" rel="noopener">📅 ${escapeHtml(t('openBooking'))}</a>`);
+  return `<div class="contact-view-card">
+    <div class="contact-view-title">${escapeHtml(def.title)}</div>
+    <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
+    ${c.phone1?`<div class="contact-line">☎ ${escapeHtml(c.phone1)}</div>`:''}
+    ${c.phone2?`<div class="contact-line">☎ ${escapeHtml(c.phone2)}</div>`:''}
+    ${c.email?`<div class="contact-line">✉ ${escapeHtml(c.email)}</div>`:''}
+    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:(!hasAnyContactValue(c)?`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`:'')}
+  </div>`;
+}
+function renderContactFormCard(def, contacts){
+  const c=contacts[def.key] || {};
+  return `<div class="contact-form-card">
+    <h3>${escapeHtml(def.title)}</h3>
+    ${contactFieldDefinitions(def.kind).map(f=>`<label>${escapeHtml(f.label)}<input id="contact_${def.key}_${f.key}" type="${f.type}" value="${escapeAttr(c[f.key]||'')}"></label>`).join('')}
+  </div>`;
+}
+function renderImportantContactsModal(){
+  const modal=document.getElementById('importantContactsModal');
+  if(!modal) return;
+  const contacts=getImportantContacts();
+  const defs=contactDefinitions();
+  const title=document.getElementById('contactsModalTitle'); if(title) title.textContent=t('importantContactsTitle');
+  const help=document.getElementById('contactsModalHelp'); if(help) help.textContent=t('importantContactsHelp');
+  const summary=document.getElementById('contactsEditSummary'); if(summary) summary.textContent=t('editContacts');
+  const preview=document.getElementById('contactsPreview'); if(preview) preview.innerHTML=defs.map(def=>renderContactPreviewCard(def, contacts)).join('');
+  const grid=document.getElementById('contactsSettingsGrid'); if(grid) grid.innerHTML=defs.map(def=>renderContactFormCard(def, contacts)).join('');
+  const saveBtn=document.getElementById('saveContactsBtn'); if(saveBtn) saveBtn.textContent=t('saveContacts');
+  const closeBtn=document.getElementById('closeContactsBtn'); if(closeBtn) closeBtn.textContent=t('close');
+}
+function openImportantContactsModal(){
+  migrateData();
+  renderImportantContactsModal();
+  const modal=document.getElementById('importantContactsModal');
+  if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+}
+function closeImportantContactsModal(){
+  const modal=document.getElementById('importantContactsModal');
+  if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+}
+function saveImportantContactsFromForm(){
+  const contacts=getImportantContacts();
+  contactDefinitions().forEach(def=>{
+    contactFieldDefinitions(def.kind).forEach(f=>{
+      const el=document.getElementById(`contact_${def.key}_${f.key}`);
+      if(el) contacts[def.key][f.key]=el.value.trim();
+    });
+  });
+  data.contacts=normalizeImportantContacts(contacts);
+  saveData();
+  renderImportantContactsModal();
 }
 
 // Kennel v2 settings overrides and initialization

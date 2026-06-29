@@ -994,6 +994,159 @@ body[data-theme="forest"] .eventline.race{border-left-color:#f4c542;background:r
   .calendar-filters{grid-template-columns:1fr}
 }
 
+
+
+/* --- Firebase login gate + cloud status --- */
+.auth-gate{
+  display:none;
+  min-height:calc(100vh - 190px);
+  place-items:start center;
+  padding:22px 18px 42px;
+}
+body.auth-locked .team-log-panel,
+body.auth-locked .app{
+  display:none!important;
+}
+body.auth-locked #authGate{
+  display:grid;
+}
+.auth-card{
+  width:min(460px,96vw);
+  background:rgba(20,54,71,.94);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  padding:22px;
+}
+.auth-card h2{
+  margin:0 0 6px;
+  font-size:26px;
+}
+.auth-card p{
+  color:var(--muted);
+  margin:0 0 14px;
+  line-height:1.45;
+}
+.auth-form-grid{
+  display:grid;
+  gap:10px;
+}
+.auth-form-grid input{
+  min-height:46px;
+}
+.auth-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:10px;
+}
+.auth-muted-action{
+  background:rgba(255,255,255,.08)!important;
+  color:var(--ice)!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+}
+.auth-status{
+  min-height:20px;
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
+}
+.auth-status.ok{color:#9ff0c4}
+.auth-status.err{color:#ffd2d8}
+.auth-status.warn{color:#ffe6a8}
+.cloud-status-line{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  padding:8px 10px;
+  margin-top:10px;
+}
+.cloud-status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:999px;
+  padding:4px 8px;
+  font-weight:800;
+  font-size:12px;
+  background:rgba(255,255,255,.10);
+  color:var(--ice);
+  margin-bottom:5px;
+}
+.cloud-status-pill.local{color:#dff}
+.cloud-status-pill.cloud{color:#bfffdc}
+.cloud-status-pill.offline{color:#ffe6a8}
+.cloud-account-row{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:6px;
+}
+.cloud-account-row button{
+  padding:5px 8px;
+  font-size:12px;
+  border-radius:9px;
+}
+.firebase-config-note{
+  margin-top:12px;
+  border-top:1px solid rgba(255,255,255,.10);
+  padding-top:10px;
+}
+.firebase-config-note summary{
+  cursor:pointer;
+  color:var(--muted);
+  font-size:13px;
+}
+.firebase-config-note code{
+  display:block;
+  white-space:pre-wrap;
+  color:#dff;
+  font-size:12px;
+  line-height:1.35;
+  background:rgba(0,0,0,.18);
+  border-radius:12px;
+  padding:8px;
+  margin-top:8px;
+}
+@media(max-width:760px){
+  .auth-gate{min-height:calc(100vh - 150px);padding:14px 12px 32px}
+  .auth-card{padding:18px;border-radius:20px}
+  .auth-card h2{font-size:23px}
+}
+
+
+/* --- Closed beta access + lightweight admin panel --- */
+.auth-access-panel{margin-top:14px;padding:12px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.auth-access-panel h3{margin:0 0 6px;color:#eaffff;font-size:17px}
+.auth-access-panel p{margin:4px 0 0;color:var(--muted)}
+.access-banner{margin:10px 0 12px;padding:10px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);color:var(--muted);font-size:13px}
+.access-banner.locked{background:rgba(255,91,110,.13);border-color:rgba(255,91,110,.34);color:#ffd8de}
+.access-banner.readonly{background:rgba(255,209,102,.13);border-color:rgba(255,209,102,.32);color:#ffe6a8}
+.access-banner.active{background:rgba(46,230,166,.10);border-color:rgba(46,230,166,.24);color:#c8ffe9}
+.app-admin-float{position:fixed;right:18px;bottom:18px;z-index:250;box-shadow:0 14px 35px rgba(0,0,0,.34)}
+.app-admin-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.58);padding:18px}
+.app-admin-modal.open{display:flex}
+.app-admin-card{width:min(1040px,96vw);max-height:92vh;overflow:auto;background:rgba(20,54,71,.98);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.45);border-radius:22px;padding:18px}
+.admin-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.admin-card{background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.11);border-radius:18px;padding:12px}
+.admin-card.pending{border-color:rgba(255,209,102,.28)}
+.admin-card.active{border-color:rgba(46,230,166,.22)}
+.admin-card.locked,.admin-card.expired{border-color:rgba(255,91,110,.28)}
+.admin-card h3{margin:0 0 5px;font-size:16px;color:#eaffff}
+.admin-card label{display:block;margin:7px 0;font-size:12px;color:var(--muted)}
+.admin-card input,.admin-card select{margin-top:4px}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.admin-status-pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:12px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);color:var(--muted);margin:4px 4px 4px 0}
+body.read-only-mode input:not(#authEmail):not(#authPassword),
+body.read-only-mode select,
+body.read-only-mode textarea{opacity:.78}
+body.read-only-mode button[data-write="1"],
+body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:not-allowed}
+@media(max-width:760px){.admin-grid{grid-template-columns:1fr}.app-admin-float{left:12px;right:12px;bottom:12px;width:calc(100% - 24px)}.admin-top{display:block}.app-admin-card{padding:14px}}
+
 </style>
 </head>
 <body>
@@ -1054,6 +1207,50 @@ body[data-theme="forest"] .eventline.race{border-left-color:#f4c542;background:r
     </div>
   </div>
 </header>
+
+<section id="authGate" class="auth-gate" hidden aria-live="polite">
+  <div class="auth-card">
+    <h2 id="authGateTitle">Kennel Book</h2>
+    <p id="authGateIntro">Přihlášení do cloudové verze. V lokálním režimu se tato obrazovka nezobrazuje.</p>
+    <div class="auth-form-grid">
+      <input id="authEmail" type="email" autocomplete="email" placeholder="E-mail">
+      <input id="authPassword" type="password" autocomplete="current-password" placeholder="Heslo">
+    </div>
+    <div class="auth-actions">
+      <button type="button" id="authSignInBtn" onclick="signInCloud()">Přihlásit se</button>
+      <button type="button" id="authCreateBtn" class="secondary auth-muted-action" onclick="createCloudAccount()">Vytvořit účet pro beta test</button>
+      <button type="button" id="authResetBtn" class="secondary auth-muted-action" onclick="sendPasswordReset()">Zapomenuté heslo</button>
+      <button type="button" id="authContinueLocalBtn" class="secondary auth-muted-action" onclick="continueLocalPreview()" style="display:none">Pokračovat v lokálním testu</button>
+    </div>
+    <div id="authStatus" class="auth-status"></div>
+    <details class="firebase-config-note">
+      <summary>Firebase přepínač</summary>
+      <code>APP_CONFIG.storageMode = "firebase"
+APP_CONFIG.authMode = "firebase"
+APP_CONFIG.firebase.config = { apiKey, authDomain, projectId, appId }</code>
+    </details>
+  </div>
+</section>
+
+<div id="appAdminButtonHost"></div>
+<div id="appAdminModal" class="app-admin-modal" aria-live="polite">
+  <div class="app-admin-card">
+    <div class="admin-top">
+      <div>
+        <h2>Správa uzavřené bety</h2>
+        <div class="small">Aktivace kennelu, role uživatelů a ruční platnost předplatného.</div>
+      </div>
+      <button type="button" class="secondary" onclick="closeAppAdminPanel()">Zavřít</button>
+    </div>
+    <div id="appAdminStatus" class="auth-status"></div>
+    <div class="actions" style="margin-bottom:12px">
+      <button type="button" onclick="refreshAppAdminPanel()">Načíst uživatele</button>
+      <button type="button" class="secondary" onclick="seedCurrentUserAsAppAdminHelp()">Jak nastavit mě jako appAdmin</button>
+    </div>
+    <div id="appAdminUsers" class="admin-grid"></div>
+  </div>
+</div>
+
 
 <section class="team-log-panel panel">
   <div class="team-log-head">
@@ -1132,7 +1329,7 @@ body[data-theme="forest"] .eventline.race{border-left-color:#f4c542;background:r
           Import JSON <input type="file" id="importFile" accept=".json" hidden onchange="importData(event)">
         </label>
       </div>
-      <div class="small full" style="margin-top:8px">Fotky psů se ukládají jako malé náhledy. JSON je nouzová záloha; hlavní ukládání později poběží online.</div>
+      <div class="small full" style="margin-top:8px">Fotky psů se ukládají jako malé náhledy; ve Firebase jsou oddělené od hlavních dat. JSON je nouzová záloha.</div>
     </div>
   </aside>
 
@@ -1164,22 +1361,52 @@ body[data-theme="forest"] .eventline.race{border-left-color:#f4c542;background:r
 
 <script>
 const APP_CONFIG = {
-  storageMode: "local", // později "firebase"
-  authMode: "local",    // později "firebase"
-  billingMode: "none",  // později "stripe" nebo "revenuecat"
+  // Přepínač režimu:
+  // "local" = současné lokální ukládání do prohlížeče
+  // "firebase" = přihlášení e-mailem/heslem + ukládání do Firebase Firestore
+  storageMode: "firebase",
+  authMode: "firebase",
+  billingMode: "none",
   platform: "web",
-  schemaVersion: 3,
-  clientVersion: "2.3-cloud-ready",
+  // Ukáže přihlašovací obrazovku i v lokálním testu, aby šla zkontrolovat před Firebase konfigurací.
+  showLoginPreviewInLocal: false,
+  schemaVersion: 4,
+  clientVersion: "2.6-closed-beta-admin",
+  photos: {
+    // Firestore-safe náhledy. Plné fotky zatím do cloudu neposíláme.
+    maxSide: 320,
+    initialQuality: 0.68,
+    minQuality: 0.42,
+    targetBytes: 80000,
+    cloudCollection: "dogPhotos"
+  },
   firebase: {
-    projectId: "",
+    enabled: true,
+    allowSelfRegistration: true,
+    // Uzavřená beta: účet se může vytvořit, ale dokud ho appAdmin neaktivuje, nic neupraví.
+    requireAdminActivation: true,
+    appAdminEmails: [], // volitelně můžeš doplnit svůj e-mail pro zobrazení admin panelu; hlavní bezpečnost hlídá /appAdmins/{uid}
+    readOnlyAfterExpiry: true,
+    uploadLocalDataOnFirstLogin: true,
+    cdnVersion: "10.12.5",
+    config: {
+      apiKey: "AIzaSyCWI4h8UDAxqGGlsrdBP9_9tmdXiOUCS8E",
+      authDomain: "kennel-v.firebaseapp.com",
+      projectId: "kennel-v",
+      appId: "1:1012052399034:web:c9dede9563e43455fdc383",
+      storageBucket: "kennel-v.firebasestorage.app",
+      messagingSenderId: "1012052399034"
+    },
     collections: {
       users: "users",
       kennels: "kennels",
-      kennelMembers: "kennelMembers",
+      kennelMembers: "members",
+      appData: "appData",
       dogs: "dogs",
       teamLogs: "teamLogs",
       contacts: "contacts",
       imports: "imports",
+      dogPhotos: "dogPhotos",
       backups: "backups"
     }
   }
@@ -1198,7 +1425,7 @@ const translations = {
     massConfirm: "Přidat stejný záznam vybraným psům?", noMassDogs: "Vyber alespoň jednoho psa.",
     teamLog: "Deník smečky", teamLogHelp: "Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.", clearForm: "Vyčistit formulář", team: "Sestava", saveTeamLog: "Uložit záznam", latestTeamLogs: "Poslední záznamy smečky",
     phTeamKm: "Km", phTeamTime: "Čas na trati, např. 1:12", phTeamTitle: "Název / místo, např. ranní trénink, Šediváčkův long", phTeamNote: "Poznámka: teplota, trať, tempo, krmení, počasí...",
-    phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se ukládají jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON",
+    phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se v cloudu ukládají odděleně jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON",
     legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky", legendVet: "veterina", legendPhysio: "fyzio",
     dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Musher", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
     importantContacts: "Kontakty", importantContactsTitle: "Důležité kontakty", importantContactsHelp: "Rychlý seznam veterin, specialistů a pohotovostí pro jeden kennel.", editContacts: "Upravit kontakty", saveContacts: "Uložit kontakty", noContactFilled: "Zatím nevyplněno",
@@ -1219,7 +1446,7 @@ const translations = {
     massConfirm: "Add the same record to selected dogs?", noMassDogs: "Select at least one dog.",
     teamLog: "Team log", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save team log", latestTeamLogs: "Latest team logs",
     phTeamKm: "Km", phTeamTime: "Time on trail, e.g. 1:12", phTeamTitle: "Title / place, e.g. morning training, long-distance race", phTeamNote: "Note: temperature, trail, pace, feeding, weather...",
-    phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are saved as small thumbnails. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
+    phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are stored separately as small thumbnails in cloud mode. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
     legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication", legendVet: "vet", legendPhysio: "physio",
     dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Musher", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
     importantContacts: "Contacts", importantContactsTitle: "Important contacts", importantContactsHelp: "Quick list of vets, specialists and emergency clinics for one kennel.", editContacts: "Edit contacts", saveContacts: "Save contacts", noContactFilled: "Not filled in yet",
@@ -1244,7 +1471,7 @@ const eventLabelsEN = {
 let eventLabels = currentLang === "en" ? eventLabelsEN : eventLabelsCS;
 
 
-const DATA_SCHEMA_VERSION = 3;
+const DATA_SCHEMA_VERSION = 4;
 function makeId(prefix){
   const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36)+"-"+Math.random().toString(36).slice(2));
   return prefix ? `${prefix}_${id}` : id;
@@ -1312,48 +1539,598 @@ function touchCloudMeta(){
     data.kennel.updatedAt = now;
   }
 }
+function clonePlain(value){
+  return JSON.parse(JSON.stringify(value || null));
+}
+function dataUrlByteSize(dataUrl){
+  if(!dataUrl) return 0;
+  const str=String(dataUrl);
+  const comma=str.indexOf(',');
+  const payload=comma>=0 ? str.slice(comma+1) : str;
+  return Math.ceil(payload.length * 3 / 4);
+}
+function stripPhotosFromDogsForCloud(dogs){
+  return (dogs || []).map(d=>{
+    const clean=clonePlain(d);
+    const hasPhoto=!!clean.photo;
+    delete clean.photo;
+    delete clean.photoCloudDirty;
+    clean.hasPhoto = hasPhoto || clean.hasPhoto === true;
+    if(hasPhoto){
+      clean.photoUpdatedAt = clean.photoUpdatedAt || new Date().toISOString();
+    }
+    return clean;
+  });
+}
 function buildFirebasePayload(){
   migrateData();
+  const kennel=clonePlain(data.kennel);
+  // Velká base64 data nepatří do hlavního dokumentu appData/current.
+  // Psí fotky ukládáme samostatně do kennels/{kennelId}/dogPhotos/{dogId}.
   return {
     schemaVersion: DATA_SCHEMA_VERSION,
     clientVersion: APP_CONFIG.clientVersion,
-    kennel: data.kennel,
-    settings: data.settings,
-    contacts: data.contacts,
-    members: data.members,
-    dogs: data.dogs,
-    teamLogs: data.teamLogs,
-    imports: data.imports,
+    kennel,
+    settings: clonePlain(data.settings),
+    contacts: clonePlain(data.contacts),
+    members: clonePlain(data.members),
+    dogs: stripPhotosFromDogsForCloud(data.dogs),
+    teamLogs: clonePlain(data.teamLogs),
+    imports: clonePlain(data.imports),
     updatedAt: data.cloud?.updatedAt || new Date().toISOString()
   };
 }
+async function loadDogPhotosFromCloud(kennelId, appData){
+  if(!isFirebaseMode() || !firebaseReady || !cloudUser || !firebaseDb || !appData?.dogs?.length) return appData;
+  const {doc, getDoc} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  const photoCol=cols.dogPhotos || APP_CONFIG.photos.cloudCollection || 'dogPhotos';
+  await Promise.all(appData.dogs.map(async d=>{
+    try{
+      const snap=await getDoc(doc(firebaseDb, cols.kennels, kennelId, photoCol, d.id));
+      if(snap.exists()){
+        const photo=snap.data();
+        d.photo = photo.thumbnailDataUrl || '';
+        d.photoUpdatedAt = photo.updatedAtIso || photo.updatedAt || d.photoUpdatedAt || '';
+        d.hasPhoto = !!d.photo;
+      }else{
+        d.photo = d.photo || '';
+      }
+      d.photoCloudDirty = false;
+    }catch(err){
+      console.warn('Could not load dog photo', d.id, err);
+      d.photo = d.photo || '';
+    }
+  }));
+  return appData;
+}
+async function saveDogPhotosToCloud(kennelId, force=false){
+  if(!isFirebaseMode() || !firebaseReady || !cloudUser || !firebaseDb || !Array.isArray(data?.dogs)) return true;
+  const {doc, setDoc, deleteDoc, serverTimestamp} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  const photoCol=cols.dogPhotos || APP_CONFIG.photos.cloudCollection || 'dogPhotos';
+  const jobs=data.dogs.map(async d=>{
+    if(!d?.id) return;
+    const shouldWrite = force || d.photoCloudDirty === true;
+    if(!shouldWrite) return;
+    const ref=doc(firebaseDb, cols.kennels, kennelId, photoCol, d.id);
+    if(d.photo){
+      await setDoc(ref, {
+        dogId:d.id,
+        kennelId,
+        thumbnailDataUrl:d.photo,
+        sizeBytes:dataUrlByteSize(d.photo),
+        maxSide:APP_CONFIG.photos.maxSide,
+        contentType:(String(d.photo).match(/^data:([^;]+);/)||[])[1] || 'image/jpeg',
+        updatedAt:serverTimestamp(),
+        updatedAtIso:d.photoUpdatedAt || new Date().toISOString(),
+        updatedBy:cloudUser.uid
+      }, {merge:true});
+      d.hasPhoto = true;
+    }else{
+      try{ await deleteDoc(ref); }catch(err){ console.warn('Dog photo delete skipped', d.id, err); }
+      d.hasPhoto = false;
+    }
+    d.photoCloudDirty = false;
+  });
+  await Promise.all(jobs);
+  return true;
+}
+
+// --- Login layer + Firebase switch ---
+let firebaseApi = null;
+let firebaseApp = null;
+let firebaseAuth = null;
+let firebaseDb = null;
+let cloudUser = null;
+let activeCloudKennelId = null;
+let firebaseReady = false;
+let cloudSaveTimer = null;
+let cloudSaveInProgress = false;
+let cloudLastError = null;
+
+function isFirebaseMode(){
+  return APP_CONFIG.storageMode === "firebase" || APP_CONFIG.authMode === "firebase" || APP_CONFIG.firebase.enabled === true;
+}
+function hasFirebaseConfig(){
+  const c = APP_CONFIG.firebase.config || {};
+  return Boolean(c.apiKey && c.authDomain && c.projectId && c.appId);
+}
+function authText(cs,en){ return currentLang === "en" ? en : cs; }
+function setAuthStatus(message, kind=""){
+  const el=document.getElementById('authStatus');
+  if(!el) return;
+  el.className='auth-status '+(kind||'');
+  el.textContent=message||'';
+}
+function applyAuthTexts(){
+  const title=document.getElementById('authGateTitle'); if(title) title.textContent='Kennel Book';
+  const intro=document.getElementById('authGateIntro'); if(intro) intro.textContent=authText('Přihlášení do cloudové verze. Data se po přihlášení načtou bezpečně pro tvůj kennel.','Sign in to the cloud version. Your kennel data will load after sign-in.');
+  const email=document.getElementById('authEmail'); if(email) email.placeholder='E-mail';
+  const pass=document.getElementById('authPassword'); if(pass) pass.placeholder=authText('Heslo','Password');
+  const sign=document.getElementById('authSignInBtn'); if(sign) sign.textContent=authText('Přihlásit se','Sign in');
+  const create=document.getElementById('authCreateBtn'); if(create) create.textContent=authText('Vytvořit účet pro beta test','Create beta account');
+  const reset=document.getElementById('authResetBtn'); if(reset) reset.textContent=authText('Zapomenuté heslo','Forgot password');
+}
+function setupAuthGate(){
+  applyAuthTexts();
+  const createBtn=document.getElementById('authCreateBtn');
+  if(createBtn) createBtn.style.display = APP_CONFIG.firebase.allowSelfRegistration ? '' : 'none';
+  ['authEmail','authPassword'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && !el.dataset.authEnterBound){
+      el.dataset.authEnterBound='1';
+      el.addEventListener('keydown', ev=>{ if(ev.key==='Enter') signInCloud(); });
+    }
+  });
+}
+function showAuthGate(message, kind=""){
+  resetAuthGateNormal();
+  document.body.classList.add('auth-locked');
+  const gate=document.getElementById('authGate');
+  if(gate) gate.hidden=false;
+  if(message) setAuthStatus(message, kind);
+  applyAuthTexts();
+}
+function hideAuthGate(){
+  resetAuthGateNormal();
+  const gate=document.getElementById('authGate');
+  if(gate) gate.hidden=true;
+  document.body.classList.remove('auth-locked');
+  setAuthStatus('');
+}
+function isLocalLoginPreviewMode(){
+  return !isFirebaseMode() && APP_CONFIG.showLoginPreviewInLocal === true;
+}
+function showLocalLoginPreview(){
+  setupAuthGate();
+  document.body.classList.add('auth-locked');
+  const gate=document.getElementById('authGate');
+  if(gate) gate.hidden=false;
+  const localBtn=document.getElementById('authContinueLocalBtn');
+  if(localBtn) localBtn.style.display='';
+  setAuthStatus(authText('Toto je náhled přihlašovací obrazovky. Skutečné přihlášení se zapne po doplnění Firebase konfigurace a přepnutí storageMode na "firebase".','This is a login screen preview. Real sign-in starts after Firebase config is filled and storageMode is switched to "firebase".'),'warn');
+  renderCloudStatusNote();
+}
+function continueLocalPreview(){
+  hideAuthGate();
+  const localBtn=document.getElementById('authContinueLocalBtn');
+  if(localBtn) localBtn.style.display='none';
+  render();
+}
+async function initFirebaseLayer(){
+  setupAuthGate();
+  if(!isFirebaseMode()){
+    hideAuthGate();
+    renderCloudStatusNote();
+    return true;
+  }
+  showAuthGate(authText('Připravuji cloudové přihlášení…','Preparing cloud sign-in…'));
+  if(!hasFirebaseConfig()){
+    setAuthStatus(authText('Chybí Firebase konfigurace. Doplň APP_CONFIG.firebase.config a přepni storageMode/authMode na "firebase".','Firebase config is missing. Fill APP_CONFIG.firebase.config and switch storageMode/authMode to "firebase".'),'warn');
+    renderCloudStatusNote();
+    return false;
+  }
+  try{
+    const v=APP_CONFIG.firebase.cdnVersion || '10.12.5';
+    const [appMod, authMod, fsMod] = await Promise.all([
+      import(`https://www.gstatic.com/firebasejs/${v}/firebase-app.js`),
+      import(`https://www.gstatic.com/firebasejs/${v}/firebase-auth.js`),
+      import(`https://www.gstatic.com/firebasejs/${v}/firebase-firestore.js`)
+    ]);
+    firebaseApi={appMod, authMod, fsMod};
+    firebaseApp = appMod.initializeApp(APP_CONFIG.firebase.config);
+    firebaseAuth = authMod.getAuth(firebaseApp);
+    firebaseDb = fsMod.getFirestore(firebaseApp);
+    firebaseReady = true;
+    authMod.onAuthStateChanged(firebaseAuth, async user=>{
+      cloudUser = user || null;
+      if(!user){
+        showAuthGate(authText('Přihlas se e-mailem a heslem.','Sign in with email and password.'));
+        renderCloudStatusNote();
+        return;
+      }
+      await handleCloudUserReady(user);
+    });
+    renderCloudStatusNote();
+    return true;
+  }catch(err){
+    console.error('Firebase init failed', err);
+    cloudLastError = err;
+    showAuthGate(authText('Firebase se nepodařilo načíst. Zkontroluj konfiguraci a internetové připojení.','Could not load Firebase. Check config and internet connection.'),'err');
+    renderCloudStatusNote();
+    return false;
+  }
+}
+async function signInCloud(){
+  if(isLocalLoginPreviewMode()){ setAuthStatus(authText('Toto je jen lokální náhled. Pro ostré přihlášení doplň Firebase config a přepni storageMode/authMode na "firebase".','This is only a local preview. Fill Firebase config and switch storageMode/authMode to "firebase" for real sign-in.'),'warn'); return; }
+  if(!firebaseReady || !firebaseAuth){ await initFirebaseLayer(); }
+  if(!firebaseAuth){ return; }
+  const email=document.getElementById('authEmail')?.value.trim();
+  const password=document.getElementById('authPassword')?.value;
+  if(!email || !password){ setAuthStatus(authText('Zadej e-mail i heslo.','Enter email and password.'),'warn'); return; }
+  try{
+    setAuthStatus(authText('Přihlašuji…','Signing in…'));
+    await firebaseApi.authMod.signInWithEmailAndPassword(firebaseAuth, email, password);
+  }catch(err){
+    console.error(err);
+    setAuthStatus(authText('Přihlášení se nepovedlo. Zkontroluj e-mail a heslo.','Sign-in failed. Check email and password.'),'err');
+  }
+}
+async function createCloudAccount(){
+  if(isLocalLoginPreviewMode()){ setAuthStatus(authText('Zakládání účtu poběží až po připojení Firebase.','Account creation starts after Firebase is connected.'),'warn'); return; }
+  if(!APP_CONFIG.firebase.allowSelfRegistration){ setAuthStatus(authText('Zakládání účtů je pro beta verzi vypnuté. Účet vytvoří správce.','Self-registration is disabled for beta. The admin creates accounts.'),'warn'); return; }
+  if(!firebaseReady || !firebaseAuth){ await initFirebaseLayer(); }
+  if(!firebaseAuth){ return; }
+  const email=document.getElementById('authEmail')?.value.trim();
+  const password=document.getElementById('authPassword')?.value;
+  if(!email || !password){ setAuthStatus(authText('Zadej e-mail i heslo.','Enter email and password.'),'warn'); return; }
+  if(password.length < 6){ setAuthStatus(authText('Heslo musí mít alespoň 6 znaků.','Password must be at least 6 characters.'),'warn'); return; }
+  try{
+    setAuthStatus(authText('Vytvářím účet…','Creating account…'));
+    await firebaseApi.authMod.createUserWithEmailAndPassword(firebaseAuth, email, password);
+  }catch(err){
+    console.error(err);
+    setAuthStatus(authText('Účet se nepodařilo vytvořit.','Could not create account.'),'err');
+  }
+}
+async function sendPasswordReset(){
+  if(isLocalLoginPreviewMode()){ setAuthStatus(authText('Reset hesla poběží až po připojení Firebase.','Password reset starts after Firebase is connected.'),'warn'); return; }
+  if(!firebaseReady || !firebaseAuth){ await initFirebaseLayer(); }
+  if(!firebaseAuth){ return; }
+  const email=document.getElementById('authEmail')?.value.trim();
+  if(!email){ setAuthStatus(authText('Nejdřív napiš e-mail.','Enter email first.'),'warn'); return; }
+  try{
+    await firebaseApi.authMod.sendPasswordResetEmail(firebaseAuth, email);
+    setAuthStatus(authText('Poslala jsem e-mail pro obnovu hesla.','Password reset email sent.'),'ok');
+  }catch(err){
+    console.error(err);
+    setAuthStatus(authText('Obnovu hesla se nepodařilo odeslat.','Could not send password reset email.'),'err');
+  }
+}
+async function signOutCloud(){
+  if(firebaseAuth && firebaseApi?.authMod){
+    await firebaseApi.authMod.signOut(firebaseAuth);
+  }
+}
+
+async function isCurrentUserAppAdmin(user){
+  if(!user) return false;
+  const configured=(APP_CONFIG.firebase.appAdminEmails||[]).map(e=>String(e).toLowerCase()).includes(String(user.email||'').toLowerCase());
+  if(configured) return true;
+  try{
+    const {doc, getDoc} = firebaseApi.fsMod;
+    const snap=await getDoc(doc(firebaseDb, 'appAdmins', user.uid));
+    return snap.exists() && snap.data()?.active !== false;
+  }catch(e){ return false; }
+}
+async function ensureFirebaseUserProfile(user){
+  const {doc, getDoc, setDoc, serverTimestamp} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  const userRef=doc(firebaseDb, cols.users, user.uid);
+  const userSnap=await getDoc(userRef);
+  const isAdmin=await isCurrentUserAppAdmin(user);
+  const existing=userSnap.exists() ? userSnap.data() : {};
+  const baseStatus=existing.status || 'pending';
+  await setDoc(userRef, {
+    uid:user.uid,
+    email:user.email || '',
+    status:baseStatus,
+    activeKennelId:existing.activeKennelId || null,
+    isAppAdmin:isAdmin || existing.isAppAdmin === true,
+    updatedAt:serverTimestamp(),
+    createdAt:existing.createdAt || serverTimestamp()
+  }, {merge:true});
+  const freshSnap=await getDoc(userRef);
+  const profile=freshSnap.exists()?freshSnap.data():{};
+  profile.uid=user.uid;
+  profile.email=user.email || profile.email || '';
+  profile.isAppAdmin=isAdmin || profile.isAppAdmin === true;
+  return profile;
+}
+async function resolveCloudAccess(user, profile){
+  const {doc, getDoc} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  const access={mode:'firebase', status:profile.status||'pending', role:null, kennelStatus:null, planUntil:null, isAppAdmin:!!profile.isAppAdmin, writeAllowed:false, readAllowed:false, kennelId:profile.activeKennelId||null, message:''};
+  if(!profile.activeKennelId){
+    access.message = access.isAppAdmin ? 'Admin účet bez aktivního kennelu. Otevři Admin panel.' : 'Účet čeká na aktivaci správcem.';
+    return access;
+  }
+  const kennelRef=doc(firebaseDb, cols.kennels, profile.activeKennelId);
+  const memberRef=doc(firebaseDb, cols.kennels, profile.activeKennelId, cols.kennelMembers, user.uid);
+  const [kennelSnap, memberSnap]=await Promise.all([getDoc(kennelRef), getDoc(memberRef)]);
+  if(!kennelSnap.exists() || !memberSnap.exists()){
+    access.message='Účet nemá přiřazený platný kennel.';
+    return access;
+  }
+  const kennel=kennelSnap.data()||{};
+  const member=memberSnap.data()||{};
+  access.kennelId=profile.activeKennelId;
+  access.kennelStatus=kennel.status || 'active';
+  access.status=member.status || kennel.status || profile.status || 'active';
+  access.role=member.role || 'readOnly';
+  access.planUntil=kennel.planUntil || member.planUntil || null;
+  const expired=isDateExpired(access.planUntil);
+  if(expired) access.status='expired';
+  access.readAllowed = access.kennelStatus !== 'locked' && access.status !== 'locked';
+  access.writeAllowed = access.readAllowed && !expired && access.status === 'active' && access.kennelStatus === 'active' && (access.role === 'admin' || access.role === 'owner');
+  access.message = access.writeAllowed ? 'Přístup aktivní.' : (expired ? 'Předplatné vypršelo. Režim jen pro čtení.' : (access.role==='readOnly'?'Režim jen pro čtení.':'Přístup je zamčený nebo čeká na aktivaci.'));
+  return access;
+}
+async function handleCloudUserReady(user){
+  try{
+    showAuthGate(authText('Načítám přístup…','Loading access…'));
+    const profile=await ensureFirebaseUserProfile(user);
+    cloudAccess=await resolveCloudAccess(user, profile);
+    activeCloudKennelId = cloudAccess.kennelId || null;
+    localStorage.setItem('kennelCloudKennelId', activeCloudKennelId || '');
+    renderAppAdminButton();
+    if(!cloudAccess.readAllowed || !activeCloudKennelId){
+      const title=cloudAccess.isAppAdmin ? 'Admin Kennel Book' : (currentLang==='en'?'Waiting for activation':'Účet čeká na aktivaci');
+      const msg=cloudAccess.message || (currentLang==='en'?'The account is waiting for admin activation.':'Účet čeká na aktivaci správcem.');
+      showAccessOnlyGate(title, msg, 'warn');
+      renderCloudStatusNote();
+      if(cloudAccess.isAppAdmin) refreshAppAdminPanel().catch(()=>{});
+      return;
+    }
+    showAuthGate(authText('Načítám kennel z cloudu…','Loading kennel from cloud…'));
+    const cloudData = await loadDataFromCloud();
+    if(cloudData && typeof cloudData === 'object'){
+      data = cloudData;
+      migrateData();
+      data.cloud.ownerUid = user.uid;
+      data.cloud.kennelId = activeCloudKennelId || data.cloud.kennelId;
+      data.cloud.syncStatus = 'cloud';
+      data.cloud.access = cloudAccess;
+      saveDataLocally();
+    }else if(APP_CONFIG.firebase.uploadLocalDataOnFirstLogin && canWriteAppData()){
+      migrateData();
+      data.cloud.ownerUid = user.uid;
+      data.cloud.kennelId = activeCloudKennelId || data.cloud.kennelId;
+      data.cloud.access = cloudAccess;
+      await saveDataToCloud(true);
+    }else{
+      data=createDemoData(); migrateData(); data.cloud.kennelId=activeCloudKennelId; data.cloud.access=cloudAccess;
+    }
+    selectedDogId = data.dogs?.find(d=>d.status!=="archived")?.id || data.dogs?.[0]?.id || null;
+    hideAuthGate();
+    render();
+  }catch(err){
+    console.error(err);
+    cloudLastError = err;
+    showAuthGate(authText('Cloudová data nebo přístup se nepodařilo načíst.','Could not load cloud data or access.'),'err');
+    renderCloudStatusNote();
+  }
+}
+function queueCloudSave(){
+  if(!isFirebaseMode() || !firebaseReady || !cloudUser) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer=setTimeout(()=>saveDataToCloud().catch(err=>{
+    console.error('Cloud save failed', err);
+    cloudLastError=err;
+    if(data?.cloud) data.cloud.syncStatus='offline';
+    renderCloudStatusNote();
+  }), 700);
+}
+function renderCloudStatusNote(){
+  const cloud=document.getElementById("cloudReadyNote");
+  if(!cloud) return;
+  const schemaNote = currentLang==='en' ? 'Prepared schema: kennel / appData / dogPhotos / contacts / imports / members.' : 'Připravená struktura: kennel / appData / dogPhotos / contacts / imports / members.';
+  if(!isFirebaseMode()){
+    cloud.innerHTML=`<div class="cloud-status-line"><span class="cloud-status-pill local">○ ${currentLang==='en'?'Local mode':'Lokální režim'}</span><div>${escapeHtml(t('cloudReady'))}</div><div class="cloud-structure-note">${escapeHtml(schemaNote)}</div></div>`;
+    return;
+  }
+  const email=cloudUser?.email || '';
+  const status=data?.cloud?.syncStatus || (firebaseReady?'cloud':'offline');
+  const pillClass=status==='cloud'?'cloud':'offline';
+  const label=status==='cloud' ? (currentLang==='en'?'Cloud active':'Cloud aktivní') : (currentLang==='en'?'Cloud waiting':'Cloud čeká');
+  cloud.innerHTML=`<div class="cloud-status-line"><span class="cloud-status-pill ${pillClass}">${status==='cloud'?'●':'○'} ${escapeHtml(label)}</span><div>${email?escapeHtml(email):escapeHtml(currentLang==='en'?'Not signed in':'Nepřihlášeno')}</div><div class="cloud-structure-note">${escapeHtml(schemaNote)}</div>${email?`<div class="cloud-account-row"><span>${escapeHtml((currentLang==='en'?'Access: ':'Přístup: ')+accessRoleLabel())}</span><button class="secondary" type="button" onclick="signOutCloud()">${escapeHtml(currentLang==='en'?'Sign out':'Odhlásit')}</button></div>`:''}</div>`;
+}
+
 
 const STORAGE_KEY = "kennelAurora";
 function createDemoData(){
-  return { version:3, schemaVersion:DATA_SCHEMA_VERSION, kennel:createDefaultKennel(), cloud:createCloudMeta(), members:[], syncQueue:[], settings:{language:"cs", theme:"classic"}, dogs:[
-    {id: crypto.randomUUID(), name:"Baldr", breed:"sibiřský husky", birth:"", chip:"", weight:"", sex:"pes", color:"", photo:"", status:"active", events:[{id:crypto.randomUUID(), type:"seizure", date:new Date().toISOString().slice(0,10), title:"Epileptický záchvat", note:"Ukázkový záznam – uprav nebo smaž."}]},
-    {id: crypto.randomUUID(), name:"Eisa", breed:"sibiřský husky", birth:"", chip:"", weight:"", sex:"fena", color:"", photo:"", status:"active", events:[]}
+  return { version:4, schemaVersion:DATA_SCHEMA_VERSION, kennel:createDefaultKennel(), cloud:createCloudMeta(), members:[], syncQueue:[], settings:{language:"cs", theme:"classic"}, dogs:[
+    {id: crypto.randomUUID(), name:"Baldr", breed:"sibiřský husky", birth:"", chip:"", weight:"", sex:"pes", color:"", photo:"", hasPhoto:false, photoCloudDirty:false, status:"active", events:[{id:crypto.randomUUID(), type:"seizure", date:new Date().toISOString().slice(0,10), title:"Epileptický záchvat", note:"Ukázkový záznam – uprav nebo smaž."}]},
+    {id: crypto.randomUUID(), name:"Eisa", breed:"sibiřský husky", birth:"", chip:"", weight:"", sex:"fena", color:"", photo:"", hasPhoto:false, photoCloudDirty:false, status:"active", events:[]}
   ], teamLogs:[], imports:[] };
 }
 function loadData(){
-  if(APP_CONFIG.storageMode === "firebase") return loadDataFromCloud();
+  // Aplikace musí nastartovat synchronně i ve Firebase režimu.
+  // Nejdřív se načte lokální záloha, po přihlášení se případně přepíše cloudem.
   return loadDataLocally();
 }
 function saveData(){
+  if(isFirebaseMode() && !canWriteAppData()){
+    showWriteBlockedMessage();
+    return false;
+  }
   touchCloudMeta();
-  if(APP_CONFIG.storageMode === "firebase") return saveDataToCloud();
-  return saveDataLocally();
+  const ok = saveDataLocally();
+  if(isFirebaseMode()) queueCloudSave();
+  return ok;
 }
 function loadDataLocally(){
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || createDemoData(); }
   catch(e){ return createDemoData(); }
 }
 function saveDataLocally(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); return true; }
-async function loadDataFromCloud(){ return loadDataLocally(); }
-async function saveDataToCloud(){ return saveDataLocally(); }
-async function getCurrentUser(){ return {uid:"local-user", email:null, plan:"local"}; }
+async function loadDataFromCloud(){
+  if(!isFirebaseMode() || !firebaseReady || !cloudUser || !firebaseDb) return loadDataLocally();
+  const {doc, getDoc} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  const kennelId = activeCloudKennelId || data?.cloud?.kennelId || localStorage.getItem('kennelCloudKennelId');
+  if(!kennelId) return null;
+  const ref=doc(firebaseDb, cols.kennels, kennelId, cols.appData, 'current');
+  const snap=await getDoc(ref);
+  if(!snap.exists()) return null;
+  const raw=snap.data();
+  const appData = raw.payload || raw.data || null;
+  if(appData){
+    await loadDogPhotosFromCloud(kennelId, appData);
+  }
+  return appData;
+}
+async function saveDataToCloud(force=false){
+  saveDataLocally();
+  if(!isFirebaseMode() || !firebaseReady || !cloudUser || !firebaseDb) return true;
+  if(!canWriteAppData()) return false;
+  if(cloudSaveInProgress && !force) return true;
+  cloudSaveInProgress=true;
+  try{
+    migrateData();
+    const {doc, setDoc, serverTimestamp} = firebaseApi.fsMod;
+    const cols=APP_CONFIG.firebase.collections;
+    const kennelId = activeCloudKennelId || data.cloud?.kennelId || localStorage.getItem('kennelCloudKennelId') || makeId('kennel');
+    activeCloudKennelId = kennelId;
+    data.cloud.kennelId = kennelId;
+    data.cloud.ownerUid = data.cloud.ownerUid || cloudUser.uid;
+    data.cloud.syncStatus = 'cloud';
+    data.cloud.lastSyncedAt = new Date().toISOString();
+    const payload=buildFirebasePayload();
+    await setDoc(doc(firebaseDb, cols.kennels, kennelId), {
+      id:kennelId,
+      name:data.kennel?.name || 'Kennel',
+      ownerUid:data.cloud.ownerUid || cloudUser.uid,
+      schemaVersion:DATA_SCHEMA_VERSION,
+      clientVersion:APP_CONFIG.clientVersion,
+      updatedAt:serverTimestamp()
+    }, {merge:true});
+    await setDoc(doc(firebaseDb, cols.kennels, kennelId, cols.appData, 'current'), {
+      payload,
+      schemaVersion:DATA_SCHEMA_VERSION,
+      clientVersion:APP_CONFIG.clientVersion,
+      photoStorage:'dogPhotos',
+      updatedAt:serverTimestamp(),
+      updatedBy:cloudUser.uid
+    }, {merge:true});
+    await saveDogPhotosToCloud(kennelId, force);
+    cloudLastError=null;
+    saveDataLocally();
+    renderCloudStatusNote();
+    return true;
+  }catch(err){
+    cloudLastError=err;
+    if(data?.cloud) data.cloud.syncStatus='offline';
+    renderCloudStatusNote();
+    throw err;
+  }finally{
+    cloudSaveInProgress=false;
+  }
+}
+async function getCurrentUser(){ return cloudUser || {uid:"local-user", email:null, plan:"local"}; }
 async function requireSubscription(){ return true; }
 
+
+
+let cloudAccess = { mode:'local', status:'local', role:'admin', kennelStatus:'active', planUntil:null, isAppAdmin:false, writeAllowed:true, readAllowed:true, message:'' };
+let appAdminUsersCache = [];
+function todayIsoDate(){ return new Date().toISOString().slice(0,10); }
+function normalizeDateString(v){ return String(v||'').slice(0,10); }
+function isDateExpired(dateStr){ const d=normalizeDateString(dateStr); return !!d && d < todayIsoDate(); }
+function isCloudAccessExpired(){ return isFirebaseMode() && cloudAccess && (cloudAccess.status==='expired' || isDateExpired(cloudAccess.planUntil)); }
+function canWriteAppData(){
+  if(!isFirebaseMode()) return true;
+  if(cloudAccess?.isAppAdmin && cloudAccess?.role==='appAdmin') return true;
+  if(!cloudAccess?.readAllowed) return false;
+  if(cloudAccess?.kennelStatus==='locked' || cloudAccess?.status==='locked') return false;
+  if(isCloudAccessExpired()) return false;
+  return cloudAccess?.writeAllowed === true && (cloudAccess.role==='admin' || cloudAccess.role==='owner');
+}
+function canReadAppData(){
+  if(!isFirebaseMode()) return true;
+  return cloudAccess?.readAllowed === true || cloudAccess?.isAppAdmin === true;
+}
+function accessRoleLabel(){
+  if(!isFirebaseMode()) return currentLang==='en'?'Local mode':'Lokální režim';
+  if(cloudAccess?.status==='pending') return currentLang==='en'?'Waiting for activation':'Čeká na aktivaci';
+  if(cloudAccess?.status==='locked') return currentLang==='en'?'Locked':'Zamčeno';
+  if(isCloudAccessExpired()) return currentLang==='en'?'Expired / read only':'Vypršelo / jen pro čtení';
+  if(cloudAccess?.role==='readOnly') return currentLang==='en'?'Read only':'Jen pro čtení';
+  if(cloudAccess?.role==='admin' || cloudAccess?.role==='owner') return currentLang==='en'?'Admin':'Admin';
+  if(cloudAccess?.isAppAdmin) return 'AppAdmin';
+  return cloudAccess?.status || '';
+}
+function showWriteBlockedMessage(){
+  const msg = currentLang==='en'
+    ? 'This account is read-only or access has expired. Data remain visible, but saving is disabled.'
+    : 'Tento účet je jen pro čtení nebo mu vypršela platnost. Data zůstávají viditelná, ale ukládání je vypnuté.';
+  alert(msg);
+}
+function showAccessOnlyGate(title, message, kind='warn'){
+  document.body.classList.add('auth-locked');
+  const gate=document.getElementById('authGate'); if(gate) gate.hidden=false;
+  const h=document.getElementById('authGateTitle'); if(h) h.textContent=title || 'Kennel Book';
+  const intro=document.getElementById('authGateIntro'); if(intro) intro.textContent=message || '';
+  const form=document.querySelector('#authGate .auth-form-grid'); if(form) form.style.display='none';
+  const actions=document.querySelector('#authGate .auth-actions'); if(actions) actions.style.display='none';
+  let panel=document.getElementById('authAccessPanel');
+  if(!panel){
+    panel=document.createElement('div'); panel.id='authAccessPanel'; panel.className='auth-access-panel';
+    const status=document.getElementById('authStatus'); status?.insertAdjacentElement('afterend', panel);
+  }
+  panel.hidden=false;
+  panel.innerHTML=`<h3>${escapeHtml(title||'Kennel Book')}</h3><p>${escapeHtml(message||'')}</p><div class="actions"><button type="button" class="secondary" onclick="signOutCloud()">${escapeHtml(currentLang==='en'?'Sign out':'Odhlásit')}</button>${cloudAccess?.isAppAdmin?`<button type="button" onclick="openAppAdminPanel()">Admin panel</button>`:''}</div>`;
+  setAuthStatus('', kind);
+}
+function resetAuthGateNormal(){
+  const form=document.querySelector('#authGate .auth-form-grid'); if(form) form.style.display='grid';
+  const actions=document.querySelector('#authGate .auth-actions'); if(actions) actions.style.display='flex';
+  const panel=document.getElementById('authAccessPanel'); if(panel) panel.hidden=true;
+}
+function applyAccessRestrictions(){
+  document.body.classList.toggle('read-only-mode', isFirebaseMode() && !canWriteAppData() && canReadAppData());
+  const bannerId='accessModeBanner';
+  document.getElementById(bannerId)?.remove();
+  if(!isFirebaseMode() || !cloudUser || !canReadAppData()) return;
+  const target=document.querySelector('.team-log-panel') || document.querySelector('.app');
+  if(!target) return;
+  let cls='active'; let msg='';
+  if(!canWriteAppData()){
+    cls=isCloudAccessExpired() || cloudAccess?.status==='locked' ? 'locked' : 'readonly';
+    msg = currentLang==='en'
+      ? `Access mode: ${accessRoleLabel()}. You can view and export data, but editing is disabled.`
+      : `Režim přístupu: ${accessRoleLabel()}. Data můžeš prohlížet a exportovat, ale úpravy jsou vypnuté.`;
+  }else{
+    msg = currentLang==='en'
+      ? `Cloud access active · role: ${accessRoleLabel()}${cloudAccess.planUntil?' · valid until '+cloudAccess.planUntil:''}`
+      : `Cloud přístup aktivní · role: ${accessRoleLabel()}${cloudAccess.planUntil?' · platné do '+cloudAccess.planUntil:''}`;
+  }
+  target.insertAdjacentHTML('afterbegin', `<div id="${bannerId}" class="access-banner ${cls}">${escapeHtml(msg)}</div>`);
+  if(!canWriteAppData()){
+    document.querySelectorAll('button').forEach(btn=>{
+      const txt=(btn.textContent||'').toLowerCase();
+      const safe = btn.closest('#appAdminModal') || btn.closest('#authGate') || txt.includes('export') || txt.includes('odhl') || txt.includes('sign out') || txt.includes('zavřít') || txt.includes('close') || txt.includes('načíst') || txt.includes('volat') || txt.includes('web') || txt.includes('rezerv') || txt.includes('e-mail');
+      if(!safe){ btn.dataset.write='1'; btn.onclick = btn.onclick || btn.getAttribute('onclick'); }
+    });
+  }
+}
+function renderAppAdminButton(){
+  const host=document.getElementById('appAdminButtonHost'); if(!host) return;
+  if(isFirebaseMode() && cloudUser && cloudAccess?.isAppAdmin){
+    host.innerHTML=`<button type="button" class="app-admin-float" onclick="openAppAdminPanel()">⚙️ Admin beta</button>`;
+  }else host.innerHTML='';
+}
 let data = loadData();
 let selectedDogId = data.dogs?.find(d=>d.status!=="archived")?.id || data.dogs?.[0]?.id || null;
 let activeTab = "overview";
@@ -1379,12 +2156,16 @@ function migrateData(){
     if(!d.id) d.id = crypto.randomUUID();
     if(!Array.isArray(d.events)) d.events = [];
     if(!d.status) d.status = "active";
+    if(d.photo === undefined) d.photo = "";
+    d.hasPhoto = !!d.photo || d.hasPhoto === true;
+    if(d.photo && !d.photoUpdatedAt) d.photoUpdatedAt = new Date().toISOString();
+    if(d.photoCloudDirty === undefined) d.photoCloudDirty = false;
     d.events.forEach(e => { if(!e.id) e.id = crypto.randomUUID(); });
   });
   currentLang = data.settings.language;
   eventLabels = currentLang === "en" ? eventLabelsEN : eventLabelsCS;
 }
-function save(){ migrateData(); saveData(); render(); }
+function save(){ if(isFirebaseMode() && !canWriteAppData()){ showWriteBlockedMessage(); render(); return; } migrateData(); saveData(); render(); }
 function dog(){ return data.dogs.find(d=>d.id===selectedDogId); }
 function visibleDogs(){ return data.dogs.filter(d => (dogListMode === "archived") ? d.status === "archived" : d.status !== "archived"); }
 function activeDogs(){ return data.dogs.filter(d => d.status !== "archived"); }
@@ -1667,7 +2448,7 @@ function addDog(){
   const name=(nameEl?.value||"").trim();
   const breed=(breedEl?.value||"").trim();
   if(!name) return alert(t('needName'));
-  data.dogs.push({id:crypto.randomUUID(), name, breed, birth:"", chip:"", weight:"", sex:"", color:"", photo:"", status:"active", events:[]});
+  data.dogs.push({id:crypto.randomUUID(), name, breed, birth:"", chip:"", weight:"", sex:"", color:"", photo:"", hasPhoto:false, photoCloudDirty:false, status:"active", events:[]});
   selectedDogId=data.dogs[data.dogs.length-1].id; dogListMode="active";
   if(nameEl) nameEl.value=""; if(breedEl) breedEl.value="";
   save();
@@ -1705,19 +2486,41 @@ function renderCard(){
   <div id="tabContent">${renderTab(d)}</div>`;
 }
 function tabName(x){ return {overview:t('overview'),vaccination:t('vaccination'),deworming:t('deworming'),health:t('health'),training:t('training'),weight:t('weight')}[x]; }
+function compressImageToThumbnail(img){
+  const maxSize = APP_CONFIG.photos.maxSide || 320;
+  let w=img.width, h=img.height;
+  if(w > h && w > maxSize){ h=Math.round(h*maxSize/w); w=maxSize; }
+  else if(h >= w && h > maxSize){ w=Math.round(w*maxSize/h); h=maxSize; }
+  const canvas=document.createElement("canvas");
+  canvas.width=w; canvas.height=h;
+  const ctx=canvas.getContext("2d", {alpha:false});
+  ctx.fillStyle="#fff"; ctx.fillRect(0,0,w,h);
+  ctx.drawImage(img,0,0,w,h);
+  let quality=APP_CONFIG.photos.initialQuality || 0.68;
+  let dataUrl=canvas.toDataURL("image/jpeg", quality);
+  const target=APP_CONFIG.photos.targetBytes || 80000;
+  const minQuality=APP_CONFIG.photos.minQuality || 0.42;
+  while(dataUrlByteSize(dataUrl) > target && quality > minQuality){
+    quality=Math.max(minQuality, quality - 0.08);
+    dataUrl=canvas.toDataURL("image/jpeg", quality);
+  }
+  return dataUrl;
+}
 function loadPhoto(ev){
   const file=ev.target.files[0]; if(!file) return;
   const img = new Image(); const reader = new FileReader();
   reader.onload = () => { img.src = reader.result; };
   img.onload = () => {
-    const maxSize = 400; let w=img.width, h=img.height;
-    if(w > h && w > maxSize){ h=Math.round(h*maxSize/w); w=maxSize; } else if(h >= w && h > maxSize){ w=Math.round(w*maxSize/h); h=maxSize; }
-    const canvas=document.createElement("canvas"); canvas.width=w; canvas.height=h; canvas.getContext("2d").drawImage(img,0,0,w,h);
-    dog().photo=canvas.toDataURL("image/jpeg",0.72); save();
+    const d=dog(); if(!d) return;
+    d.photo=compressImageToThumbnail(img);
+    d.photoUpdatedAt=new Date().toISOString();
+    d.hasPhoto=true;
+    d.photoCloudDirty=true;
+    save();
   };
   reader.readAsDataURL(file);
 }
-function removePhoto(){ dog().photo=""; save(); }
+function removePhoto(){ const d=dog(); if(!d) return; d.photo=""; d.hasPhoto=false; d.photoUpdatedAt=new Date().toISOString(); d.photoCloudDirty=true; save(); }
 function renderTab(d){
   if(activeTab==="overview"){ const ev=[...(d.events||[])].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,20); return `<h3>${currentLang==='en'?'Latest records':'Poslední záznamy'}</h3>${renderEventsTable(ev)}${eventForm("note")}`; }
   if(activeTab==="vaccination") return renderEventsTable((d.events||[]).filter(e=>e.type==="vaccination")) + eventForm("vaccination");
@@ -2352,7 +3155,8 @@ function applyLanguageToStatic(){
   const importLabel=[...document.querySelectorAll('aside.panel label.secondary')].find(l=>l.querySelector('#importFile')); if(importLabel && importLabel.firstChild) importLabel.firstChild.nodeValue=t('importJson')+' ';
 
   const cardTitle=[...document.querySelectorAll("main.app section.panel h2")][0]; if(cardTitle) cardTitle.textContent=t('dogCard');
-  const cloud=document.getElementById("cloudReadyNote"); if(cloud) cloud.innerHTML=`${escapeHtml(t('cloudReady'))}<div class="cloud-structure-note">${currentLang==='en'?'Prepared schema: kennel / dogs / teamLogs / contacts / imports / members.':'Připravená struktura: kennel / dogs / teamLogs / contacts / imports / members.'}</div>`;
+  renderCloudStatusNote();
+  applyAuthTexts();
 
   const legend=document.querySelector('main.app section.panel .legend');
   if(legend) legend.innerHTML=`<span>🔵 ${t('legendTraining')}</span><span>🩷 ${t('legendRace')}</span><span>🔴 ${t('legendVet')}</span><span>🟣 ${t('legendPhysio')}</span><span>🟢 ${t('legendVaccination')}</span><span>🟤 ${t('legendDeworming')}</span><span>🟢 ${t('legendMeds')}</span><span>🔴 ${t('legendAcute')}</span><span>🟣 ${t('legendHeatBreeding')}</span>`;
@@ -2617,6 +3421,97 @@ function saveImportantContactsFromForm(){
   renderImportantContactsModal();
 }
 
+
+async function refreshAppAdminPanel(){
+  if(!firebaseReady || !firebaseDb || !cloudUser) return;
+  const status=document.getElementById('appAdminStatus');
+  if(!cloudAccess?.isAppAdmin){ if(status) status.textContent='Tento účet není appAdmin.'; return; }
+  try{
+    if(status) status.textContent='Načítám uživatele…';
+    const {collection, getDocs} = firebaseApi.fsMod;
+    const cols=APP_CONFIG.firebase.collections;
+    const snap=await getDocs(collection(firebaseDb, cols.users));
+    appAdminUsersCache=snap.docs.map(d=>({id:d.id,...(d.data()||{})})).sort((a,b)=>String(a.email||'').localeCompare(String(b.email||'')));
+    renderAppAdminUsers();
+    if(status) status.textContent=`Načteno ${appAdminUsersCache.length} uživatelů.`;
+  }catch(err){ console.error(err); if(status) status.textContent='Uživatelé se nepodařili načíst. Zkontroluj /appAdmins a Firestore rules.'; }
+}
+function openAppAdminPanel(){
+  const m=document.getElementById('appAdminModal'); if(m) m.classList.add('open');
+  refreshAppAdminPanel().catch(console.error);
+}
+function closeAppAdminPanel(){ document.getElementById('appAdminModal')?.classList.remove('open'); }
+function adminCardStatus(u){
+  if(!u.activeKennelId) return 'pending';
+  return u.status || 'active';
+}
+function renderAppAdminUsers(){
+  const box=document.getElementById('appAdminUsers'); if(!box) return;
+  if(!appAdminUsersCache.length){ box.innerHTML='<p class="small">Zatím žádní uživatelé. Uživatel se objeví po prvním přihlášení nebo vytvoření účtu.</p>'; return; }
+  box.innerHTML=appAdminUsersCache.map(u=>{
+    const status=adminCardStatus(u);
+    const uid=escapeAttr(u.id);
+    const role=u.memberRole || 'admin';
+    const plan=u.planUntil || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
+    const kennelName=u.kennelName || (u.email ? `Kennel ${u.email.split('@')[0]}` : 'Kennel');
+    return `<div class="admin-card ${escapeAttr(status)}">
+      <h3>${escapeHtml(u.email || u.id)}</h3>
+      <div class="admin-status-pill">UID: ${escapeHtml(u.id)}</div>
+      <div class="admin-status-pill">stav: ${escapeHtml(status)}</div>
+      ${u.activeKennelId?`<div class="admin-status-pill">kennel: ${escapeHtml(u.activeKennelId)}</div>`:''}
+      <label>Název kennelu<input id="adminKennelName_${uid}" value="${escapeAttr(kennelName)}"></label>
+      <label>Platné do<input id="adminPlanUntil_${uid}" type="date" value="${escapeAttr(plan)}"></label>
+      <label>Role<select id="adminRole_${uid}"><option value="admin" ${role==='admin'?'selected':''}>admin</option><option value="readOnly" ${role==='readOnly'?'selected':''}>readOnly</option></select></label>
+      <label>Stav<select id="adminStatus_${uid}"><option value="active" ${status==='active'?'selected':''}>active</option><option value="locked" ${status==='locked'?'selected':''}>locked</option><option value="pending" ${status==='pending'?'selected':''}>pending</option></select></label>
+      <div class="admin-actions">
+        <button type="button" onclick="activateBetaUser('${uid}')">Uložit / aktivovat</button>
+        <button type="button" class="secondary" onclick="setBetaUserReadOnly('${uid}')">Jen pro čtení</button>
+        <button type="button" class="danger-secondary" onclick="lockBetaUser('${uid}')">Zamknout</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function getAdminInput(uid, prefix){ return document.getElementById(`${prefix}_${uid}`)?.value || ''; }
+async function activateBetaUser(uid){
+  if(!cloudAccess?.isAppAdmin) return alert('Nemáš appAdmin oprávnění.');
+  const u=appAdminUsersCache.find(x=>x.id===uid); if(!u) return;
+  const {doc, setDoc, getDoc, serverTimestamp, Timestamp} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  const kennelId=u.activeKennelId || makeId('kennel');
+  const kennelName=getAdminInput(uid,'adminKennelName') || 'Kennel';
+  const planUntil=getAdminInput(uid,'adminPlanUntil') || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
+  const role=getAdminInput(uid,'adminRole') || 'admin';
+  const status=getAdminInput(uid,'adminStatus') || 'active';
+  const planUntilTs=Timestamp.fromDate(new Date(planUntil+'T23:59:59'));
+  const userRef=doc(firebaseDb, cols.users, uid);
+  const existing=await getDoc(userRef);
+  const email=(existing.exists()?existing.data().email:u.email)||'';
+  await setDoc(doc(firebaseDb, cols.kennels, kennelId), {id:kennelId,name:kennelName,status,planUntil,planUntilTs,ownerUid:uid,schemaVersion:DATA_SCHEMA_VERSION,clientVersion:APP_CONFIG.clientVersion,updatedAt:serverTimestamp()}, {merge:true});
+  await setDoc(doc(firebaseDb, cols.kennels, kennelId, cols.kennelMembers, uid), {uid,email,role,status,planUntil,planUntilTs,updatedAt:serverTimestamp()}, {merge:true});
+  await setDoc(userRef, {uid,email,status: status==='active'?'active':status,activeKennelId:kennelId,kennelName,memberRole:role,planUntil,updatedAt:serverTimestamp()}, {merge:true});
+  await refreshAppAdminPanel();
+}
+async function setBetaUserReadOnly(uid){
+  const roleEl=document.getElementById(`adminRole_${uid}`); if(roleEl) roleEl.value='readOnly';
+  const statusEl=document.getElementById(`adminStatus_${uid}`); if(statusEl) statusEl.value='active';
+  await activateBetaUser(uid);
+}
+async function lockBetaUser(uid){
+  const statusEl=document.getElementById(`adminStatus_${uid}`); if(statusEl) statusEl.value='locked';
+  await activateBetaUser(uid);
+}
+function seedCurrentUserAsAppAdminHelp(){
+  const uid=cloudUser?.uid || 'UID_TVEHO_UCTU';
+  alert(`Ve Firestore vytvoř dokument:\n\nappAdmins/${uid}\n\nPole:\nactive: true\nemail: ${cloudUser?.email || 'tvuj@email.cz'}\n\nPak obnov stránku.`);
+}
+
+const __originalRenderForAccess = render;
+render = function(){
+  __originalRenderForAccess();
+  renderAppAdminButton();
+  applyAccessRestrictions();
+};
+
 // Kennel v2 settings overrides and initialization
 const __kennelOriginalApplyBrandClean = applyKennelBrandClean;
 applyKennelBrandClean = function(){
@@ -2652,9 +3547,24 @@ resetKennelBrandClean = function(){
   currentLang = "cs"; eventLabels = eventLabelsCS;
   saveData(); render();
 };
-migrateData();
-applyTheme();
-render();
+async function bootApp(){
+  setupAuthGate();
+  migrateData();
+  applyTheme();
+  if(isFirebaseMode()){
+    const localBtn=document.getElementById('authContinueLocalBtn');
+    if(localBtn) localBtn.style.display='none';
+    document.body.classList.add('auth-locked');
+    renderCloudStatusNote();
+    await initFirebaseLayer();
+  }else if(isLocalLoginPreviewMode()){
+    showLocalLoginPreview();
+  }else{
+    hideAuthGate();
+    render();
+  }
+}
+bootApp();
 
 </script>
 </body>

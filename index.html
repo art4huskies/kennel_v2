@@ -1825,7 +1825,12 @@ async function createCloudAccount(){
     await firebaseApi.authMod.createUserWithEmailAndPassword(firebaseAuth, email, password);
   }catch(err){
     console.error(err);
-    setAuthStatus(authText('Účet se nepodařilo vytvořit.','Could not create account.'),'err');
+    const code=err?.code || '';
+    if(code.includes('email-already-in-use')){
+      setAuthStatus(authText('Účet s tímto e-mailem už existuje. Přihlas se, případně použij zapomenuté heslo.','An account with this email already exists. Sign in or use password reset.'),'warn');
+    }else{
+      setAuthStatus(authText('Účet se nepodařilo vytvořit.','Could not create account.'),'err');
+    }
   }
 }
 async function sendPasswordReset(){
@@ -2048,14 +2053,19 @@ async function saveDataToCloud(force=false){
     data.cloud.syncStatus = 'cloud';
     data.cloud.lastSyncedAt = new Date().toISOString();
     const payload=buildFirebasePayload();
-    await setDoc(doc(firebaseDb, cols.kennels, kennelId), {
-      id:kennelId,
-      name:data.kennel?.name || 'Kennel',
-      ownerUid:data.cloud.ownerUid || cloudUser.uid,
-      schemaVersion:DATA_SCHEMA_VERSION,
-      clientVersion:APP_CONFIG.clientVersion,
-      updatedAt:serverTimestamp()
-    }, {merge:true});
+    // Běžný uživatel nemá podle bezpečnostních pravidel právo upravovat dokument kennelu.
+    // Kennel metadata vytváří a mění pouze appAdmin ve Správě přístupů.
+    // Uživatel ukládá jen appData/current a dogPhotos ve svém vlastním kennelu.
+    if(cloudAccess?.isAppAdmin){
+      await setDoc(doc(firebaseDb, cols.kennels, kennelId), {
+        id:kennelId,
+        name:data.kennel?.name || 'Kennel',
+        ownerUid:data.cloud.ownerUid || cloudUser.uid,
+        schemaVersion:DATA_SCHEMA_VERSION,
+        clientVersion:APP_CONFIG.clientVersion,
+        updatedAt:serverTimestamp()
+      }, {merge:true});
+    }
     await setDoc(doc(firebaseDb, cols.kennels, kennelId, cols.appData, 'current'), {
       payload,
       schemaVersion:DATA_SCHEMA_VERSION,

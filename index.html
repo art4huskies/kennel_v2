@@ -430,6 +430,43 @@ header{position:relative;min-height:190px;padding:24px 28px;overflow:hidden;bord
   gap:12px;
   margin-bottom:12px;
 }
+
+/* --- Folded team diary: compact daily view --- */
+.team-log-panel.is-collapsed .team-log-body{display:none}
+.team-log-compact{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:16px;
+  padding:8px 10px;
+  margin:10px 0 0;
+}
+.team-log-compact-line{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  min-height:21px;
+  line-height:1.25;
+  font-size:13px;
+  color:#eafcff;
+}
+.team-log-compact-line + .team-log-compact-line{
+  margin-top:3px;
+  color:var(--muted);
+}
+.team-log-toggle-btn{
+  white-space:nowrap;
+  background:linear-gradient(135deg,var(--aurora),var(--aurora2));
+  color:#03202a;
+  border:none;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
+.team-log-toggle-btn:hover{filter:brightness(1.04)}
+@media(max-width:760px){
+  .team-log-compact{padding:8px 9px;border-radius:14px}
+  .team-log-compact-line{font-size:12px;gap:5px}
+  .team-log-toggle-btn{width:100%;margin-top:8px}
+}
 .team-form{
   display:grid;
   grid-template-columns:1fr .9fr 1.25fr .55fr .75fr;
@@ -1194,6 +1231,236 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
 .admin-kennel-select-hint{font-size:12px;color:var(--muted);margin:5px 0 0}
 @media(max-width:760px){.admin-search-row,.admin-existing-tools{grid-template-columns:1fr}.admin-search-hint{white-space:normal}}
 
+
+
+/* --- Weather strip: two narrow rows above team log --- */
+.weather-strip-panel{
+  margin:18px 18px 0;
+  padding:9px 14px;
+  border-radius:18px;
+  background:rgba(20,54,71,.72);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+.weather-strip-row{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  min-height:22px;
+  line-height:1.25;
+  font-size:13px;
+  color:#eafcff;
+}
+.weather-strip-row + .weather-strip-row{
+  margin-top:3px;
+  color:var(--muted);
+}
+.weather-main{font-weight:850;color:#fff}
+.weather-sep{color:rgba(255,255,255,.34);padding:0 2px}
+.weather-tip{color:#ffe6a8}
+.weather-tip.ok{color:#bfffdc}
+.weather-tip.warn{color:#ffe6a8}
+.weather-tip.danger{color:#ffd2d8}
+.weather-allow-btn{
+  padding:3px 7px;
+  font-size:12px;
+  border-radius:999px;
+  margin-left:4px;
+}
+body.auth-locked .weather-strip-panel{display:none!important}
+@media(max-width:760px){
+  .weather-strip-panel{margin:12px 12px 0;padding:8px 11px;border-radius:16px}
+  .weather-strip-row{font-size:12px;gap:5px}
+}
+
+/* --- Polished team diary panel: clean folded summary + mushing wording --- */
+.team-log-panel{
+  overflow:hidden;
+  background:linear-gradient(180deg, rgba(20,54,71,.92), rgba(12,37,50,.88));
+}
+.team-log-head{
+  display:block;
+  margin:0 0 10px;
+  padding:2px 2px 10px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.team-log-title-block h2{
+  margin:0 0 5px;
+  font-size:20px;
+  letter-spacing:.01em;
+}
+.team-log-title-block .small{
+  max-width:760px;
+  line-height:1.45;
+}
+.team-log-compact{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  padding:0;
+  margin:10px 0 12px;
+}
+.team-log-info-card{
+  min-height:76px;
+  padding:11px 12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.065);
+}
+.team-log-last-card{background:rgba(255,255,255,.075)}
+.team-log-30-card{background:linear-gradient(135deg, rgba(46,230,166,.10), rgba(66,217,255,.055))}
+body[data-theme="classic"] .team-log-30-card{background:linear-gradient(135deg, rgba(255,111,183,.13), rgba(255,179,217,.06))}
+body[data-theme="forest"] .team-log-30-card{background:linear-gradient(135deg, rgba(139,207,122,.13), rgba(214,181,109,.06))}
+.team-log-card-label{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.055em;
+  font-weight:900;
+  color:#dff;
+  margin-bottom:6px;
+  opacity:.94;
+}
+.team-log-compact-line{
+  display:block;
+  min-height:0;
+  font-size:13px;
+  line-height:1.38;
+  color:#eafcff;
+}
+.team-log-compact-line + .team-log-compact-line{margin-top:0;color:#eafcff}
+.team-log-toggle-btn{
+  width:100%;
+  margin:0 0 12px;
+  padding:11px 14px;
+  min-height:46px;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--aurora),var(--aurora2));
+  color:#03202a;
+  border:0;
+  box-shadow:0 8px 20px rgba(0,0,0,.22);
+  font-weight:950;
+  letter-spacing:.015em;
+  white-space:normal;
+}
+.team-log-toggle-btn:hover{filter:brightness(1.04)}
+.team-log-body{
+  overflow:hidden;
+  transition:max-height .22s ease, opacity .18s ease;
+}
+.team-log-panel.is-collapsed .team-log-body{display:none}
+.team-log-form-shell,
+.team-log-history-shell{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:18px;
+  padding:12px;
+  margin-top:10px;
+}
+.team-log-form-shell{background:rgba(255,255,255,.055)}
+.team-section-soft{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  padding:10px 12px 12px;
+  margin-top:12px;
+}
+.team-section-soft h3{margin-top:0}
+.team-log-form-actions{
+  justify-content:flex-end;
+  align-items:center;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.09);
+}
+.team-log-form-actions #saveTeamLogBtn{
+  min-width:160px;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
+.team-log-form-actions #clearTeamFormBtn{
+  background:rgba(255,255,255,.08);
+  color:var(--muted);
+  border:1px solid rgba(255,255,255,.16);
+  font-weight:750;
+}
+@media(max-width:760px){
+  .team-log-compact{grid-template-columns:1fr;gap:8px;margin:9px 0 10px}
+  .team-log-info-card{min-height:auto;padding:9px 10px;border-radius:14px}
+  .team-log-card-label{font-size:11px;margin-bottom:4px}
+  .team-log-compact-line{font-size:12px}
+  .team-log-toggle-btn{margin-bottom:10px;min-height:44px}
+  .team-log-form-shell,.team-log-history-shell{padding:10px;border-radius:16px}
+  .team-log-form-actions{display:grid;grid-template-columns:1fr;gap:8px}
+  .team-log-form-actions #saveTeamLogBtn{min-width:0;width:100%;order:1}
+  .team-log-form-actions #clearTeamFormBtn{width:100%;order:2}
+}
+
+
+
+/* --- My season: simple season period setting for diary statistics --- */
+.team-season-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+.team-season-button{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  max-width:100%;
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  color:#eafcff;
+  font-size:13px;
+  font-weight:850;
+  box-shadow:none;
+}
+.team-season-button:hover{background:rgba(255,255,255,.12)}
+.team-season-button .season-muted{color:var(--muted);font-weight:700}
+.season-settings-card{
+  width:min(520px,96vw);
+}
+.season-settings-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.season-settings-grid label{
+  display:block;
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+}
+.season-settings-grid select{
+  margin-top:5px;
+  min-height:44px;
+}
+.season-date-pair{
+  display:grid;
+  grid-template-columns:1fr 1.15fr;
+  gap:7px;
+}
+.season-preview-box{
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:16px;
+  background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.12);
+  color:#eafcff;
+  line-height:1.38;
+}
+@media(max-width:760px){
+  .team-season-button{width:100%;justify-content:center;border-radius:14px;white-space:normal;text-align:center}
+  .season-settings-grid{grid-template-columns:1fr}
+}
+
 </style>
 
   <!-- PWA / mobile home screen icon -->
@@ -1309,57 +1576,115 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
 </div>
 
 
-<section class="team-log-panel panel">
-  <div class="team-log-head">
-    <div>
-      <h2>Deník smečky</h2>
-      <div class="small">Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.</div>
-    </div>
-    <button type="button" class="secondary" onclick="clearTeamForm()">Vyčistit formulář</button>
-  </div>
 
-  <div class="team-form">
-    <input id="teamDate" type="date">
-    <select id="teamType">
-      <option value="training">Trénink</option>
-      <option value="race">Závod</option>
-    </select>
-    <select id="teamMusher"></select>
-    <input id="teamKm" type="number" step="0.1" placeholder="Km">
-    <input id="teamTime" type="text" placeholder="Čas na trati, např. 1:12:00">
-    <input id="teamElevation" type="number" step="1" placeholder="Převýšení m">
-    <input id="teamAvgSpeed" type="number" step="0.1" placeholder="Průměr km/h">
-    <input id="teamSource" type="text" placeholder="Zdroj dat: ručně / GPX / TCX / FIT" readonly>
-    <input id="teamTitle" class="full" placeholder="Název / místo, např. ranní trénink, Šediváčkův long">
-    <textarea id="teamNote" class="full" placeholder="Poznámka: teplota, trať, tempo, krmení, počasí..."></textarea>
-  </div>
-
-  <details id="trackImportPanel" class="track-import-panel">
-    <summary id="trackImportSummary">⌚ Import GPX / TCX / FIT z hodinek</summary>
-    <div class="track-import-body">
-      <div class="track-import-grid">
-        <label class="track-file-label" id="trackImportLabel">Vybrat soubor
-          <input id="trackImportFile" type="file" accept=".gpx,.tcx,.fit,.xml,application/gpx+xml,application/xml,text/xml" hidden onchange="importTrainingTrack(event)">
-        </label>
-        <button class="secondary" type="button" id="clearTrackImportBtn" onclick="clearImportedTrack()">Vyčistit import</button>
-      </div>
-      <div id="trackImportStatus" class="track-import-status small">GPX a TCX se načtou přímo. FIT je připravený jako první most; u běžných FIT souborů se pokusí načíst souhrnná data.</div>
-    </div>
-  </details>
-
-  <h3>Sestava</h3>
-  <div id="teamRoleHelp" class="small">Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.</div>
-  <div class="role-legend" aria-hidden="true"><span class="role-pill lead">L Leader</span><span class="role-pill team">T Team</span><span class="role-pill wheel">W Wheel</span></div>
-  <div id="teamDogPicker" class="team-dog-picker"></div>
-
-  <div class="actions">
-    <button type="button" onclick="saveTeamLog()">Uložit záznam</button>
-  </div>
-
-  <h3>Poslední záznamy smečky</h3>
-  <div id="teamLogList" class="small">Zatím bez záznamů.</div>
+<section id="weatherStrip" class="weather-strip-panel" aria-live="polite">
+  <div id="weatherStripLine1" class="weather-strip-row">📍 Počasí se načte podle aktuální polohy.</div>
+  <div id="weatherStripLine2" class="weather-strip-row"><span class="weather-tip ok">✔️ Žádná významná meteorologická upozornění.</span></div>
 </section>
 
+<section class="team-log-panel panel">
+  <div class="team-log-head">
+    <div class="team-log-title-block">
+      <h2>🐾 Deník smečky</h2>
+      <div class="small">Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.</div>
+      <div class="team-season-row">
+        <button id="seasonSettingsBtn" type="button" class="team-season-button" onclick="openSeasonSettings()">📅 Sezóna</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="teamLogCompact" class="team-log-compact" aria-live="polite">
+    <div class="team-log-info-card team-log-last-card">
+      <div class="team-log-card-label">📅 Poslední záznam</div>
+      <div id="teamLogCompactLine1" class="team-log-compact-line">Deník smečky je připravený.</div>
+    </div>
+    <div class="team-log-info-card team-log-30-card">
+      <div class="team-log-card-label">📈 Posledních 30 dní</div>
+      <div id="teamLogCompactLine2" class="team-log-compact-line">Rozbal deník pro první zápis tréninku nebo závodu.</div>
+    </div>
+  </div>
+
+  <button id="teamLogToggleBtn" type="button" class="team-log-toggle-btn" onclick="toggleTeamLogPanel(event)">Rozbalit deník smečky ▼</button>
+
+  <div id="teamLogBody" class="team-log-body">
+    <div class="team-log-form-shell">
+      <div class="team-form">
+        <input id="teamDate" type="date">
+        <select id="teamType">
+          <option value="training">Trénink</option>
+          <option value="race">Závod</option>
+        </select>
+        <select id="teamMusher"></select>
+        <input id="teamKm" type="number" step="0.1" placeholder="Km">
+        <input id="teamTime" type="text" placeholder="Čas na trati, např. 1:12:00">
+        <input id="teamElevation" type="number" step="1" placeholder="Převýšení m">
+        <input id="teamAvgSpeed" type="number" step="0.1" placeholder="Průměr km/h">
+        <input id="teamSource" type="text" placeholder="Zdroj dat: ručně / GPX / TCX / FIT" readonly>
+        <input id="teamTitle" class="full" placeholder="Název / místo, např. ranní trénink, Šediváčkův long">
+        <textarea id="teamNote" class="full" placeholder="Poznámka: teplota, trať, tempo, krmení, počasí..."></textarea>
+      </div>
+
+      <details id="trackImportPanel" class="track-import-panel">
+        <summary id="trackImportSummary">⌚ Import GPX / TCX / FIT z hodinek</summary>
+        <div class="track-import-body">
+          <div class="track-import-grid">
+            <label class="track-file-label" id="trackImportLabel">Vybrat soubor
+              <input id="trackImportFile" type="file" accept=".gpx,.tcx,.fit,.xml,application/gpx+xml,application/xml,text/xml" hidden onchange="importTrainingTrack(event)">
+            </label>
+            <button class="secondary" type="button" id="clearTrackImportBtn" onclick="clearImportedTrack()">Vyčistit import</button>
+          </div>
+          <div id="trackImportStatus" class="track-import-status small">GPX a TCX se načtou přímo. FIT je připravený jako první most; u běžných FIT souborů se pokusí načíst souhrnná data.</div>
+        </div>
+      </details>
+
+      <div class="team-section-soft">
+        <h3>Spřežení</h3>
+        <div id="teamRoleHelp" class="small">Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.</div>
+        <div class="role-legend" aria-hidden="true"><span class="role-pill lead">L Leader</span><span class="role-pill team">T Team</span><span class="role-pill wheel">W Wheel</span></div>
+        <div id="teamDogPicker" class="team-dog-picker"></div>
+      </div>
+
+      <div class="actions team-log-form-actions">
+        <button id="clearTeamFormBtn" type="button" class="secondary" onclick="clearTeamForm()">Vyčistit formulář</button>
+        <button id="saveTeamLogBtn" type="button" onclick="saveTeamLog()">Uložit záznam</button>
+      </div>
+    </div>
+
+    <div class="team-log-history-shell">
+      <h3>Poslední záznamy smečky</h3>
+      <div id="teamLogList" class="small">Zatím bez záznamů.</div>
+    </div>
+  </div>
+</section>
+
+
+
+<div id="seasonSettingsModal" class="brand-settings-clean" aria-hidden="true">
+  <div class="brand-settings-card-clean season-settings-card">
+    <h2>🐾 Moje sezóna</h2>
+    <p class="small">Nastav období, ze kterého se budou počítat sezónní statistiky, milníky a později Ohlédnutí za sezónou.</p>
+    <div class="season-settings-grid">
+      <label>Začátek sezóny
+        <div class="season-date-pair">
+          <select id="seasonStartDay"></select>
+          <select id="seasonStartMonth"></select>
+        </div>
+      </label>
+      <label>Konec sezóny
+        <div class="season-date-pair">
+          <select id="seasonEndDay"></select>
+          <select id="seasonEndMonth"></select>
+        </div>
+      </label>
+    </div>
+    <div id="seasonPreviewBox" class="season-preview-box small">📅 Sezóna se dopočítá automaticky podle dnešního data.</div>
+    <div class="brand-settings-actions-clean">
+      <button type="button" onclick="saveSeasonSettings()">Uložit</button>
+      <button class="secondary" type="button" onclick="resetSeasonSettings()">Výchozí 1. září – 30. dubna</button>
+      <button class="secondary" type="button" onclick="closeSeasonSettings()">Zavřít</button>
+    </div>
+  </div>
+</div>
 
 <main class="app">
   <aside class="panel dog-sidebar">
@@ -1480,7 +1805,7 @@ const translations = {
     kennelSettings: "Nastavení kennelu", kennelName: "Název kennelu", kennelSubtitle: "Podtitulek", kennelLogo: "Logo kennelu", theme: "Barevný motiv", language: "Jazyk", cloudReady: "Přihlášeno. Data jsou chráněna a průběžně ukládána.",
     needName: "Zadej jméno psa.", needDate: "Zadej datum.", confirmDelete: "Opravdu smazat tento záznam?", confirmArchive: "Archivovat tohoto psa? Zůstane uložený v archivu.", confirmRestore: "Vrátit psa mezi aktivní?", confirmRemoveDog: "Trvale odstranit kartu psa? Používej jen pro omylem založené duplicity. Historie psa se smaže.",
     massConfirm: "Přidat stejný záznam vybraným psům?", noMassDogs: "Vyber alespoň jednoho psa.",
-    teamLog: "Deník smečky", teamLogHelp: "Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.", clearForm: "Vyčistit formulář", team: "Sestava", saveTeamLog: "Uložit záznam", latestTeamLogs: "Poslední záznamy smečky",
+    teamLog: "🐾 Deník smečky", teamLogHelp: "Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.", clearForm: "Vyčistit formulář", team: "Spřežení", saveTeamLog: "Uložit záznam", latestTeamLogs: "Poslední záznamy smečky",
     phTeamKm: "Km", phTeamTime: "Čas na trati, např. 1:12", phTeamTitle: "Název / místo, např. ranní trénink, Šediváčkův long", phTeamNote: "Poznámka: teplota, trať, tempo, krmení, počasí...",
     phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se v cloudu ukládají odděleně jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON",
     legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky", legendVet: "veterina", legendPhysio: "fyzio",
@@ -1501,7 +1826,7 @@ const translations = {
     kennelSettings: "Kennel settings", kennelName: "Kennel name", kennelSubtitle: "Subtitle", kennelLogo: "Kennel logo", theme: "Color theme", language: "Language", cloudReady: "Signed in. Data is protected and saved continuously.",
     needName: "Enter dog name.", needDate: "Enter date.", confirmDelete: "Delete this record?", confirmArchive: "Archive this dog? The record will stay in the archive.", confirmRestore: "Restore this dog to active?", confirmRemoveDog: "Permanently remove this dog card? Use only for accidentally created duplicates. The dog history will be deleted.",
     massConfirm: "Add the same record to selected dogs?", noMassDogs: "Select at least one dog.",
-    teamLog: "Team log", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save team log", latestTeamLogs: "Latest team logs",
+    teamLog: "🐾 Team log", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save team log", latestTeamLogs: "Latest team logs",
     phTeamKm: "Km", phTeamTime: "Time on trail, e.g. 1:12", phTeamTitle: "Title / place, e.g. morning training, long-distance race", phTeamNote: "Note: temperature, trail, pace, feeding, weather...",
     phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are stored separately as small thumbnails in cloud mode. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
     legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication", legendVet: "vet", legendPhysio: "physio",
@@ -1985,7 +2310,7 @@ async function handleCloudUserReady(user){
     }else{
       data=createDemoData(); migrateData(); data.cloud.kennelId=activeCloudKennelId; data.cloud.access=cloudAccess;
     }
-    selectedDogId = data.dogs?.find(d=>d.status!=="archived")?.id || data.dogs?.[0]?.id || null;
+    selectedDogId = null;
     hideAuthGate();
     render();
   }catch(err){
@@ -2241,7 +2566,7 @@ function renderAppAdminButton(){
   }else host.innerHTML='';
 }
 let data = loadData();
-let selectedDogId = data.dogs?.find(d=>d.status!=="archived")?.id || data.dogs?.[0]?.id || null;
+let selectedDogId = null;
 let activeTab = "overview";
 let dogListMode = "active";
 let editingEventId = null;
@@ -2259,6 +2584,7 @@ function migrateData(){
   if(!data.settings) data.settings = {};
   data.settings.language = data.settings.language || localStorage.getItem("kennelAuroraLang") || "cs";
   data.settings.theme = data.settings.theme || localStorage.getItem("kennelAuroraTheme") || "classic";
+  if(!data.settings.season || typeof data.settings.season!=="object") data.settings.season={start:"09-01", end:"04-30", repeat:true};
   ensureCloudShape();
   data.contacts = normalizeImportantContacts(data.contacts);
   data.dogs.forEach(d => {
@@ -2359,8 +2685,8 @@ function renderDogList(){
   const dogs = visibleDogs();
   box.innerHTML = `
     <div class="dog-list-tabs">
-      <button class="secondary ${dogListMode==='active'?'mini-active':''}" onclick="dogListMode='active'; selectedDogId=activeDogs()[0]?.id||null; activeTab='overview'; render()">${t('activeDogs')} (${activeDogs().length})</button>
-      <button class="secondary ${dogListMode==='archived'?'mini-active':''}" onclick="dogListMode='archived'; selectedDogId=visibleDogs()[0]?.id||null; activeTab='overview'; render()">${t('archivedDogs')} (${data.dogs.filter(d=>d.status==='archived').length})</button>
+      <button class="secondary ${dogListMode==='active'?'mini-active':''}" onclick="dogListMode='active'; selectedDogId=null; activeTab='overview'; render()">${t('activeDogs')} (${activeDogs().length})</button>
+      <button class="secondary ${dogListMode==='archived'?'mini-active':''}" onclick="dogListMode='archived'; selectedDogId=null; activeTab='overview'; render()">${t('archivedDogs')} (${data.dogs.filter(d=>d.status==='archived').length})</button>
     </div>
     ${dogs.length ? `<div class="compact-dog-grid">${dogs.map(d=>`
       <div class="compact-dog-item ${d.id===selectedDogId?'active':''} ${d.status==='archived'?'archived-dog':''}" onclick="selectedDogId='${d.id}';activeTab='overview';render()" title="${escapeAttr(d.name)}">
@@ -2705,7 +3031,7 @@ function editEvent(id){ editingEventId=id; renderCard(); setTimeout(()=>document
 function cancelEdit(){ editingEventId=null; renderCard(); }
 function updateEvent(){ const d=dog(), e=d.events.find(x=>x.id===editingEventId); if(!e) return; const date=document.getElementById("evDate").value; if(!date) return alert(t('needDate')); e.date=date; e.type=document.getElementById("evType").value; e.title=document.getElementById("evTitle").value.trim()||trEvent(e.type); e.note=document.getElementById("evNote").value.trim(); editingEventId=null; save(); }
 function deleteEvent(id){ const d=dog(); if(!confirm(t('confirmDelete'))) return; d.events=d.events.filter(e=>e.id!==id); if(editingEventId===id) editingEventId=null; save(); }
-function openArchiveDialog(){ const d=dog(); if(!d) return; const reason=prompt(currentLang==='en'?'Reason: sold, deceased, new home, retired...':'Důvod: prodán, zemřel, nový domov, vyřazen...',''); if(reason===null) return; const note=prompt(t('archiveNote'),'') || ''; if(!confirm(t('confirmArchive'))) return; d.status='archived'; d.archiveReason=reason; d.archiveDate=new Date().toISOString().slice(0,10); d.archiveNote=note; massSelection.delete(d.id); dogListMode='active'; selectedDogId=activeDogs()[0]?.id || null; save(); }
+function openArchiveDialog(){ const d=dog(); if(!d) return; const reason=prompt(currentLang==='en'?'Reason: sold, deceased, new home, retired...':'Důvod: prodán, zemřel, nový domov, vyřazen...',''); if(reason===null) return; const note=prompt(t('archiveNote'),'') || ''; if(!confirm(t('confirmArchive'))) return; d.status='archived'; d.archiveReason=reason; d.archiveDate=new Date().toISOString().slice(0,10); d.archiveNote=note; massSelection.delete(d.id); dogListMode='active'; selectedDogId=null; save(); }
 function restoreDog(){ const d=dog(); if(!d || !confirm(t('confirmRestore'))) return; d.status='active'; dogListMode='active'; selectedDogId=d.id; save(); }
 
 function renderCalendar(){
@@ -2732,7 +3058,7 @@ function renderDayEvents(){
   }).join("");
 }
 function exportData(){ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="kennel-book-zaloha.json"; a.click(); }
-function importData(ev){ const file=ev.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ try{ data=JSON.parse(reader.result); migrateData(); selectedDogId=activeDogs()[0]?.id || data.dogs[0]?.id || null; save(); }catch(e){ alert(currentLang==='en'?'File could not be loaded.':'Soubor se nepodařilo načíst.'); } }; reader.readAsText(file); }
+function importData(ev){ const file=ev.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ try{ data=JSON.parse(reader.result); migrateData(); selectedDogId=null; save(); }catch(e){ alert(currentLang==='en'?'File could not be loaded.':'Soubor se nepodařilo načíst.'); } }; reader.readAsText(file); }
 
 function ensureTeamLogData(){ if(!data.teamLogs) data.teamLogs=[]; if(!Array.isArray(data.teamLogs)) data.teamLogs=[]; }
 function getMusherLabelByIndex(idx){
@@ -3178,6 +3504,192 @@ function renderTeamLogEntry(l){
   const author = l.createdByEmail ? `<br><span class="small">zapsal/a: ${escapeHtml(l.createdByEmail)}${l.createdAt?' · '+escapeHtml(String(l.createdAt).slice(0,10)):''}</span>` : '';
   return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${elevation}${avg}${source}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${author}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
 }
+
+function getTeamLogCollapsed(){
+  const saved=localStorage.getItem("kennelTeamLogCollapsed");
+  return saved===null ? true : saved !== "0";
+}
+function setTeamLogCollapsed(collapsed){
+  localStorage.setItem("kennelTeamLogCollapsed", collapsed ? "1" : "0");
+  applyTeamLogCollapsedState();
+}
+function toggleTeamLogPanel(ev){
+  if(ev) ev.stopPropagation();
+  setTeamLogCollapsed(!getTeamLogCollapsed());
+}
+function applyTeamLogCollapsedState(){
+  const panel=document.querySelector('.team-log-panel');
+  const btn=document.getElementById('teamLogToggleBtn');
+  const collapsed=getTeamLogCollapsed();
+  if(panel) panel.classList.toggle('is-collapsed', collapsed);
+  if(btn) btn.textContent = currentLang==='en' ? (collapsed?'Open team diary ▼':'Fold team diary ▲') : (collapsed?'Rozbalit deník smečky ▼':'Sbalit deník smečky ▲');
+}
+
+function ensureSeasonSettings(){
+  data.settings=data.settings||{};
+  if(!data.settings.season || typeof data.settings.season!=="object") data.settings.season={start:"09-01", end:"04-30", repeat:true};
+  data.settings.season.start = /^\d{2}-\d{2}$/.test(data.settings.season.start||"") ? data.settings.season.start : "09-01";
+  data.settings.season.end = /^\d{2}-\d{2}$/.test(data.settings.season.end||"") ? data.settings.season.end : "04-30";
+  if(data.settings.season.repeat===undefined) data.settings.season.repeat=true;
+}
+function seasonKeyToParts(key){
+  const [m,d]=String(key||"09-01").split('-').map(x=>parseInt(x,10));
+  return {month:Number.isFinite(m)?m:9, day:Number.isFinite(d)?d:1};
+}
+function seasonPartsToKey(month, day){ return `${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`; }
+function daysInMonthSimple(month){ return new Date(2024, month, 0).getDate(); }
+function seasonKeyNumber(key){ const p=seasonKeyToParts(key); return p.month*100+p.day; }
+function getSeasonYears(refDate=new Date()){
+  ensureSeasonSettings();
+  const start=data.settings.season.start;
+  const end=data.settings.season.end;
+  const startN=seasonKeyNumber(start), endN=seasonKeyNumber(end);
+  const y=refDate.getFullYear();
+  const nowN=(refDate.getMonth()+1)*100+refDate.getDate();
+  let startYear=y, endYear=y;
+  if(startN>endN){
+    if(nowN>=startN){ startYear=y; endYear=y+1; }
+    else { startYear=y-1; endYear=y; }
+  }else{
+    if(nowN<startN){ startYear=y-1; endYear=y-1; }
+    else { startYear=y; endYear=y; }
+  }
+  return {startYear,endYear};
+}
+function getSeasonRange(refDate=new Date()){
+  ensureSeasonSettings();
+  const sy=getSeasonYears(refDate);
+  const sp=seasonKeyToParts(data.settings.season.start);
+  const ep=seasonKeyToParts(data.settings.season.end);
+  const startDate=new Date(sy.startYear, sp.month-1, sp.day, 0,0,0,0);
+  const endDate=new Date(sy.endYear, ep.month-1, ep.day, 23,59,59,999);
+  return {startDate,endDate,...sy};
+}
+function getSeasonLabel(){
+  const r=getSeasonRange(new Date());
+  if(r.startYear===r.endYear) return String(r.startYear);
+  return `${r.startYear}/${String(r.endYear).slice(-2)}`;
+}
+function formatSeasonDate(key){
+  const p=seasonKeyToParts(key);
+  const monthsCs=['ledna','února','března','dubna','května','června','července','srpna','září','října','listopadu','prosince'];
+  const monthsEn=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return currentLang==='en' ? `${monthsEn[p.month-1]} ${p.day}` : `${p.day}. ${monthsCs[p.month-1]}`;
+}
+function renderSeasonButton(){
+  ensureSeasonSettings();
+  const btn=document.getElementById('seasonSettingsBtn');
+  if(!btn) return;
+  const label=currentLang==='en'?'Season':'Sezóna';
+  btn.innerHTML=`📅 ${label} ${getSeasonLabel()} <span class="season-muted">· ${formatSeasonDate(data.settings.season.start)} – ${formatSeasonDate(data.settings.season.end)} ▼</span>`;
+}
+function fillSeasonSelects(){
+  const monthsCs=['leden','únor','březen','duben','květen','červen','červenec','srpen','září','říjen','listopad','prosinec'];
+  const monthsEn=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const monthLabels=currentLang==='en'?monthsEn:monthsCs;
+  ['seasonStartMonth','seasonEndMonth'].forEach(id=>{
+    const sel=document.getElementById(id); if(!sel) return;
+    sel.innerHTML=monthLabels.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');
+  });
+  function fillDays(id, month){
+    const sel=document.getElementById(id); if(!sel) return;
+    const max=daysInMonthSimple(month);
+    const old=parseInt(sel.value||'1',10);
+    sel.innerHTML=Array.from({length:max},(_,i)=>`<option value="${i+1}">${i+1}</option>`).join('');
+    sel.value=String(Math.min(old||1,max));
+  }
+  const sp=seasonKeyToParts(data.settings.season.start), ep=seasonKeyToParts(data.settings.season.end);
+  const sm=document.getElementById('seasonStartMonth'), em=document.getElementById('seasonEndMonth');
+  if(sm) sm.value=String(sp.month); if(em) em.value=String(ep.month);
+  fillDays('seasonStartDay', sp.month); fillDays('seasonEndDay', ep.month);
+  const sd=document.getElementById('seasonStartDay'), ed=document.getElementById('seasonEndDay');
+  if(sd) sd.value=String(Math.min(sp.day, daysInMonthSimple(sp.month)));
+  if(ed) ed.value=String(Math.min(ep.day, daysInMonthSimple(ep.month)));
+  ['seasonStartMonth','seasonEndMonth'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.onchange=()=>{ fillDays(id==='seasonStartMonth'?'seasonStartDay':'seasonEndDay', parseInt(el.value,10)); updateSeasonPreviewFromInputs(); };
+  });
+  ['seasonStartDay','seasonEndDay'].forEach(id=>{ const el=document.getElementById(id); if(el) el.onchange=updateSeasonPreviewFromInputs; });
+}
+function getSeasonInputKeys(){
+  const sm=parseInt(document.getElementById('seasonStartMonth')?.value||'9',10);
+  const sd=parseInt(document.getElementById('seasonStartDay')?.value||'1',10);
+  const em=parseInt(document.getElementById('seasonEndMonth')?.value||'4',10);
+  const ed=parseInt(document.getElementById('seasonEndDay')?.value||'30',10);
+  return {start:seasonPartsToKey(sm,sd), end:seasonPartsToKey(em,ed)};
+}
+function updateSeasonPreviewFromInputs(){
+  const box=document.getElementById('seasonPreviewBox'); if(!box) return;
+  const keys=getSeasonInputKeys();
+  const old=data.settings?.season ? {...data.settings.season} : {start:'09-01',end:'04-30',repeat:true};
+  data.settings=data.settings||{}; data.settings.season={...old,start:keys.start,end:keys.end};
+  box.innerHTML=`📅 ${currentLang==='en'?'Season':'Sezóna'} ${getSeasonLabel()}<br>${formatSeasonDate(keys.start)} – ${formatSeasonDate(keys.end)}`;
+  data.settings.season=old;
+}
+function openSeasonSettings(){
+  ensureSeasonSettings();
+  fillSeasonSelects();
+  updateSeasonPreviewFromInputs();
+  const modal=document.getElementById('seasonSettingsModal');
+  if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+}
+function closeSeasonSettings(){
+  const modal=document.getElementById('seasonSettingsModal');
+  if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+}
+function saveSeasonSettings(){
+  const keys=getSeasonInputKeys();
+  ensureSeasonSettings();
+  data.settings.season.start=keys.start;
+  data.settings.season.end=keys.end;
+  data.settings.season.repeat=true;
+  closeSeasonSettings();
+  save();
+}
+function resetSeasonSettings(){
+  ensureSeasonSettings();
+  data.settings.season.start='09-01';
+  data.settings.season.end='04-30';
+  fillSeasonSelects();
+  updateSeasonPreviewFromInputs();
+}
+
+function renderTeamLogCompact(){
+  const line1=document.getElementById('teamLogCompactLine1');
+  const line2=document.getElementById('teamLogCompactLine2');
+  if(!line1 || !line2) return;
+  ensureTeamLogData();
+  const logs=[...data.teamLogs].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!logs.length){
+    line1.textContent = currentLang==='en' ? 'No records yet.' : 'Zatím bez záznamů.';
+    line2.textContent = currentLang==='en' ? 'Open the diary to add the first training or race.' : 'Rozbal deník pro první zápis tréninku nebo závodu.';
+    return;
+  }
+  const latest=logs[0];
+  const latestDogCount=(latest.dogNames||[]).length;
+  const latestType=latest.type==='race' ? trEvent('race') : trEvent('training');
+  const latestTitle=latest.title ? ` · ${latest.title}` : '';
+  const latestElevation=latest.elevation ? ` · ↗ ${latest.elevation} m` : '';
+  line1.textContent = `${fmt(latest.date)} · ${latestType}${latestTitle} · ${latest.km||'—'} km${latestElevation} · ${latestDogCount} ${currentLang==='en'?'dogs':'psů'}`;
+  const now=new Date();
+  const since=new Date(now.getTime()-30*24*60*60*1000);
+  const recent=logs.filter(l=>{
+    const d=new Date(l.date+'T00:00:00');
+    return !isNaN(d) && d>=since && d<=now;
+  });
+  const totalKm=recent.reduce((sum,l)=>sum+(parseFloat(String(l.km||'').replace(',','.'))||0),0);
+  const totalElevation=recent.reduce((sum,l)=>sum+(parseFloat(String(l.elevation||'').replace(',','.'))||0),0);
+  const unique=new Set();
+  recent.forEach(l=>{
+    (l.dogs||[]).forEach(id=>unique.add(String(id)));
+    if((!l.dogs || !l.dogs.length) && l.dogNames) l.dogNames.forEach(n=>unique.add(String(n)));
+  });
+  const kmTxt=totalKm.toFixed(totalKm%1?1:0);
+  const elevTxt=totalElevation ? ` · 🏔 ${Math.round(totalElevation)} m` : '';
+  line2.textContent = currentLang==='en'
+    ? `📏 ${kmTxt} km · 🐾 ${recent.length} records${elevTxt} · ${unique.size} dogs`
+    : `📏 ${kmTxt} km · 🐾 ${recent.length} záznamů${elevTxt} · ${unique.size} psů`;
+}
+
 function renderTeamLogList(){
   ensureTeamLogData();
   const box=document.getElementById("teamLogList"); if(!box) return;
@@ -3190,12 +3702,12 @@ function renderTeamLogList(){
   box.innerHTML=`<div class="team-history-grid"><div class="team-log-list-compact">${latest.map(renderTeamLogEntry).join("")}${olderHtml}</div>${renderTeamMiniChart(logs)}</div>`;
 }
 function deleteTeamLog(id){ ensureTeamLogData(); if(!confirm(currentLang==='en'?'Delete team log? Dog card records will stay.':'Smazat team log? Záznamy z karet psů zůstanou zachované.')) return; data.teamLogs=data.teamLogs.filter(l=>l.id!==id); save(); }
-function renderTeamLog(){ renderTeamMusherSelect(); renderTeamDogPicker(); renderTeamLogList(); }
+function renderTeamLog(){ renderTeamMusherSelect(); renderTeamDogPicker(); renderTeamLogList(); renderTeamLogCompact(); renderSeasonButton(); applyTeamLogCollapsedState(); }
 
 function setTheme(theme){ data.settings.theme=theme; localStorage.setItem("kennelAuroraTheme", theme); applyTheme(); saveData(); }
 function applyTheme(){ const theme=(data.settings&&data.settings.theme)||localStorage.getItem("kennelAuroraTheme")||"classic"; document.body.dataset.theme=theme; const sel=document.getElementById("kennelThemeSelectClean"); if(sel) sel.value=theme; }
 function setLanguage(lang){ currentLang=lang; data.settings.language=lang; localStorage.setItem("kennelAuroraLang", lang); eventLabels=lang==="en"?eventLabelsEN:eventLabelsCS; saveData(); render(); }
-function render(){ migrateData(); applyTheme(); if(typeof applyKennelBrandClean === "function") applyKennelBrandClean(); renderUserSessionBar(); renderTeamLog(); renderDogList(); renderCard(); renderCalendar(); if(selectedDate) renderDayEvents(); applyLanguageToStatic(); }
+function render(){ migrateData(); applyTheme(); if(typeof applyKennelBrandClean === "function") applyKennelBrandClean(); renderUserSessionBar(); renderTeamLog(); renderDogList(); renderCard(); renderCalendar(); if(selectedDate) renderDayEvents(); applyLanguageToStatic(); initKennelWeather(); }
 function setLabelTextFor(controlId, text){
   const el=document.getElementById(controlId); const label=el?.closest('label');
   if(label && label.firstChild && label.firstChild.nodeType===Node.TEXT_NODE) label.firstChild.nodeValue=text;
@@ -3241,7 +3753,8 @@ function applyLanguageToStatic(){
   if(teamPanel){
     const h2=teamPanel.querySelector('.team-log-head h2'); if(h2) h2.textContent=t('teamLog');
     const help=teamPanel.querySelector('.team-log-head .small'); if(help) help.textContent=t('teamLogHelp');
-    const clearBtn=teamPanel.querySelector('.team-log-head button'); if(clearBtn) clearBtn.textContent=t('clearForm');
+    const toggleBtn=document.getElementById('teamLogToggleBtn'); if(toggleBtn) applyTeamLogCollapsedState();
+    const clearBtn=document.getElementById('clearTeamFormBtn'); if(clearBtn) clearBtn.textContent=t('clearForm');
     const typeSel=document.getElementById('teamType'); if(typeSel){ [...typeSel.options].forEach(o=>{ o.textContent=o.value==='race'?trEvent('race'):trEvent('training'); }); }
     const km=document.getElementById('teamKm'); if(km) km.placeholder=t('phTeamKm');
     const musher=document.getElementById('teamMusher'); if(musher) renderTeamMusherSelect();
@@ -3256,7 +3769,7 @@ function applyLanguageToStatic(){
     const importClear=document.getElementById('clearTrackImportBtn'); if(importClear) importClear.textContent=t('clearTrackImport');
     const importStatus=document.getElementById('trackImportStatus'); if(importStatus && !importedTrackMeta && !importStatus.classList.contains('ok') && !importStatus.classList.contains('warn') && !importStatus.classList.contains('err')) importStatus.textContent=t('importTrackHelp');
     const h3s=teamPanel.querySelectorAll('h3'); if(h3s[0]) h3s[0].textContent=t('team'); if(h3s[1]) h3s[1].textContent=t('latestTeamLogs');
-    const saveBtn=teamPanel.querySelector('.actions button'); if(saveBtn) saveBtn.textContent=t('saveTeamLog');
+    const saveBtn=document.getElementById('saveTeamLogBtn'); if(saveBtn) saveBtn.textContent=t('saveTeamLog');
   }
 
   ensureImportantContactsButton();
@@ -3834,6 +4347,154 @@ async function bootApp(){
     render();
   }
 }
+
+/* --- Weather strip from Open-Meteo: current location, no Firebase writes --- */
+let kennelWeatherLoaded = false;
+const KENNEL_WEATHER_CACHE_KEY = 'kennelBookWeatherCacheV1';
+
+function weatherSetLines(line1, line2, level='ok'){
+  const l1=document.getElementById('weatherStripLine1');
+  const l2=document.getElementById('weatherStripLine2');
+  if(l1) l1.innerHTML=line1;
+  if(l2) l2.innerHTML=`<span class="weather-tip ${level}">${line2}</span>`;
+}
+function weatherEsc(v){
+  return String(v ?? '').replace(/[&<>"]/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+}
+function weatherRound(v, digits=0){
+  if(v===null || v===undefined || Number.isNaN(Number(v))) return '—';
+  return Number(v).toFixed(digits).replace('.', ',');
+}
+function weatherCodeInfo(code){
+  const c=Number(code);
+  if(c===0) return ['☀️','Jasno'];
+  if(c===1) return ['🌤','Převážně jasno'];
+  if(c===2) return ['⛅','Polojasno'];
+  if(c===3) return ['☁️','Zataženo'];
+  if(c===45 || c===48) return ['🌫','Mlha'];
+  if([51,53,55,56,57].includes(c)) return ['🌦','Mrholení'];
+  if([61,63,65,66,67,80,81,82].includes(c)) return ['🌧','Déšť'];
+  if([71,73,75,77,85,86].includes(c)) return ['🌨','Sněžení'];
+  if([95,96,99].includes(c)) return ['⛈','Bouřky'];
+  return ['🌡','Počasí'];
+}
+function weatherMakeTip(values){
+  const tempNow=values.currentTemp;
+  const tempMax=values.tempMax;
+  const windMax=values.windMax;
+  const rainSum=values.rainSum;
+  const snowSum=values.snowSum;
+  const uvMax=values.uvMax;
+  const hasStorm=values.hasStorm;
+  const icingRisk=values.icingRisk;
+
+  if(tempMax >= 32) return ['danger','🔥 Velmi vysoké teploty. Pozor na přehřátí.'];
+  if(tempMax >= 25 || tempNow >= 25) return ['warn','🔥 Vysoké teploty. Dbejte na dostatek vody a chlazení psů.'];
+  if(windMax >= 12) return ['warn','🌬 Silný vítr. Pozor na padající větve a létající předměty. 🛸'];
+  if(hasStorm) return ['warn','⛈ Očekávají se bouřky. Sledujte vývoj počasí.'];
+  if(rainSum > 10) return ['warn','🌧 Vydatné srážky. Počítejte s podmáčeným terénem.'];
+  if(snowSum > 5) return ['warn',`❄️ Napadla nová vrstva sněhu (${weatherRound(snowSum)} cm). Podmínky na trasách se mohou změnit.`];
+  if(icingRisk) return ['warn','🧊 Riziko náledí. Zvýšená opatrnost je na místě.'];
+  if(uvMax >= 7) return ['warn','☀️ Vysoký UV index. Chraňte sebe i psy před dlouhým pobytem na přímém slunci.'];
+  return ['ok','✔️ Žádná významná meteorologická upozornění.'];
+}
+function weatherNearestIndex(times){
+  const now=Date.now();
+  let best=0, bestDiff=Infinity;
+  times.forEach((t,i)=>{
+    const diff=Math.abs(new Date(t).getTime()-now);
+    if(diff<bestDiff){ bestDiff=diff; best=i; }
+  });
+  return best;
+}
+function weatherNext24Indexes(times){
+  const now=Date.now();
+  const end=now+24*60*60*1000;
+  return times.map((t,i)=>[new Date(t).getTime(),i]).filter(([ms])=>ms>=now-60*60*1000 && ms<=end).map(([,i])=>i);
+}
+async function initKennelWeather(force=false){
+  if(kennelWeatherLoaded && !force) return;
+  const panel=document.getElementById('weatherStrip');
+  if(!panel) return;
+  kennelWeatherLoaded = true;
+
+  const cachedRaw=localStorage.getItem(KENNEL_WEATHER_CACHE_KEY);
+  if(cachedRaw){
+    try{
+      const cached=JSON.parse(cachedRaw);
+      if(cached && Date.now() - cached.ts < 30*60*1000){
+        weatherRenderData(cached.payload);
+        return;
+      }
+    }catch(e){}
+  }
+
+  if(!navigator.geolocation){
+    weatherSetLines('📍 Počasí není v tomto prohlížeči dostupné.', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+    return;
+  }
+
+  weatherSetLines('📍 Načítám počasí podle aktuální polohy…', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    try{
+      const lat=pos.coords.latitude.toFixed(4);
+      const lon=pos.coords.longitude.toFixed(4);
+      const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,rain,snowfall,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,precipitation,rain,snowfall,weather_code,wind_speed_10m,uv_index&daily=temperature_2m_max,precipitation_sum,rain_sum,snowfall_sum,uv_index_max&forecast_days=2&timezone=auto&wind_speed_unit=ms`;
+      const res=await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('weather fetch failed');
+      const payload=await res.json();
+      localStorage.setItem(KENNEL_WEATHER_CACHE_KEY, JSON.stringify({ts:Date.now(), payload}));
+      weatherRenderData(payload);
+    }catch(err){
+      console.warn('Weather load failed', err);
+      weatherSetLines('🌡 Počasí se teď nepodařilo načíst.', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+    }
+  }, err=>{
+    console.warn('Geolocation denied/unavailable', err);
+    weatherSetLines('📍 Počasí podle polohy není povoleno. <button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Povolit</button>', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+  }, {enableHighAccuracy:false, timeout:9000, maximumAge:30*60*1000});
+}
+function weatherRenderData(payload){
+  const current=payload?.current || {};
+  const hourly=payload?.hourly || {};
+  const daily=payload?.daily || {};
+  const times=hourly.time || [];
+  const nowIdx=times.length ? weatherNearestIndex(times) : 0;
+  const nextIdxs=times.length ? weatherNext24Indexes(times) : [];
+  const arrVal=(arr,i)=>Array.isArray(arr) ? arr[i] : undefined;
+  const maxFrom=(arr, idxs)=>{
+    const vals=idxs.map(i=>Number(arrVal(arr,i))).filter(v=>!Number.isNaN(v));
+    return vals.length ? Math.max(...vals) : 0;
+  };
+  const sumFrom=(arr, idxs)=>{
+    const vals=idxs.map(i=>Number(arrVal(arr,i))).filter(v=>!Number.isNaN(v));
+    return vals.reduce((a,b)=>a+b,0);
+  };
+  const codes=nextIdxs.map(i=>Number(arrVal(hourly.weather_code,i))).filter(v=>!Number.isNaN(v));
+  const currentCode=current.weather_code ?? arrVal(hourly.weather_code, nowIdx);
+  const [icon, desc]=weatherCodeInfo(currentCode);
+  const tempNow=current.temperature_2m ?? arrVal(hourly.temperature_2m, nowIdx);
+  const humidity=current.relative_humidity_2m ?? arrVal(hourly.relative_humidity_2m, nowIdx);
+  const windNow=current.wind_speed_10m ?? arrVal(hourly.wind_speed_10m, nowIdx);
+  const precipNow=current.precipitation ?? arrVal(hourly.precipitation, nowIdx);
+  const snowNow=current.snowfall ?? arrVal(hourly.snowfall, nowIdx);
+
+  const values={
+    currentTemp:Number(tempNow),
+    tempMax:Number(arrVal(daily.temperature_2m_max,0) ?? maxFrom(hourly.temperature_2m,nextIdxs)),
+    windMax:maxFrom(hourly.wind_speed_10m,nextIdxs),
+    rainSum:Number(arrVal(daily.rain_sum,0) ?? sumFrom(hourly.rain,nextIdxs)),
+    snowSum:Number(arrVal(daily.snowfall_sum,0) ?? sumFrom(hourly.snowfall,nextIdxs)),
+    uvMax:Number(arrVal(daily.uv_index_max,0) ?? maxFrom(hourly.uv_index,nextIdxs)),
+    hasStorm:codes.some(c=>[95,96,99].includes(c)),
+    icingRisk:(Number(tempNow) <= 1 && (Number(precipNow)>0 || Number(snowNow)>0 || codes.some(c=>[51,53,55,56,57,61,63,65,66,67,71,73,75,77,80,81,82,85,86].includes(c))))
+  };
+  const precipText = Number(snowNow)>0.1 ? `❄️ ${weatherRound(snowNow,1)} cm` : `🌧 ${weatherRound(precipNow,1)} mm`;
+  const line1=`<span class="weather-main">${icon} ${weatherRound(tempNow)} °C</span> <span>${weatherEsc(desc)}</span> <span class="weather-sep">│</span> <span>💨 ${weatherRound(windNow,1)} m/s</span> <span class="weather-sep">│</span> <span>💧 ${weatherRound(humidity)} %</span> <span class="weather-sep">│</span> <span>${precipText}</span>`;
+  const [level, tip]=weatherMakeTip(values);
+  weatherSetLines(line1, tip, level);
+}
+
 bootApp();
 
 </script>

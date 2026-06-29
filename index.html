@@ -1181,6 +1181,19 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
 .admin-member-panel summary{cursor:pointer;font-weight:900;color:#dff}
 .admin-confirm-note{background:rgba(255,209,102,.10);border:1px solid rgba(255,209,102,.24);border-radius:12px;padding:8px 9px;margin:8px 0;color:#ffe9aa;font-size:12px}
 
+/* --- Admin usability: search, safer existing kennel selection --- */
+.admin-search-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:0 0 12px}
+.admin-search-row input{min-height:42px}
+.admin-search-hint{font-size:12px;color:var(--muted);white-space:nowrap}
+.admin-activation-mode-row select{font-weight:800}
+.admin-existing-tools{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;margin:8px 0}
+.admin-existing-tools input{margin:0!important}
+.admin-existing-tools button{padding:7px 9px;font-size:12px}
+.admin-member-panel.is-hidden{display:none}
+.admin-member-panel[open]{border-color:rgba(255,209,102,.35)}
+.admin-kennel-select-hint{font-size:12px;color:var(--muted);margin:5px 0 0}
+@media(max-width:760px){.admin-search-row,.admin-existing-tools{grid-template-columns:1fr}.admin-search-hint{white-space:normal}}
+
 </style>
 </head>
 <body>
@@ -1275,6 +1288,10 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
     <div class="actions" style="margin-bottom:12px">
       <button type="button" onclick="refreshAppAdminPanel()">Načíst uživatele</button>
       <button type="button" class="secondary" onclick="seedCurrentUserAsAppAdminHelp()">Jak nastavit mě jako appAdmin</button>
+    </div>
+    <div class="admin-search-row">
+      <input id="appAdminSearch" type="search" placeholder="Vyhledat kennel, e-mail, UID nebo stav…" oninput="renderAppAdminUsers()">
+      <span id="appAdminSearchInfo" class="admin-search-hint"></span>
     </div>
     <div id="appAdminUsers" class="admin-grid"></div>
   </div>
@@ -3557,11 +3574,22 @@ function adminUserDisplayKennel(u){
 }
 function adminUserStatus(u){ return adminCardStatus(u); }
 function adminUserMatchesOwn(u){ return u.id===cloudUser?.uid || (cloudAccess?.kennelId && u.activeKennelId===cloudAccess.kennelId); }
+function adminSearchTextForUser(u){
+  const k = appAdminKennelsCache.find(x=>x.id===u.activeKennelId) || {};
+  return [u.email,u.id,u.status,u.memberRole,u.kennelName,u.activeKennelId,k.name,k.ownerEmail,k.ownerUid,k.status,k.id].filter(Boolean).join(' ').toLowerCase();
+}
+function getAdminSearchQuery(){
+  return (document.getElementById('appAdminSearch')?.value || '').trim().toLowerCase();
+}
 function renderAppAdminUsers(){
   const box=document.getElementById('appAdminUsers'); if(!box) return;
   if(!appAdminUsersCache.length){ box.innerHTML='<p class="small">Zatím žádní uživatelé. Uživatel se objeví po prvním přihlášení nebo vytvoření účtu.</p>'; return; }
-  const own = appAdminUsersCache.filter(adminUserMatchesOwn);
-  const others = appAdminUsersCache.filter(u=>!adminUserMatchesOwn(u));
+  const q=getAdminSearchQuery();
+  const allFiltered = q ? appAdminUsersCache.filter(u=>adminSearchTextForUser(u).includes(q)) : appAdminUsersCache.slice();
+  const own = allFiltered.filter(adminUserMatchesOwn);
+  const others = allFiltered.filter(u=>!adminUserMatchesOwn(u));
+  const info=document.getElementById('appAdminSearchInfo');
+  if(info) info.textContent = q ? `${allFiltered.length} výsledků` : `${appAdminUsersCache.length} uživatelů · ${appAdminKennelsCache.length} kennelů`;
   const groups = [
     {key:'pending', label:'Čeká na schválení', users:others.filter(u=>adminUserStatus(u)==='pending')},
     {key:'active', label:'Aktivní kennely', users:others.filter(u=>adminUserStatus(u)==='active')},
@@ -3569,7 +3597,7 @@ function renderAppAdminUsers(){
     {key:'archived', label:'Archivované kennely', users:others.filter(u=>adminUserStatus(u)==='archived')}
   ];
   const ownHtml = own.length ? `<details class="admin-section admin-my-section" open><summary><span>Můj kennel a moje účty</span><span class="admin-count-pill">${own.length}</span></summary><div class="admin-section-body">${own.map(u=>renderAdminUserPanel(u,true)).join('')}</div></details>` : '';
-  const groupHtml = groups.map(g=>`<details class="admin-section"><summary><span>${g.label}</span><span class="admin-count-pill">${g.users.length}</span></summary><div class="admin-section-body">${g.users.length ? `<div class="admin-user-list">${g.users.map(u=>renderAdminUserHeader(u)).join('')}</div>` : '<p class="small">Žádné záznamy.</p>'}</div></details>`).join('');
+  const groupHtml = groups.map(g=>`<details class="admin-section" ${q && g.users.length ? 'open' : ''}><summary><span>${g.label}</span><span class="admin-count-pill">${g.users.length}</span></summary><div class="admin-section-body">${g.users.length ? `<div class="admin-user-list">${g.users.map(u=>renderAdminUserHeader(u)).join('')}</div>` : '<p class="small">Žádné záznamy.</p>'}</div></details>`).join('');
   box.innerHTML = ownHtml + groupHtml;
 }
 function renderAdminUserHeader(u){
@@ -3593,15 +3621,16 @@ function renderAdminUserPanel(u,isOwn=false){
   const existingCurrent=appAdminKennelsCache.find(k=>k.id===u.activeKennelId);
   const kennelName=u.kennelName || existingCurrent?.name || (u.email ? `Kennel ${u.email.split('@')[0]}` : 'Kennel');
   const defaultMode = u.activeKennelId ? 'keep' : 'new';
-  const kennelOptions = appAdminKennelsCache.map(k=>`<option value="${escapeAttr(k.id)}" ${u.activeKennelId===k.id?'selected':''}>${escapeHtml(adminKennelLabel(k))}</option>`).join('');
-  const memberPanel = !isOwn ? `<details class="admin-member-panel"><summary>Přidat jako dalšího člena existujícího kennelu</summary><div class="admin-confirm-note">Používej jen tehdy, když jde o druhý účet stejné domácnosti/kennelu. Uživatel uvidí data vybraného kennelu podle zvolené role.</div><label>Vybrat existující kennel<select id="adminExistingKennel_${uid}">${kennelOptions}</select></label></details>` : `<input id="adminExistingKennel_${uid}" type="hidden" value="${escapeAttr(u.activeKennelId||'')}">`;
+  const currentOption = u.activeKennelId && !appAdminKennelsCache.some(k=>k.id===u.activeKennelId) ? `<option value="${escapeAttr(u.activeKennelId)}" selected>${escapeHtml(u.kennelName || u.activeKennelId)} · ${escapeHtml(u.activeKennelId)}</option>` : '';
+  const kennelOptions = currentOption + appAdminKennelsCache.map(k=>`<option value="${escapeAttr(k.id)}" ${u.activeKennelId===k.id?'selected':''} data-search="${escapeAttr(adminKennelLabel(k).toLowerCase())}">${escapeHtml(adminKennelLabel(k))}</option>`).join('');
+  const memberPanel = !isOwn ? `<details id="adminMemberPanel_${uid}" class="admin-member-panel is-hidden"><summary>Přidat jako dalšího člena existujícího kennelu</summary><div class="admin-confirm-note">Používej jen tehdy, když jde o druhý účet stejné domácnosti/kennelu. Uživatel uvidí data vybraného kennelu podle zvolené role.</div><div class="admin-existing-tools"><input id="adminExistingSearch_${uid}" type="search" placeholder="Vyhledat existující kennel podle názvu, e-mailu nebo ID…" oninput="filterAdminKennelOptions('${uid}')"><button type="button" class="secondary" onclick="clearAdminKennelSearch('${uid}')">Vyčistit</button></div><label>Vybrat existující kennel<select id="adminExistingKennel_${uid}">${kennelOptions}</select><div class="admin-kennel-select-hint">Nejprve vyber režim „Připojit k existujícímu kennelu“, potom zde zvol konkrétní kennel.</div></label></details>` : `<input id="adminExistingKennel_${uid}" type="hidden" value="${escapeAttr(u.activeKennelId||'')}">`;
   return `<div class="admin-card ${escapeAttr(status)}">
       <h3>${escapeHtml(u.email || u.id)}${isOwn?' · můj účet':''}</h3>
       <div class="admin-status-pill">UID: ${escapeHtml(u.id)}</div>
       <div class="admin-status-pill">stav: ${escapeHtml(status)}</div>
       ${u.activeKennelId?`<div class="admin-status-pill">kennel: ${escapeHtml(u.activeKennelId)}</div>`:''}
       <label>Název kennelu<input id="adminKennelName_${uid}" value="${escapeAttr(kennelName)}"></label>
-      <label>Typ aktivace<select id="adminActivationMode_${uid}"><option value="keep" ${defaultMode==='keep'?'selected':''}>Ponechat současný kennel</option><option value="new" ${defaultMode==='new'?'selected':''}>Nový kennel pro tohoto uživatele</option><option value="existing">Připojit k existujícímu kennelu</option></select></label>
+      <label class="admin-activation-mode-row">Typ aktivace<select id="adminActivationMode_${uid}" onchange="onAdminActivationModeChange('${uid}')"><option value="keep" ${defaultMode==='keep'?'selected':''}>Ponechat současný kennel</option><option value="new" ${defaultMode==='new'?'selected':''}>Vytvořit nový kennel pro tohoto uživatele</option><option value="existing">Připojit jako dalšího člena existujícího kennelu</option></select></label>
       ${memberPanel}
       <label>Platné do<input id="adminPlanUntil_${uid}" type="date" value="${escapeAttr(plan)}"></label>
       <label>Role<select id="adminRole_${uid}"><option value="admin" ${role==='admin'?'selected':''}>admin</option><option value="readOnly" ${role==='readOnly'?'selected':''}>readOnly</option></select></label>
@@ -3614,6 +3643,34 @@ function renderAdminUserPanel(u,isOwn=false){
       </div>
       ${status==='archived' ? `<details class="admin-danger-zone"><summary>Nebezpečné akce</summary><div class="admin-actions"><button type="button" class="danger-secondary" onclick="permanentlyDeleteKennelForUser('${uid}')">Trvale smazat archivovaný kennel</button></div><p class="small">Dostupné jen u archivovaných kennelů. Před smazáním doporučuji stáhnout JSON zálohu.</p></details>` : ''}
     </div>`;
+}
+function onAdminActivationModeChange(uid){
+  const mode=document.getElementById(`adminActivationMode_${uid}`)?.value || 'keep';
+  const panel=document.getElementById(`adminMemberPanel_${uid}`);
+  if(panel){
+    const show=mode==='existing';
+    panel.classList.toggle('is-hidden', !show);
+    panel.open = show;
+  }
+}
+function clearAdminKennelSearch(uid){
+  const input=document.getElementById(`adminExistingSearch_${uid}`);
+  if(input) input.value='';
+  filterAdminKennelOptions(uid);
+}
+function filterAdminKennelOptions(uid){
+  const input=document.getElementById(`adminExistingSearch_${uid}`);
+  const select=document.getElementById(`adminExistingKennel_${uid}`);
+  if(!select) return;
+  const q=(input?.value || '').trim().toLowerCase();
+  Array.from(select.options).forEach(opt=>{
+    const txt=(opt.textContent || '') + ' ' + (opt.dataset.search || '');
+    opt.hidden = !!q && !txt.toLowerCase().includes(q);
+  });
+  if(select.selectedOptions[0]?.hidden){
+    const first=Array.from(select.options).find(o=>!o.hidden);
+    if(first) select.value=first.value;
+  }
 }
 function getAdminInput(uid, prefix){ return document.getElementById(`${prefix}_${uid}`)?.value || ''; }
 async function activateBetaUser(uid){

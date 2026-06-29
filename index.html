@@ -1218,7 +1218,7 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
     </div>
     <div class="auth-actions">
       <button type="button" id="authSignInBtn" onclick="signInCloud()">Přihlásit se</button>
-      <button type="button" id="authCreateBtn" class="secondary auth-muted-action" onclick="createCloudAccount()">Vytvořit účet pro beta test</button>
+      <button type="button" id="authCreateBtn" class="secondary auth-muted-action" onclick="createCloudAccount()">Požádat o přístup</button>
       <button type="button" id="authResetBtn" class="secondary auth-muted-action" onclick="sendPasswordReset()">Zapomenuté heslo</button>
       <button type="button" id="authContinueLocalBtn" class="secondary auth-muted-action" onclick="continueLocalPreview()" style="display:none">Pokračovat v lokálním testu</button>
     </div>
@@ -1371,7 +1371,7 @@ const APP_CONFIG = {
   // Ukáže přihlašovací obrazovku i v lokálním testu, aby šla zkontrolovat před Firebase konfigurací.
   showLoginPreviewInLocal: false,
   schemaVersion: 4,
-  clientVersion: "2.6-closed-beta-admin",
+  clientVersion: "2.6-closed-access-admin",
   photos: {
     // Firestore-safe náhledy. Plné fotky zatím do cloudu neposíláme.
     maxSide: 320,
@@ -1669,7 +1669,7 @@ function applyAuthTexts(){
   const email=document.getElementById('authEmail'); if(email) email.placeholder='E-mail';
   const pass=document.getElementById('authPassword'); if(pass) pass.placeholder=authText('Heslo','Password');
   const sign=document.getElementById('authSignInBtn'); if(sign) sign.textContent=authText('Přihlásit se','Sign in');
-  const create=document.getElementById('authCreateBtn'); if(create) create.textContent=authText('Vytvořit účet pro beta test','Create beta account');
+  const create=document.getElementById('authCreateBtn'); if(create) create.textContent=authText('Požádat o přístup','Request access');
   const reset=document.getElementById('authResetBtn'); if(reset) reset.textContent=authText('Zapomenuté heslo','Forgot password');
 }
 function setupAuthGate(){
@@ -1779,7 +1779,7 @@ async function signInCloud(){
 }
 async function createCloudAccount(){
   if(isLocalLoginPreviewMode()){ setAuthStatus(authText('Zakládání účtu poběží až po připojení Firebase.','Account creation starts after Firebase is connected.'),'warn'); return; }
-  if(!APP_CONFIG.firebase.allowSelfRegistration){ setAuthStatus(authText('Zakládání účtů je pro beta verzi vypnuté. Účet vytvoří správce.','Self-registration is disabled for beta. The admin creates accounts.'),'warn'); return; }
+  if(!APP_CONFIG.firebase.allowSelfRegistration){ setAuthStatus(authText('Zakládání účtů je momentálně vypnuté. Účet vytvoří správce.','Account creation is currently disabled. The admin creates accounts.'),'warn'); return; }
   if(!firebaseReady || !firebaseAuth){ await initFirebaseLayer(); }
   if(!firebaseAuth){ return; }
   const email=document.getElementById('authEmail')?.value.trim();
@@ -1853,7 +1853,7 @@ async function resolveCloudAccess(user, profile){
   const cols=APP_CONFIG.firebase.collections;
   const access={mode:'firebase', status:profile.status||'pending', role:null, kennelStatus:null, planUntil:null, isAppAdmin:!!profile.isAppAdmin, writeAllowed:false, readAllowed:false, kennelId:profile.activeKennelId||null, message:''};
   if(!profile.activeKennelId){
-    access.message = access.isAppAdmin ? 'Admin účet bez aktivního kennelu. Otevři Admin panel.' : 'Účet čeká na aktivaci správcem.';
+    access.message = access.isAppAdmin ? 'Admin účet bez aktivního kennelu. Otevři Admin panel.' : 'Účet čeká na schválení přístupu. Po aktivaci se zde otevře váš kennel.';
     return access;
   }
   const kennelRef=doc(firebaseDb, cols.kennels, profile.activeKennelId);
@@ -1886,8 +1886,8 @@ async function handleCloudUserReady(user){
     localStorage.setItem('kennelCloudKennelId', activeCloudKennelId || '');
     renderAppAdminButton();
     if(!cloudAccess.readAllowed || !activeCloudKennelId){
-      const title=cloudAccess.isAppAdmin ? 'Admin Kennel Book' : (currentLang==='en'?'Waiting for activation':'Účet čeká na aktivaci');
-      const msg=cloudAccess.message || (currentLang==='en'?'The account is waiting for admin activation.':'Účet čeká na aktivaci správcem.');
+      const title=cloudAccess.isAppAdmin ? 'Admin Kennel Book' : (currentLang==='en'?'Waiting for approval':'Účet čeká na schválení');
+      const msg=cloudAccess.message || (currentLang==='en'?'The account is waiting for access approval.':'Účet čeká na schválení přístupu. Po aktivaci se zde otevře váš kennel.');
       showAccessOnlyGate(title, msg, 'warn');
       renderCloudStatusNote();
       if(cloudAccess.isAppAdmin) refreshAppAdminPanel().catch(()=>{});
@@ -2063,7 +2063,7 @@ function canReadAppData(){
 }
 function accessRoleLabel(){
   if(!isFirebaseMode()) return currentLang==='en'?'Local mode':'Lokální režim';
-  if(cloudAccess?.status==='pending') return currentLang==='en'?'Waiting for activation':'Čeká na aktivaci';
+  if(cloudAccess?.status==='pending') return currentLang==='en'?'Waiting for approval':'Čeká na schválení';
   if(cloudAccess?.status==='locked') return currentLang==='en'?'Locked':'Zamčeno';
   if(isCloudAccessExpired()) return currentLang==='en'?'Expired / read only':'Vypršelo / jen pro čtení';
   if(cloudAccess?.role==='readOnly') return currentLang==='en'?'Read only':'Jen pro čtení';
@@ -2128,7 +2128,7 @@ function applyAccessRestrictions(){
 function renderAppAdminButton(){
   const host=document.getElementById('appAdminButtonHost'); if(!host) return;
   if(isFirebaseMode() && cloudUser && cloudAccess?.isAppAdmin){
-    host.innerHTML=`<button type="button" class="app-admin-float" onclick="openAppAdminPanel()">⚙️ Admin beta</button>`;
+    host.innerHTML=`<button type="button" class="app-admin-float" onclick="openAppAdminPanel()">⚙️ Správa přístupů</button>`;
   }else host.innerHTML='';
 }
 let data = loadData();

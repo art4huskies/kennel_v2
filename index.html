@@ -3434,7 +3434,15 @@ function openAppAdminPanel(){
   const m=document.getElementById('appAdminModal'); if(m) m.classList.add('open');
   refreshAppAdminPanel().catch(console.error);
 }
-function closeAppAdminPanel(){ document.getElementById('appAdminModal')?.classList.remove('open'); }
+function closeAppAdminPanel(){
+  document.getElementById('appAdminModal')?.classList.remove('open');
+  // Po aktivaci vlastního účtu znovu načti přístup, aby appAdmin mohl rovnou vstoupit do kennelu.
+  if(isFirebaseMode() && cloudUser){
+    handleCloudUserReady(cloudUser).catch(err=>{
+      console.error('Reload after admin panel close failed', err);
+    });
+  }
+}
 function adminCardStatus(u){
   if(!u.activeKennelId) return 'pending';
   return u.status || 'active';
@@ -3483,6 +3491,12 @@ async function activateBetaUser(uid){
   await setDoc(doc(firebaseDb, cols.kennels, kennelId), {id:kennelId,name:kennelName,status,planUntil,planUntilTs,ownerUid:uid,schemaVersion:DATA_SCHEMA_VERSION,clientVersion:APP_CONFIG.clientVersion,updatedAt:serverTimestamp()}, {merge:true});
   await setDoc(doc(firebaseDb, cols.kennels, kennelId, cols.kennelMembers, uid), {uid,email,role,status,planUntil,planUntilTs,updatedAt:serverTimestamp()}, {merge:true});
   await setDoc(userRef, {uid,email,status: status==='active'?'active':status,activeKennelId:kennelId,kennelName,memberRole:role,planUntil,updatedAt:serverTimestamp()}, {merge:true});
+  if(uid === cloudUser?.uid){
+    activeCloudKennelId = kennelId;
+    localStorage.setItem('kennelCloudKennelId', kennelId);
+    const statusBox=document.getElementById('appAdminStatus');
+    if(statusBox) statusBox.textContent='Uloženo. Klikni na Zavřít a otevře se tvůj kennel.';
+  }
   await refreshAppAdminPanel();
 }
 async function setBetaUserReadOnly(uid){

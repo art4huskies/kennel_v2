@@ -1126,6 +1126,13 @@ body.auth-locked #authGate{
 .access-banner.readonly{background:rgba(255,209,102,.13);border-color:rgba(255,209,102,.32);color:#ffe6a8}
 .access-banner.active{background:rgba(46,230,166,.10);border-color:rgba(46,230,166,.24);color:#c8ffe9}
 .app-admin-float{position:fixed;right:18px;bottom:18px;z-index:250;box-shadow:0 14px 35px rgba(0,0,0,.34)}
+.user-session-bar{position:fixed;right:18px;top:14px;z-index:240;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(20,54,71,.92);border:1px solid rgba(255,255,255,.13);box-shadow:0 10px 26px rgba(0,0,0,.24);border-radius:999px;padding:7px 9px 7px 13px;color:var(--muted);font-size:12px;max-width:min(620px,calc(100vw - 36px))}
+.user-session-bar strong{color:var(--ice);font-size:12px;white-space:nowrap}
+.user-session-bar .session-pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px 7px;white-space:nowrap}
+.user-session-bar button{padding:6px 9px;font-size:12px;border-radius:999px}
+.user-session-spacer{height:0}
+@media(max-width:760px){.user-session-bar{position:static;margin:10px 12px 0;border-radius:18px;justify-content:flex-start}.user-session-bar strong{white-space:normal}.user-session-spacer{height:0}}
+
 .app-admin-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.58);padding:18px}
 .app-admin-modal.open{display:flex}
 .app-admin-card{width:min(1040px,96vw);max-height:92vh;overflow:auto;background:rgba(20,54,71,.98);border:1px solid rgba(255,255,255,.16);box-shadow:0 20px 60px rgba(0,0,0,.45);border-radius:22px;padding:18px}
@@ -1226,6 +1233,7 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
   </div>
 </section>
 
+<div id="userSessionHost"></div>
 <div id="appAdminButtonHost"></div>
 <div id="appAdminModal" class="app-admin-modal" aria-live="polite">
   <div class="app-admin-card">
@@ -1803,8 +1811,14 @@ async function sendPasswordReset(){
   }
 }
 async function signOutCloud(){
-  if(firebaseAuth && firebaseApi?.authMod){
-    await firebaseApi.authMod.signOut(firebaseAuth);
+  try{
+    if(firebaseAuth && firebaseApi?.authMod){
+      await firebaseApi.authMod.signOut(firebaseAuth);
+    }
+  }finally{
+    cloudUser=null; activeCloudKennelId=null;
+    const host=document.getElementById('userSessionHost'); if(host) host.innerHTML='';
+    const adminHost=document.getElementById('appAdminButtonHost'); if(adminHost) adminHost.innerHTML='';
   }
 }
 
@@ -2039,6 +2053,7 @@ async function requireSubscription(){ return true; }
 
 let cloudAccess = { mode:'local', status:'local', role:'admin', kennelStatus:'active', planUntil:null, isAppAdmin:false, writeAllowed:true, readAllowed:true, message:'' };
 let appAdminUsersCache = [];
+let appAdminKennelsCache = [];
 function todayIsoDate(){ return new Date().toISOString().slice(0,10); }
 function normalizeDateString(v){ return String(v||'').slice(0,10); }
 function isDateExpired(dateStr){ const d=normalizeDateString(dateStr); return !!d && d < todayIsoDate(); }
@@ -2064,6 +2079,23 @@ function accessRoleLabel(){
   if(cloudAccess?.role==='admin' || cloudAccess?.role==='owner') return currentLang==='en'?'Admin':'Admin';
   if(cloudAccess?.isAppAdmin) return 'AppAdmin';
   return cloudAccess?.status || '';
+}
+function currentEditorMeta(){
+  return {
+    byUid: cloudUser?.uid || '',
+    byEmail: cloudUser?.email || '',
+    at: new Date().toISOString()
+  };
+}
+function withEditorMeta(obj, action='created'){
+  const meta=currentEditorMeta();
+  if(!isFirebaseMode() || !meta.byUid) return obj;
+  return {
+    ...obj,
+    [`${action}ByUid`]: meta.byUid,
+    [`${action}ByEmail`]: meta.byEmail,
+    [`${action}At`]: meta.at
+  };
 }
 function showWriteBlockedMessage(){
   const msg = currentLang==='en'
@@ -2118,6 +2150,18 @@ function applyAccessRestrictions(){
       if(!safe){ btn.dataset.write='1'; btn.onclick = btn.onclick || btn.getAttribute('onclick'); }
     });
   }
+}
+function renderUserSessionBar(){
+  const host=document.getElementById('userSessionHost'); if(!host) return;
+  if(!isFirebaseMode() || !cloudUser){ host.innerHTML=''; return; }
+  const kennelName = data?.kennel?.name || data?.cloud?.kennelId || cloudAccess?.kennelId || '';
+  const parts = [
+    `<strong>${escapeHtml(cloudUser.email||'')}</strong>`,
+    `<span class="session-pill">${escapeHtml(accessRoleLabel())}</span>`
+  ];
+  if(kennelName) parts.push(`<span class="session-pill">${escapeHtml(kennelName)}</span>`);
+  const adminBtn = cloudAccess?.isAppAdmin ? `<button type="button" class="secondary" onclick="openAppAdminPanel()">Správa přístupů</button>` : '';
+  host.innerHTML = `<div class="user-session-bar" aria-label="Přihlášený uživatel">${parts.join('')}${adminBtn}<button type="button" class="secondary" onclick="signOutCloud()">Odhlásit</button></div>`;
 }
 function renderAppAdminButton(){
   const host=document.getElementById('appAdminButtonHost'); if(!host) return;
@@ -2298,7 +2342,7 @@ function addMassRecord(){
   const batchId = crypto.randomUUID();
   ids.forEach(id => {
     const d = data.dogs.find(x=>x.id===id);
-    d.events.push({id:crypto.randomUUID(), batchId, type, date, title, note});
+    d.events.push(withEditorMeta({id:crypto.randomUUID(), batchId, type, date, title, note}));
   });
   massSelection.clear();
   save();
@@ -2442,7 +2486,7 @@ function addDog(){
   const name=(nameEl?.value||"").trim();
   const breed=(breedEl?.value||"").trim();
   if(!name) return alert(t('needName'));
-  data.dogs.push({id:crypto.randomUUID(), name, breed, birth:"", chip:"", weight:"", sex:"", color:"", photo:"", hasPhoto:false, photoCloudDirty:false, status:"active", events:[]});
+  data.dogs.push(withEditorMeta({id:crypto.randomUUID(), name, breed, birth:"", chip:"", weight:"", sex:"", color:"", photo:"", hasPhoto:false, photoCloudDirty:false, status:"active", events:[]}));
   selectedDogId=data.dogs[data.dogs.length-1].id; dogListMode="active";
   if(nameEl) nameEl.value=""; if(breedEl) breedEl.value="";
   save();
@@ -2523,10 +2567,17 @@ function renderTab(d){
   if(activeTab==="weight") return renderWeightTab(d);
   return renderEventsTable((d.events||[]).filter(e=>!["vaccination","deworming","training","race","weight"].includes(e.type))) + eventForm("acute");
 }
+function recordAuthorLine(e){
+  const email=e?.createdByEmail || e?.updatedByEmail || '';
+  const when=e?.createdAt || e?.updatedAt || '';
+  if(!email) return '';
+  const datePart = when ? ` · ${escapeHtml(String(when).slice(0,10))}` : '';
+  return `<div class="small">zapsal/a: ${escapeHtml(email)}${datePart}</div>`;
+}
 function renderEventsTable(events){
   events=[...events].sort((a,b)=>b.date.localeCompare(a.date));
   if(!events.length) return `<p class="small">${t('noRecords')}</p>`;
-  return `<table class="table"><tr><th>${t('date')}</th><th>${t('type')}</th><th>${t('title')}</th><th>${t('note')}</th><th></th></tr>${events.map(e=>`<tr><td>${fmt(e.date)}</td><td>${trEvent(e.type)}</td><td>${escapeHtml(e.title||"")}</td><td>${escapeHtml(e.note||"")}</td><td><button class="secondary" onclick="editEvent('${e.id}')">${t('edit')}</button><button class="secondary" onclick="deleteEvent('${e.id}')">${t('delete')}</button></td></tr>`).join("")}</table>`;
+  return `<table class="table"><tr><th>${t('date')}</th><th>${t('type')}</th><th>${t('title')}</th><th>${t('note')}</th><th></th></tr>${events.map(e=>`<tr><td>${fmt(e.date)}</td><td>${trEvent(e.type)}</td><td>${escapeHtml(e.title||"")}${recordAuthorLine(e)}</td><td>${escapeHtml(e.note||"")}</td><td><button class="secondary" onclick="editEvent('${e.id}')">${t('edit')}</button><button class="secondary" onclick="deleteEvent('${e.id}')">${t('delete')}</button></td></tr>`).join("")}</table>`;
 }
 function renderWeightTab(d){
   const weights=[...(d.events||[])].filter(e=>e.type==="weight").sort((a,b)=>a.date.localeCompare(b.date));
@@ -2563,7 +2614,7 @@ function renderWeightTrendSummary(trend){
   const cls=fluct>=1.5?'watch':'ok';
   return `<div class="weight-insight"><span class="badge">${currentLang==='en'?'Overall change':'Celková změna'}: ${trend.overall>=0?'+':''}${trend.overall.toFixed(1)} kg</span><span class="badge">${currentLang==='en'?'30 days':'30 dní'}: ${trend.change30>=0?'+':''}${trend.change30.toFixed(1)} kg · ${trendLabel}</span><span class="badge ${cls}">${currentLang==='en'?'Range 30 days':'Rozmezí 30 dní'}: ${trend.min30.toFixed(1)}–${trend.max30.toFixed(1)} kg · ${fluctLabel}</span><span class="badge">${currentLang==='en'?'Overall range':'Celkové rozmezí'}: ${trend.min.toFixed(1)}–${trend.max.toFixed(1)} kg</span></div>`;
 }
-function addWeight(){ const d=dog(), date=document.getElementById("weightDate").value, weight=document.getElementById("weightValue").value, context=document.getElementById("weightContext").value, note=document.getElementById("weightNote").value.trim(); if(!date) return alert(t('needDate')); if(!weight) return alert(currentLang==='en'?'Enter weight.':'Zadej váhu.'); d.events.push({id:crypto.randomUUID(), type:"weight", date, title:t('weight'), weight:parseFloat(weight).toFixed(1), note:(context?context+". ":"")+note}); d.weight=parseFloat(weight).toFixed(1)+" kg"; save(); }
+function addWeight(){ const d=dog(), date=document.getElementById("weightDate").value, weight=document.getElementById("weightValue").value, context=document.getElementById("weightContext").value, note=document.getElementById("weightNote").value.trim(); if(!date) return alert(t('needDate')); if(!weight) return alert(currentLang==='en'?'Enter weight.':'Zadej váhu.'); d.events.push(withEditorMeta({id:crypto.randomUUID(), type:"weight", date, title:t('weight'), weight:parseFloat(weight).toFixed(1), note:(context?context+". ":"")+note})); d.weight=parseFloat(weight).toFixed(1)+" kg"; save(); }
 function renderWeightTable(weights){ if(!weights.length) return `<p class="small">${currentLang==='en'?'No weight records yet.':'Zatím bez váhových záznamů.'}</p>`; const rows=[...weights].sort((a,b)=>b.date.localeCompare(a.date)); return `<table class="table"><tr><th>${t('date')}</th><th>${t('weight')}</th><th>${t('note')}</th><th></th></tr>${rows.map(e=>`<tr><td>${fmt(e.date)}</td><td>${e.weight||""} kg</td><td>${escapeHtml(e.note||"")}</td><td><button class="secondary" onclick="deleteEvent('${e.id}')">${t('delete')}</button></td></tr>`).join("")}</table>`; }
 function renderWeightChart(weights){
   if(weights.length<2) return `<p class="small">${currentLang==='en'?'The chart appears after at least two weights.':'Graf se zobrazí po zadání alespoň dvou vážení.'}</p>`;
@@ -2578,7 +2629,7 @@ function eventForm(defaultType){
   const dateVal=edited?edited.date:new Date().toISOString().slice(0,10), typeVal=edited?edited.type:defaultType, titleVal=edited?(edited.title||""):"", noteVal=edited?(edited.note||""):"";
   return `<h3 id="eventForm">${edited?(currentLang==='en'?'Edit record':'Upravit záznam'):(currentLang==='en'?'Add record':'Přidat záznam')}</h3><div class="formgrid"><input id="evDate" type="date" value="${dateVal}"><select id="evType">${Object.entries(eventLabels).map(([k,v])=>`<option value="${k}" ${k===typeVal?'selected':''}>${v}</option>`).join("")}</select><input id="evTitle" value="${escapeAttr(titleVal)}" placeholder="${currentLang==='en'?'Vaccine / product / event title':'Vakcína / přípravek / název události'}">${edited?`<input disabled value="${currentLang==='en'?'Next date can be added as a new record':'Další termín lze přidat jako nový záznam'}">`:`<input id="evNext" type="date" title="${currentLang==='en'?'Next date / check-up':'Další termín / kontrola'}">`}<textarea class="full" id="evNote" placeholder="${currentLang==='en'?'Note, dose, batch, vet...':'Poznámka, dávka, šarže, veterinář, průběh...'}">${escapeHtml(noteVal)}</textarea>${edited?`<button onclick="updateEvent()">${currentLang==='en'?'Save changes':'Uložit změny'}</button><button class="secondary" onclick="cancelEdit()">${currentLang==='en'?'Cancel':'Zrušit úpravy'}</button>`:`<button class="full" onclick="addEvent()">${currentLang==='en'?'Add record':'Přidat záznam'}</button>`}</div>`;
 }
-function addEvent(){ const d=dog(), type=document.getElementById("evType").value, title=document.getElementById("evTitle").value.trim()||trEvent(type), date=document.getElementById("evDate").value, note=document.getElementById("evNote").value.trim(), next=document.getElementById("evNext")?.value; if(!date) return alert(t('needDate')); d.events.push({id:crypto.randomUUID(), type, date, title, note}); if(next) d.events.push({id:crypto.randomUUID(), type:"note", date:next, title:(currentLang==='en'?'Next date: ':'Další termín: ')+title, note:currentLang==='en'?'Automatically created from previous record.':'Automaticky založeno z předchozího záznamu.'}); save(); }
+function addEvent(){ const d=dog(), type=document.getElementById("evType").value, title=document.getElementById("evTitle").value.trim()||trEvent(type), date=document.getElementById("evDate").value, note=document.getElementById("evNote").value.trim(), next=document.getElementById("evNext")?.value; if(!date) return alert(t('needDate')); d.events.push(withEditorMeta({id:crypto.randomUUID(), type, date, title, note})); if(next) d.events.push(withEditorMeta({id:crypto.randomUUID(), type:"note", date:next, title:(currentLang==='en'?'Next date: ':'Další termín: ')+title, note:currentLang==='en'?'Automatically created from previous record.':'Automaticky založeno z předchozího záznamu.'})); save(); }
 function editEvent(id){ editingEventId=id; renderCard(); setTimeout(()=>document.getElementById("eventForm")?.scrollIntoView({behavior:"smooth",block:"center"}),50); }
 function cancelEdit(){ editingEventId=null; renderCard(); }
 function updateEvent(){ const d=dog(), e=d.events.find(x=>x.id===editingEventId); if(!e) return; const date=document.getElementById("evDate").value; if(!date) return alert(t('needDate')); e.date=date; e.type=document.getElementById("evType").value; e.title=document.getElementById("evTitle").value.trim()||trEvent(e.type); e.note=document.getElementById("evNote").value.trim(); editingEventId=null; save(); }
@@ -2969,7 +3020,7 @@ function saveTeamLog(){
   const elevation=Number.isFinite(elevationNum) ? String(Math.round(elevationNum)) : "";
   const avgSpeed=Number.isFinite(computedAvg) ? computedAvg.toFixed(1) : "";
   const importMeta=importedTrackMeta ? {...importedTrackMeta} : null;
-  const log={id:crypto.randomUUID(),date,type,km:kmNum.toFixed(1),time,elevation,avgSpeed,source,title,note,dogIds,dogNames,musherIndex,musherName,roles,importMeta};
+  const log=withEditorMeta({id:crypto.randomUUID(),date,type,km:kmNum.toFixed(1),time,elevation,avgSpeed,source,title,note,dogIds,dogNames,musherIndex,musherName,roles,importMeta});
   data.teamLogs.push(log);
   if(importMeta){
     if(!Array.isArray(data.imports)) data.imports=[];
@@ -2979,7 +3030,7 @@ function saveTeamLog(){
   const extraBits=[elevation?`↗ ${elevation} m`:"",avgSpeed?`Ø ${avgSpeed} km/h`:"",source&&source!=="manual"?`Zdroj: ${source}`:""].filter(Boolean).join(" · ");
   dogIds.forEach(id=>{
     const d=data.dogs.find(x=>x.id===id); if(!d) return;
-    d.events.push({
+    d.events.push(withEditorMeta({
       id:crypto.randomUUID(),
       type:type==="race"?"race":"training",
       date,
@@ -2993,7 +3044,7 @@ function saveTeamLog(){
       source,
       musherName,
       roles
-    });
+    }));
   });
   save(); clearTeamForm();
 }
@@ -3053,7 +3104,8 @@ function renderTeamLogEntry(l){
   const elevation=l.elevation?` • ↗ ${escapeHtml(l.elevation)} m`:"";
   const avg=l.avgSpeed?` • Ø ${escapeHtml(l.avgSpeed)} km/h`:"";
   const source=l.source&&l.source!=="manual"?` • ${escapeHtml(l.source)}`:"";
-  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${elevation}${avg}${source}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
+  const author = l.createdByEmail ? `<br><span class="small">zapsal/a: ${escapeHtml(l.createdByEmail)}${l.createdAt?' · '+escapeHtml(String(l.createdAt).slice(0,10)):''}</span>` : '';
+  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${elevation}${avg}${source}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${author}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
 }
 function renderTeamLogList(){
   ensureTeamLogData();
@@ -3072,7 +3124,7 @@ function renderTeamLog(){ renderTeamMusherSelect(); renderTeamDogPicker(); rende
 function setTheme(theme){ data.settings.theme=theme; localStorage.setItem("kennelAuroraTheme", theme); applyTheme(); saveData(); }
 function applyTheme(){ const theme=(data.settings&&data.settings.theme)||localStorage.getItem("kennelAuroraTheme")||"classic"; document.body.dataset.theme=theme; const sel=document.getElementById("kennelThemeSelectClean"); if(sel) sel.value=theme; }
 function setLanguage(lang){ currentLang=lang; data.settings.language=lang; localStorage.setItem("kennelAuroraLang", lang); eventLabels=lang==="en"?eventLabelsEN:eventLabelsCS; saveData(); render(); }
-function render(){ migrateData(); applyTheme(); if(typeof applyKennelBrandClean === "function") applyKennelBrandClean(); renderTeamLog(); renderDogList(); renderCard(); renderCalendar(); if(selectedDate) renderDayEvents(); applyLanguageToStatic(); }
+function render(){ migrateData(); applyTheme(); if(typeof applyKennelBrandClean === "function") applyKennelBrandClean(); renderUserSessionBar(); renderTeamLog(); renderDogList(); renderCard(); renderCalendar(); if(selectedDate) renderDayEvents(); applyLanguageToStatic(); }
 function setLabelTextFor(controlId, text){
   const el=document.getElementById(controlId); const label=el?.closest('label');
   if(label && label.firstChild && label.firstChild.nodeType===Node.TEXT_NODE) label.firstChild.nodeValue=text;
@@ -3424,10 +3476,14 @@ async function refreshAppAdminPanel(){
     if(status) status.textContent='Načítám uživatele…';
     const {collection, getDocs} = firebaseApi.fsMod;
     const cols=APP_CONFIG.firebase.collections;
-    const snap=await getDocs(collection(firebaseDb, cols.users));
-    appAdminUsersCache=snap.docs.map(d=>({id:d.id,...(d.data()||{})})).sort((a,b)=>String(a.email||'').localeCompare(String(b.email||'')));
+    const [userSnap, kennelSnap]=await Promise.all([
+      getDocs(collection(firebaseDb, cols.users)),
+      getDocs(collection(firebaseDb, cols.kennels))
+    ]);
+    appAdminUsersCache=userSnap.docs.map(d=>({id:d.id,...(d.data()||{})})).sort((a,b)=>String(a.email||'').localeCompare(String(b.email||'')));
+    appAdminKennelsCache=kennelSnap.docs.map(d=>({id:d.id,...(d.data()||{})})).sort((a,b)=>String(a.name||a.id).localeCompare(String(b.name||b.id)));
     renderAppAdminUsers();
-    if(status) status.textContent=`Načteno ${appAdminUsersCache.length} uživatelů.`;
+    if(status) status.textContent=`Načteno ${appAdminUsersCache.length} uživatelů · ${appAdminKennelsCache.length} kennelů.`;
   }catch(err){ console.error(err); if(status) status.textContent='Uživatelé se nepodařili načíst. Zkontroluj /appAdmins a Firestore rules.'; }
 }
 function openAppAdminPanel(){
@@ -3456,12 +3512,14 @@ function renderAppAdminUsers(){
     const role=u.memberRole || 'admin';
     const plan=u.planUntil || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
     const kennelName=u.kennelName || (u.email ? `Kennel ${u.email.split('@')[0]}` : 'Kennel');
+    const kennelOptions = ['<option value="">Nový kennel / ponechat současný</option>'].concat(appAdminKennelsCache.map(k=>`<option value="${escapeAttr(k.id)}" ${u.activeKennelId===k.id?'selected':''}>${escapeHtml(k.name||k.id)} · ${escapeHtml(k.id)}</option>`)).join('');
     return `<div class="admin-card ${escapeAttr(status)}">
       <h3>${escapeHtml(u.email || u.id)}</h3>
       <div class="admin-status-pill">UID: ${escapeHtml(u.id)}</div>
       <div class="admin-status-pill">stav: ${escapeHtml(status)}</div>
       ${u.activeKennelId?`<div class="admin-status-pill">kennel: ${escapeHtml(u.activeKennelId)}</div>`:''}
       <label>Název kennelu<input id="adminKennelName_${uid}" value="${escapeAttr(kennelName)}"></label>
+      <label>Připojit k existujícímu kennelu<select id="adminExistingKennel_${uid}">${kennelOptions}</select></label>
       <label>Platné do<input id="adminPlanUntil_${uid}" type="date" value="${escapeAttr(plan)}"></label>
       <label>Role<select id="adminRole_${uid}"><option value="admin" ${role==='admin'?'selected':''}>admin</option><option value="readOnly" ${role==='readOnly'?'selected':''}>readOnly</option></select></label>
       <label>Stav<select id="adminStatus_${uid}"><option value="active" ${status==='active'?'selected':''}>active</option><option value="locked" ${status==='locked'?'selected':''}>locked</option><option value="pending" ${status==='pending'?'selected':''}>pending</option></select></label>
@@ -3479,8 +3537,10 @@ async function activateBetaUser(uid){
   const u=appAdminUsersCache.find(x=>x.id===uid); if(!u) return;
   const {doc, setDoc, getDoc, serverTimestamp, Timestamp} = firebaseApi.fsMod;
   const cols=APP_CONFIG.firebase.collections;
-  const kennelId=u.activeKennelId || makeId('kennel');
-  const kennelName=getAdminInput(uid,'adminKennelName') || 'Kennel';
+  const selectedKennelId=getAdminInput(uid,'adminExistingKennel');
+  const kennelId=selectedKennelId || u.activeKennelId || makeId('kennel');
+  const existingKennel=appAdminKennelsCache.find(k=>k.id===kennelId);
+  const kennelName=getAdminInput(uid,'adminKennelName') || existingKennel?.name || 'Kennel';
   const planUntil=getAdminInput(uid,'adminPlanUntil') || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
   const role=getAdminInput(uid,'adminRole') || 'admin';
   const status=getAdminInput(uid,'adminStatus') || 'active';
@@ -3488,7 +3548,7 @@ async function activateBetaUser(uid){
   const userRef=doc(firebaseDb, cols.users, uid);
   const existing=await getDoc(userRef);
   const email=(existing.exists()?existing.data().email:u.email)||'';
-  await setDoc(doc(firebaseDb, cols.kennels, kennelId), {id:kennelId,name:kennelName,status,planUntil,planUntilTs,ownerUid:uid,schemaVersion:DATA_SCHEMA_VERSION,clientVersion:APP_CONFIG.clientVersion,updatedAt:serverTimestamp()}, {merge:true});
+  await setDoc(doc(firebaseDb, cols.kennels, kennelId), {id:kennelId,name:kennelName,status,planUntil,planUntilTs,ownerUid:existingKennel?.ownerUid || uid,schemaVersion:DATA_SCHEMA_VERSION,clientVersion:APP_CONFIG.clientVersion,updatedAt:serverTimestamp()}, {merge:true});
   await setDoc(doc(firebaseDb, cols.kennels, kennelId, cols.kennelMembers, uid), {uid,email,role,status,planUntil,planUntilTs,updatedAt:serverTimestamp()}, {merge:true});
   await setDoc(userRef, {uid,email,status: status==='active'?'active':status,activeKennelId:kennelId,kennelName,memberRole:role,planUntil,updatedAt:serverTimestamp()}, {merge:true});
   if(uid === cloudUser?.uid){

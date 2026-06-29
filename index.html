@@ -1125,13 +1125,14 @@ body.auth-locked #authGate{
 .access-banner.locked{background:rgba(255,91,110,.13);border-color:rgba(255,91,110,.34);color:#ffd8de}
 .access-banner.readonly{background:rgba(255,209,102,.13);border-color:rgba(255,209,102,.32);color:#ffe6a8}
 .access-banner.active{background:rgba(46,230,166,.10);border-color:rgba(46,230,166,.24);color:#c8ffe9}
-.app-admin-float{position:fixed;right:18px;bottom:18px;z-index:250;box-shadow:0 14px 35px rgba(0,0,0,.34)}
-.user-session-bar{position:fixed;right:18px;top:14px;z-index:240;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(20,54,71,.92);border:1px solid rgba(255,255,255,.13);box-shadow:0 10px 26px rgba(0,0,0,.24);border-radius:999px;padding:7px 9px 7px 13px;color:var(--muted);font-size:12px;max-width:min(620px,calc(100vw - 36px))}
+.app-admin-float{display:none!important}
+.user-session-bar{position:relative;z-index:30;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:rgba(20,54,71,.92);border:1px solid rgba(255,255,255,.13);box-shadow:0 10px 26px rgba(0,0,0,.24);border-radius:999px;padding:7px 9px 7px 13px;color:var(--muted);font-size:12px;max-width:min(760px,calc(100vw - 36px));margin:12px 70px 0 auto}
 .user-session-bar strong{color:var(--ice);font-size:12px;white-space:nowrap}
 .user-session-bar .session-pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px 7px;white-space:nowrap}
 .user-session-bar button{padding:6px 9px;font-size:12px;border-radius:999px}
 .user-session-spacer{height:0}
-@media(max-width:760px){.user-session-bar{position:static;margin:10px 12px 0;border-radius:18px;justify-content:flex-start}.user-session-bar strong{white-space:normal}.user-session-spacer{height:0}}
+@media(max-width:900px){.user-session-bar{margin:10px 12px 0;border-radius:18px;justify-content:flex-start;max-width:calc(100vw - 24px)}}
+@media(max-width:760px){.user-session-bar strong{white-space:normal}.user-session-spacer{height:0}}
 
 .app-admin-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.58);padding:18px}
 .app-admin-modal.open{display:flex}
@@ -1142,6 +1143,9 @@ body.auth-locked #authGate{
 .admin-card.pending{border-color:rgba(255,209,102,.28)}
 .admin-card.active{border-color:rgba(46,230,166,.22)}
 .admin-card.locked,.admin-card.expired{border-color:rgba(255,91,110,.28)}
+.admin-card.archived{border-color:rgba(181,140,255,.34);background:rgba(181,140,255,.075)}
+.admin-danger-zone{margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.10)}
+.admin-danger-zone summary{cursor:pointer;color:#ffd8de;font-weight:800;font-size:12px}
 .admin-card h3{margin:0 0 5px;font-size:16px;color:#eaffff}
 .admin-card label{display:block;margin:7px 0;font-size:12px;color:var(--muted)}
 .admin-card input,.admin-card select{margin-top:4px}
@@ -1153,6 +1157,29 @@ body.read-only-mode textarea{opacity:.78}
 body.read-only-mode button[data-write="1"],
 body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:not-allowed}
 @media(max-width:760px){.admin-grid{grid-template-columns:1fr}.app-admin-float{left:12px;right:12px;bottom:12px;width:calc(100% - 24px)}.admin-top{display:block}.app-admin-card{padding:14px}}
+
+
+
+/* --- Safer admin access management: grouped headers, hidden existing-kennel linking --- */
+.admin-grid{display:block!important}
+.admin-section{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);border-radius:18px;margin:10px 0;overflow:hidden}
+.admin-section > summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:900;color:#eaffff;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.admin-section > summary::-webkit-details-marker{display:none}
+.admin-section > summary:after{content:'▸';color:var(--muted)}
+.admin-section[open] > summary:after{content:'▾'}
+.admin-section-body{padding:0 12px 12px}
+.admin-my-section{border-color:rgba(46,230,166,.35);background:rgba(46,230,166,.055)}
+.admin-count-pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.10);font-size:12px;color:var(--muted);font-weight:800}
+.admin-user-list{display:grid;grid-template-columns:1fr;gap:7px}
+.admin-user-summary{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);border-radius:14px;color:var(--ice);padding:9px 11px;font-weight:800}
+.admin-user-summary:hover{background:rgba(255,255,255,.11)}
+.admin-user-title{display:flex;flex-direction:column;gap:3px;min-width:0}
+.admin-user-title strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-user-title span{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-section .admin-card{margin-top:8px}
+.admin-member-panel{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.14);border-radius:14px;padding:9px;margin-top:8px}
+.admin-member-panel summary{cursor:pointer;font-weight:900;color:#dff}
+.admin-confirm-note{background:rgba(255,209,102,.10);border:1px solid rgba(255,209,102,.24);border-radius:12px;padding:8px 9px;margin:8px 0;color:#ffe9aa;font-size:12px}
 
 </style>
 </head>
@@ -1880,9 +1907,9 @@ async function resolveCloudAccess(user, profile){
   access.planUntil=kennel.planUntil || member.planUntil || null;
   const expired=isDateExpired(access.planUntil);
   if(expired) access.status='expired';
-  access.readAllowed = access.kennelStatus !== 'locked' && access.status !== 'locked';
+  access.readAllowed = (access.kennelStatus === 'active' || access.kennelStatus === 'locked') && access.status !== 'archived' && access.status !== 'pending';
   access.writeAllowed = access.readAllowed && !expired && access.status === 'active' && access.kennelStatus === 'active' && (access.role === 'admin' || access.role === 'owner');
-  access.message = access.writeAllowed ? 'Přístup aktivní.' : (expired ? 'Předplatné vypršelo. Režim jen pro čtení.' : (access.role==='readOnly'?'Režim jen pro čtení.':'Přístup je zamčený nebo čeká na aktivaci.'));
+  access.message = access.writeAllowed ? 'Přístup aktivní.' : (expired ? 'Předplatné vypršelo. Režim jen pro čtení.' : (access.kennelStatus==='archived' || access.status==='archived' ? 'Kennel je archivovaný. Kontaktujte správce.' : (access.role==='readOnly'?'Režim jen pro čtení.':'Přístup je zamčený nebo čeká na aktivaci.')));
   return access;
 }
 async function handleCloudUserReady(user){
@@ -2062,7 +2089,7 @@ function canWriteAppData(){
   if(!isFirebaseMode()) return true;
   if(cloudAccess?.isAppAdmin && cloudAccess?.role==='appAdmin') return true;
   if(!cloudAccess?.readAllowed) return false;
-  if(cloudAccess?.kennelStatus==='locked' || cloudAccess?.status==='locked') return false;
+  if(cloudAccess?.kennelStatus==='locked' || cloudAccess?.status==='locked' || cloudAccess?.kennelStatus==='archived' || cloudAccess?.status==='archived') return false;
   if(isCloudAccessExpired()) return false;
   return cloudAccess?.writeAllowed === true && (cloudAccess.role==='admin' || cloudAccess.role==='owner');
 }
@@ -2073,7 +2100,8 @@ function canReadAppData(){
 function accessRoleLabel(){
   if(!isFirebaseMode()) return currentLang==='en'?'Local mode':'Lokální režim';
   if(cloudAccess?.status==='pending') return currentLang==='en'?'Waiting for approval':'Čeká na schválení';
-  if(cloudAccess?.status==='locked') return currentLang==='en'?'Locked':'Zamčeno';
+  if(cloudAccess?.status==='locked' || cloudAccess?.kennelStatus==='locked') return currentLang==='en'?'Locked / read only':'Zamčeno / jen pro čtení';
+  if(cloudAccess?.status==='archived' || cloudAccess?.kennelStatus==='archived') return currentLang==='en'?'Archived':'Archivováno';
   if(isCloudAccessExpired()) return currentLang==='en'?'Expired / read only':'Vypršelo / jen pro čtení';
   if(cloudAccess?.role==='readOnly') return currentLang==='en'?'Read only':'Jen pro čtení';
   if(cloudAccess?.role==='admin' || cloudAccess?.role==='owner') return currentLang==='en'?'Admin':'Admin';
@@ -3503,33 +3531,74 @@ function adminCardStatus(u){
   if(!u.activeKennelId) return 'pending';
   return u.status || 'active';
 }
+
+function adminKennelLabel(k){
+  const owner = k.ownerEmail || k.email || k.ownerUid || '';
+  return `${k.name || k.id}${owner ? ' — ' + owner : ''} · ${k.id}`;
+}
+function adminUserDisplayKennel(u){
+  const k = appAdminKennelsCache.find(x=>x.id===u.activeKennelId);
+  return k ? (k.name || k.id) : (u.kennelName || 'bez kennelu');
+}
+function adminUserStatus(u){ return adminCardStatus(u); }
+function adminUserMatchesOwn(u){ return u.id===cloudUser?.uid || (cloudAccess?.kennelId && u.activeKennelId===cloudAccess.kennelId); }
 function renderAppAdminUsers(){
   const box=document.getElementById('appAdminUsers'); if(!box) return;
   if(!appAdminUsersCache.length){ box.innerHTML='<p class="small">Zatím žádní uživatelé. Uživatel se objeví po prvním přihlášení nebo vytvoření účtu.</p>'; return; }
-  box.innerHTML=appAdminUsersCache.map(u=>{
-    const status=adminCardStatus(u);
-    const uid=escapeAttr(u.id);
-    const role=u.memberRole || 'admin';
-    const plan=u.planUntil || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
-    const kennelName=u.kennelName || (u.email ? `Kennel ${u.email.split('@')[0]}` : 'Kennel');
-    const kennelOptions = ['<option value="">Nový kennel / ponechat současný</option>'].concat(appAdminKennelsCache.map(k=>`<option value="${escapeAttr(k.id)}" ${u.activeKennelId===k.id?'selected':''}>${escapeHtml(k.name||k.id)} · ${escapeHtml(k.id)}</option>`)).join('');
-    return `<div class="admin-card ${escapeAttr(status)}">
-      <h3>${escapeHtml(u.email || u.id)}</h3>
+  const own = appAdminUsersCache.filter(adminUserMatchesOwn);
+  const others = appAdminUsersCache.filter(u=>!adminUserMatchesOwn(u));
+  const groups = [
+    {key:'pending', label:'Čeká na schválení', users:others.filter(u=>adminUserStatus(u)==='pending')},
+    {key:'active', label:'Aktivní kennely', users:others.filter(u=>adminUserStatus(u)==='active')},
+    {key:'locked', label:'Zamčené kennely', users:others.filter(u=>adminUserStatus(u)==='locked' || adminUserStatus(u)==='expired')},
+    {key:'archived', label:'Archivované kennely', users:others.filter(u=>adminUserStatus(u)==='archived')}
+  ];
+  const ownHtml = own.length ? `<details class="admin-section admin-my-section" open><summary><span>Můj kennel a moje účty</span><span class="admin-count-pill">${own.length}</span></summary><div class="admin-section-body">${own.map(u=>renderAdminUserPanel(u,true)).join('')}</div></details>` : '';
+  const groupHtml = groups.map(g=>`<details class="admin-section"><summary><span>${g.label}</span><span class="admin-count-pill">${g.users.length}</span></summary><div class="admin-section-body">${g.users.length ? `<div class="admin-user-list">${g.users.map(u=>renderAdminUserHeader(u)).join('')}</div>` : '<p class="small">Žádné záznamy.</p>'}</div></details>`).join('');
+  box.innerHTML = ownHtml + groupHtml;
+}
+function renderAdminUserHeader(u){
+  const uid=escapeAttr(u.id);
+  const status=adminUserStatus(u);
+  const kennel=adminUserDisplayKennel(u);
+  return `<div><button type="button" class="admin-user-summary ${escapeAttr(status)}" onclick="toggleAdminUserCard('${uid}')"><span class="admin-user-title"><strong>${escapeHtml(u.email || u.id)}</strong><span>${escapeHtml(kennel)} · stav: ${escapeHtml(status)} · role: ${escapeHtml(u.memberRole || 'admin')}</span></span><span>Upravit ▾</span></button><div id="adminCardHost_${uid}" hidden></div></div>`;
+}
+function toggleAdminUserCard(uid){
+  const host=document.getElementById(`adminCardHost_${uid}`); if(!host) return;
+  if(!host.hidden){ host.hidden=true; host.innerHTML=''; return; }
+  const u=appAdminUsersCache.find(x=>x.id===uid); if(!u) return;
+  host.innerHTML=renderAdminUserPanel(u,false);
+  host.hidden=false;
+}
+function renderAdminUserPanel(u,isOwn=false){
+  const status=adminCardStatus(u);
+  const uid=escapeAttr(u.id);
+  const role=u.memberRole || 'admin';
+  const plan=u.planUntil || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
+  const existingCurrent=appAdminKennelsCache.find(k=>k.id===u.activeKennelId);
+  const kennelName=u.kennelName || existingCurrent?.name || (u.email ? `Kennel ${u.email.split('@')[0]}` : 'Kennel');
+  const defaultMode = u.activeKennelId ? 'keep' : 'new';
+  const kennelOptions = appAdminKennelsCache.map(k=>`<option value="${escapeAttr(k.id)}" ${u.activeKennelId===k.id?'selected':''}>${escapeHtml(adminKennelLabel(k))}</option>`).join('');
+  const memberPanel = !isOwn ? `<details class="admin-member-panel"><summary>Přidat jako dalšího člena existujícího kennelu</summary><div class="admin-confirm-note">Používej jen tehdy, když jde o druhý účet stejné domácnosti/kennelu. Uživatel uvidí data vybraného kennelu podle zvolené role.</div><label>Vybrat existující kennel<select id="adminExistingKennel_${uid}">${kennelOptions}</select></label></details>` : `<input id="adminExistingKennel_${uid}" type="hidden" value="${escapeAttr(u.activeKennelId||'')}">`;
+  return `<div class="admin-card ${escapeAttr(status)}">
+      <h3>${escapeHtml(u.email || u.id)}${isOwn?' · můj účet':''}</h3>
       <div class="admin-status-pill">UID: ${escapeHtml(u.id)}</div>
       <div class="admin-status-pill">stav: ${escapeHtml(status)}</div>
       ${u.activeKennelId?`<div class="admin-status-pill">kennel: ${escapeHtml(u.activeKennelId)}</div>`:''}
       <label>Název kennelu<input id="adminKennelName_${uid}" value="${escapeAttr(kennelName)}"></label>
-      <label>Připojit k existujícímu kennelu<select id="adminExistingKennel_${uid}">${kennelOptions}</select></label>
+      <label>Typ aktivace<select id="adminActivationMode_${uid}"><option value="keep" ${defaultMode==='keep'?'selected':''}>Ponechat současný kennel</option><option value="new" ${defaultMode==='new'?'selected':''}>Nový kennel pro tohoto uživatele</option><option value="existing">Připojit k existujícímu kennelu</option></select></label>
+      ${memberPanel}
       <label>Platné do<input id="adminPlanUntil_${uid}" type="date" value="${escapeAttr(plan)}"></label>
       <label>Role<select id="adminRole_${uid}"><option value="admin" ${role==='admin'?'selected':''}>admin</option><option value="readOnly" ${role==='readOnly'?'selected':''}>readOnly</option></select></label>
-      <label>Stav<select id="adminStatus_${uid}"><option value="active" ${status==='active'?'selected':''}>active</option><option value="locked" ${status==='locked'?'selected':''}>locked</option><option value="pending" ${status==='pending'?'selected':''}>pending</option></select></label>
+      <label>Stav<select id="adminStatus_${uid}"><option value="active" ${status==='active'?'selected':''}>active</option><option value="locked" ${status==='locked'?'selected':''}>locked</option><option value="pending" ${status==='pending'?'selected':''}>pending</option><option value="archived" ${status==='archived'?'selected':''}>archived</option></select></label>
       <div class="admin-actions">
         <button type="button" onclick="activateBetaUser('${uid}')">Uložit / aktivovat</button>
         <button type="button" class="secondary" onclick="setBetaUserReadOnly('${uid}')">Jen pro čtení</button>
         <button type="button" class="danger-secondary" onclick="lockBetaUser('${uid}')">Zamknout</button>
+        <button type="button" class="secondary" onclick="archiveKennelForUser('${uid}')">Archivovat kennel</button>
       </div>
+      ${status==='archived' ? `<details class="admin-danger-zone"><summary>Nebezpečné akce</summary><div class="admin-actions"><button type="button" class="danger-secondary" onclick="permanentlyDeleteKennelForUser('${uid}')">Trvale smazat archivovaný kennel</button></div><p class="small">Dostupné jen u archivovaných kennelů. Před smazáním doporučuji stáhnout JSON zálohu.</p></details>` : ''}
     </div>`;
-  }).join('');
 }
 function getAdminInput(uid, prefix){ return document.getElementById(`${prefix}_${uid}`)?.value || ''; }
 async function activateBetaUser(uid){
@@ -3537,8 +3606,17 @@ async function activateBetaUser(uid){
   const u=appAdminUsersCache.find(x=>x.id===uid); if(!u) return;
   const {doc, setDoc, getDoc, serverTimestamp, Timestamp} = firebaseApi.fsMod;
   const cols=APP_CONFIG.firebase.collections;
+  const activationMode=getAdminInput(uid,'adminActivationMode') || (u.activeKennelId ? 'keep' : 'new');
   const selectedKennelId=getAdminInput(uid,'adminExistingKennel');
-  const kennelId=selectedKennelId || u.activeKennelId || makeId('kennel');
+  let kennelId = u.activeKennelId || makeId('kennel');
+  if(activationMode === 'new') kennelId = makeId('kennel');
+  if(activationMode === 'existing') {
+    if(!selectedKennelId) return alert('Vyber existující kennel.');
+    const selectedKennel=appAdminKennelsCache.find(k=>k.id===selectedKennelId) || {};
+    const label=selectedKennel.name || selectedKennelId;
+    if(!confirm(`Opravdu připojit uživatele ${u.email || uid} ke kennelu ${label}?\n\nUživatel uvidí data tohoto kennelu podle své role.`)) return;
+    kennelId = selectedKennelId;
+  }
   const existingKennel=appAdminKennelsCache.find(k=>k.id===kennelId);
   const kennelName=getAdminInput(uid,'adminKennelName') || existingKennel?.name || 'Kennel';
   const planUntil=getAdminInput(uid,'adminPlanUntil') || new Date(Date.now()+365*86400000).toISOString().slice(0,10);
@@ -3548,7 +3626,7 @@ async function activateBetaUser(uid){
   const userRef=doc(firebaseDb, cols.users, uid);
   const existing=await getDoc(userRef);
   const email=(existing.exists()?existing.data().email:u.email)||'';
-  await setDoc(doc(firebaseDb, cols.kennels, kennelId), {id:kennelId,name:kennelName,status,planUntil,planUntilTs,ownerUid:existingKennel?.ownerUid || uid,schemaVersion:DATA_SCHEMA_VERSION,clientVersion:APP_CONFIG.clientVersion,updatedAt:serverTimestamp()}, {merge:true});
+  await setDoc(doc(firebaseDb, cols.kennels, kennelId), {id:kennelId,name:kennelName,status,planUntil,planUntilTs,ownerUid:existingKennel?.ownerUid || uid,ownerEmail:existingKennel?.ownerEmail || email,schemaVersion:DATA_SCHEMA_VERSION,clientVersion:APP_CONFIG.clientVersion,updatedAt:serverTimestamp()}, {merge:true});
   await setDoc(doc(firebaseDb, cols.kennels, kennelId, cols.kennelMembers, uid), {uid,email,role,status,planUntil,planUntilTs,updatedAt:serverTimestamp()}, {merge:true});
   await setDoc(userRef, {uid,email,status: status==='active'?'active':status,activeKennelId:kennelId,kennelName,memberRole:role,planUntil,updatedAt:serverTimestamp()}, {merge:true});
   if(uid === cloudUser?.uid){
@@ -3567,6 +3645,47 @@ async function setBetaUserReadOnly(uid){
 async function lockBetaUser(uid){
   const statusEl=document.getElementById(`adminStatus_${uid}`); if(statusEl) statusEl.value='locked';
   await activateBetaUser(uid);
+}
+async function archiveKennelForUser(uid){
+  const u=appAdminUsersCache.find(x=>x.id===uid);
+  const kennelId=getAdminInput(uid,'adminExistingKennel') || u?.activeKennelId;
+  if(!kennelId) return alert('Uživatel zatím nemá kennel k archivaci.');
+  if(!confirm('Archivovat tento kennel? Uživatelé už k němu nebudou mít běžný přístup, ale data zůstanou uložená.')) return;
+  const statusEl=document.getElementById(`adminStatus_${uid}`); if(statusEl) statusEl.value='archived';
+  await activateBetaUser(uid);
+}
+async function permanentlyDeleteKennelForUser(uid){
+  if(!cloudAccess?.isAppAdmin) return alert('Nemáš appAdmin oprávnění.');
+  const u=appAdminUsersCache.find(x=>x.id===uid);
+  const kennelId=getAdminInput(uid,'adminExistingKennel') || u?.activeKennelId;
+  if(!kennelId) return alert('Chybí kennelId.');
+  const kennel=appAdminKennelsCache.find(k=>k.id===kennelId) || {};
+  const kennelName=kennel.name || getAdminInput(uid,'adminKennelName') || kennelId;
+  const typed=prompt(`Trvalé smazání archivovaného kennelu\n\nTato akce smaže členy, hlavní data a malé fotky. Nelze ji vrátit zpět.\n\nPro potvrzení napiš přesně název kennelu:\n${kennelName}`,'');
+  if(typed !== kennelName) return alert('Název nesouhlasí. Mazání zrušeno.');
+  const {doc, getDocs, collection, deleteDoc, updateDoc, serverTimestamp} = firebaseApi.fsMod;
+  const cols=APP_CONFIG.firebase.collections;
+  try{
+    const subCollections=[cols.kennelMembers, cols.appData, cols.dogPhotos, 'backups'];
+    for(const sub of subCollections){
+      const snap=await getDocs(collection(firebaseDb, cols.kennels, kennelId, sub));
+      for(const d of snap.docs){ await deleteDoc(d.ref); }
+    }
+    await deleteDoc(doc(firebaseDb, cols.kennels, kennelId));
+    // Uživatelům, kteří na kennel ukazovali, odeber aktivní kennel a označ je jako pending.
+    const userSnap=await getDocs(collection(firebaseDb, cols.users));
+    for(const d of userSnap.docs){
+      const ud=d.data()||{};
+      if(ud.activeKennelId===kennelId){
+        await updateDoc(d.ref,{activeKennelId:null,status:'pending',kennelName:'',memberRole:'',updatedAt:serverTimestamp()});
+      }
+    }
+    alert('Archivovaný kennel byl trvale smazán.');
+    await refreshAppAdminPanel();
+  }catch(err){
+    console.error(err);
+    alert('Mazání se nepodařilo dokončit. Zkontroluj konzoli a Firestore rules.');
+  }
 }
 function seedCurrentUserAsAppAdminHelp(){
   const uid=cloudUser?.uid || 'UID_TVEHO_UCTU';

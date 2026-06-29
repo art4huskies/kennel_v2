@@ -1800,7 +1800,12 @@ async function signInCloud(){
   if(!email || !password){ setAuthStatus(authText('Zadej e-mail i heslo.','Enter email and password.'),'warn'); return; }
   try{
     setAuthStatus(authText('Přihlašuji…','Signing in…'));
-    await firebaseApi.authMod.signInWithEmailAndPassword(firebaseAuth, email, password);
+    const cred = await firebaseApi.authMod.signInWithEmailAndPassword(firebaseAuth, email, password);
+    // Pojistka: některé prohlížeče po resetu hesla nechají UI čekat na onAuthStateChanged.
+    // Po úspěšném přihlášení proto rovnou načteme přístup i zde.
+    if(cred && cred.user){
+      await handleCloudUserReady(cred.user);
+    }
   }catch(err){
     console.error(err);
     setAuthStatus(authText('Přihlášení se nepovedlo. Zkontroluj e-mail a heslo.','Sign-in failed. Check email and password.'),'err');

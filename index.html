@@ -1211,7 +1211,7 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
 <section id="authGate" class="auth-gate" hidden aria-live="polite">
   <div class="auth-card">
     <h2 id="authGateTitle">Kennel Book</h2>
-    <p id="authGateIntro">Přihlášení do cloudové verze. V lokálním režimu se tato obrazovka nezobrazuje.</p>
+    <p id="authGateIntro">Přihlaste se do Kennel Book. Přístup je chráněný a schvaluje ho správce.</p>
     <div class="auth-form-grid">
       <input id="authEmail" type="email" autocomplete="email" placeholder="E-mail">
       <input id="authPassword" type="password" autocomplete="current-password" placeholder="Heslo">
@@ -1223,12 +1223,6 @@ body.read-only-mode .write-only-action{opacity:.45;filter:grayscale(.35);cursor:
       <button type="button" id="authContinueLocalBtn" class="secondary auth-muted-action" onclick="continueLocalPreview()" style="display:none">Pokračovat v lokálním testu</button>
     </div>
     <div id="authStatus" class="auth-status"></div>
-    <details class="firebase-config-note">
-      <summary>Firebase přepínač</summary>
-      <code>APP_CONFIG.storageMode = "firebase"
-APP_CONFIG.authMode = "firebase"
-APP_CONFIG.firebase.config = { apiKey, authDomain, projectId, appId }</code>
-    </details>
   </div>
 </section>
 
@@ -1237,8 +1231,8 @@ APP_CONFIG.firebase.config = { apiKey, authDomain, projectId, appId }</code>
   <div class="app-admin-card">
     <div class="admin-top">
       <div>
-        <h2>Správa uzavřené bety</h2>
-        <div class="small">Aktivace kennelu, role uživatelů a ruční platnost předplatného.</div>
+        <h2>Správa přístupů</h2>
+        <div class="small">Aktivace kennelu, role uživatelů a platnost přístupu.</div>
       </div>
       <button type="button" class="secondary" onclick="closeAppAdminPanel()">Zavřít</button>
     </div>
@@ -1329,7 +1323,7 @@ APP_CONFIG.firebase.config = { apiKey, authDomain, projectId, appId }</code>
           Import JSON <input type="file" id="importFile" accept=".json" hidden onchange="importData(event)">
         </label>
       </div>
-      <div class="small full" style="margin-top:8px">Fotky psů se ukládají jako malé náhledy; ve Firebase jsou oddělené od hlavních dat. JSON je nouzová záloha.</div>
+      <div class="small full" style="margin-top:8px">Fotky psů se ukládají jako malé náhledy. JSON export slouží jako bezpečná záloha.</div>
     </div>
   </aside>
 
@@ -1420,7 +1414,7 @@ const translations = {
     archiveReason: "Důvod archivace", archiveDate: "Datum archivace", archiveNote: "Poznámka k archivu", save: "Uložit", close: "Zavřít", resetDefault: "Vrátit výchozí",
     overview: "Přehled", vaccination: "Očkování", deworming: "Odčervení", health: "Zdraví / léky", training: "Trénink", weight: "Váha",
     date: "Datum", type: "Typ", title: "Název / přípravek", note: "Poznámka", delete: "smazat", edit: "upravit",
-    kennelSettings: "Nastavení kennelu", kennelName: "Název kennelu", kennelSubtitle: "Podtitulek", kennelLogo: "Logo kennelu", theme: "Barevný motiv", language: "Jazyk", cloudReady: "Cloud režim připravený – teď ukládá lokálně, později se přepojí na Firebase.",
+    kennelSettings: "Nastavení kennelu", kennelName: "Název kennelu", kennelSubtitle: "Podtitulek", kennelLogo: "Logo kennelu", theme: "Barevný motiv", language: "Jazyk", cloudReady: "Přihlášeno. Data jsou chráněna a průběžně ukládána.",
     needName: "Zadej jméno psa.", needDate: "Zadej datum.", confirmDelete: "Opravdu smazat tento záznam?", confirmArchive: "Archivovat tohoto psa? Zůstane uložený v archivu.", confirmRestore: "Vrátit psa mezi aktivní?", confirmRemoveDog: "Trvale odstranit kartu psa? Používej jen pro omylem založené duplicity. Historie psa se smaže.",
     massConfirm: "Přidat stejný záznam vybraným psům?", noMassDogs: "Vyber alespoň jednoho psa.",
     teamLog: "Deník smečky", teamLogHelp: "Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.", clearForm: "Vyčistit formulář", team: "Sestava", saveTeamLog: "Uložit záznam", latestTeamLogs: "Poslední záznamy smečky",
@@ -1441,7 +1435,7 @@ const translations = {
     archiveReason: "Archive reason", archiveDate: "Archive date", archiveNote: "Archive note", save: "Save", close: "Close", resetDefault: "Reset default",
     overview: "Overview", vaccination: "Vaccination", deworming: "Deworming", health: "Health / meds", training: "Training", weight: "Weight",
     date: "Date", type: "Type", title: "Title / product", note: "Note", delete: "delete", edit: "edit",
-    kennelSettings: "Kennel settings", kennelName: "Kennel name", kennelSubtitle: "Subtitle", kennelLogo: "Kennel logo", theme: "Color theme", language: "Language", cloudReady: "Cloud mode prepared – currently local, later Firebase.",
+    kennelSettings: "Kennel settings", kennelName: "Kennel name", kennelSubtitle: "Subtitle", kennelLogo: "Kennel logo", theme: "Color theme", language: "Language", cloudReady: "Signed in. Data is protected and saved continuously.",
     needName: "Enter dog name.", needDate: "Enter date.", confirmDelete: "Delete this record?", confirmArchive: "Archive this dog? The record will stay in the archive.", confirmRestore: "Restore this dog to active?", confirmRemoveDog: "Permanently remove this dog card? Use only for accidentally created duplicates. The dog history will be deleted.",
     massConfirm: "Add the same record to selected dogs?", noMassDogs: "Select at least one dog.",
     teamLog: "Team log", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save team log", latestTeamLogs: "Latest team logs",
@@ -1665,7 +1659,7 @@ function setAuthStatus(message, kind=""){
 }
 function applyAuthTexts(){
   const title=document.getElementById('authGateTitle'); if(title) title.textContent='Kennel Book';
-  const intro=document.getElementById('authGateIntro'); if(intro) intro.textContent=authText('Přihlášení do cloudové verze. Data se po přihlášení načtou bezpečně pro tvůj kennel.','Sign in to the cloud version. Your kennel data will load after sign-in.');
+  const intro=document.getElementById('authGateIntro'); if(intro) intro.textContent=authText('Přihlaste se do Kennel Book. Přístup je chráněný a schvaluje ho správce.','Sign in to Kennel Book. Access is protected and approved by the administrator.');
   const email=document.getElementById('authEmail'); if(email) email.placeholder='E-mail';
   const pass=document.getElementById('authPassword'); if(pass) pass.placeholder=authText('Heslo','Password');
   const sign=document.getElementById('authSignInBtn'); if(sign) sign.textContent=authText('Přihlásit se','Sign in');

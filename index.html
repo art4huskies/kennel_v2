@@ -912,6 +912,130 @@ body[data-theme="forest"] .eventline.race{border-left-color:#f4c542;background:r
 
 
 
+
+
+/* --- Compact important contacts: emergency first + add-on-demand editor --- */
+.contacts-list-compact{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin:12px 0 14px;
+}
+.contacts-section-label{
+  margin:12px 0 4px;
+  color:#dff;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  opacity:.9;
+}
+.contact-view-card.compact{
+  min-height:auto;
+  padding:12px;
+}
+.contact-view-card.compact .contact-view-name{
+  font-size:17px;
+  font-weight:650;
+}
+.contact-row-empty{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  min-height:48px;
+  border-radius:16px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+}
+.contact-row-empty.emergency{
+  border-color:rgba(255,91,110,.28);
+  background:rgba(255,91,110,.07);
+}
+.contact-row-title{
+  color:#eafcff;
+  font-weight:600;
+}
+.contact-add-btn{
+  width:34px;
+  height:34px;
+  min-width:34px;
+  border-radius:999px;
+  padding:0;
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  line-height:1;
+  font-weight:700;
+  color:#03202a;
+  background:linear-gradient(135deg,var(--aurora),var(--aurora2));
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+}
+.contact-card-actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.contact-card-actions button{
+  padding:6px 8px;
+  font-size:12px;
+  border-radius:999px;
+}
+.contact-editor-host{
+  position:relative;
+  z-index:250;
+}
+.contact-editor-overlay{
+  position:fixed;
+  inset:0;
+  z-index:420;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.55);
+  padding:18px;
+}
+.contact-editor-card{
+  width:min(520px,96vw);
+  max-height:90vh;
+  overflow:auto;
+  background:rgba(20,54,71,.98);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 20px 60px rgba(0,0,0,.48);
+  border-radius:22px;
+  padding:16px;
+}
+.contact-editor-card h3{
+  margin:0 0 8px;
+  font-size:18px;
+  color:#eaffff;
+}
+.contact-editor-card label{
+  display:block;
+  margin:8px 0;
+  font-size:12px;
+  color:var(--muted);
+}
+.contact-editor-card input{
+  margin-top:4px;
+}
+.contact-editor-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+@media(max-width:760px){
+  .contacts-list-compact{gap:8px}
+  .contact-row-empty{padding:9px 10px;border-radius:14px}
+  .contact-add-btn{width:32px;height:32px;min-width:32px}
+  .contact-view-card.compact{padding:11px}
+  .contact-editor-card{padding:14px}
+}
+
+
 /* --- Training import bridge + mobile polish --- */
 .track-import-panel{
   background:rgba(255,255,255,.055);
@@ -1666,13 +1790,9 @@ main.app > section.panel:first-of-type .eventline{
     <div class="brand-settings-card-clean contacts-card-clean">
       <h2 id="contactsModalTitle">Důležité kontakty</h2>
       <p id="contactsModalHelp" class="small contacts-intro">Rychlý seznam veterin, specialistů a pohotovostí pro jeden kennel.</p>
-      <div id="contactsPreview" class="contacts-preview-grid"></div>
-      <details id="contactsEditPanel" class="contacts-edit-panel" open>
-        <summary id="contactsEditSummary">Upravit kontakty</summary>
-        <div id="contactsSettingsGrid" class="contacts-form-grid"></div>
-      </details>
+      <div id="contactsPreview" class="contacts-list-compact"></div>
+      <div id="contactEditorHost" class="contact-editor-host" aria-live="polite"></div>
       <div class="brand-settings-actions-clean">
-        <button type="button" onclick="saveImportantContactsFromForm()" id="saveContactsBtn">Uložit kontakty</button>
         <button type="button" class="secondary" onclick="closeImportantContactsModal()" id="closeContactsBtn">Zavřít</button>
       </div>
     </div>
@@ -1957,8 +2077,8 @@ const translations = {
     legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky", legendVet: "veterina", legendPhysio: "fyzio",
     dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Musher", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
     importantContacts: "Kontakty", importantContactsTitle: "Důležité kontakty", importantContactsHelp: "Rychlý seznam veterin, specialistů a pohotovostí pro jeden kennel.", editContacts: "Upravit kontakty", saveContacts: "Uložit kontakty", noContactFilled: "Zatím nevyplněno",
-    contactPrimaryVet: "1. hlavní veterina", contactSecondVet: "2. druhá veterina", contactSpecialist: "3. specialista", contactPhysio: "Fyzioterapie", contactEmergency1: "1. pohotovost", contactEmergency2: "2. pohotovost",
-    contactName: "Název", contactPhone1: "1. telefon", contactPhone2: "2. telefon", contactPhone: "Telefon", contactEmail: "E-mail", contactWeb: "Webovky", contactBooking: "Rezervační systém", contactAddress: "Adresa", callNow: "Volat", openWeb: "Web", openBooking: "Rezervace", writeEmail: "E-mail",
+    contactPrimaryVet: "1. veterina", contactSecondVet: "2. veterina", contactSpecialist: "1. specialista", contactSpecialist2: "2. specialista", contactPhysio: "Fyzioterapie", contactFeeding: "Krmení", contactEmergency1: "1. pohotovost", contactEmergency2: "2. pohotovost",
+    contactName: "Název", contactPhone1: "1. telefon", contactPhone2: "2. telefon", contactPhone: "Telefon", contactEmail: "E-mail", contactWeb: "Webovky", contactBooking: "Rezervační systém", contactAddress: "Adresa", callNow: "Volat", openWeb: "Web", openBooking: "Rezervace", writeEmail: "E-mail", addContact: "Přidat kontakt", editContact: "Upravit", saveContact: "Uložit kontakt", cancel: "Zrušit", filledContacts: "Vyplněné kontakty", contactsToAdd: "Další k vyplnění", noContactsYet: "Zatím nejsou vyplněné žádné kontakty.",
     importTrack: "Import GPX / TCX / FIT z hodinek", chooseTrackFile: "Vybrat soubor", clearTrackImport: "Vyčistit import", importTrackHelp: "GPX a TCX se načtou přímo. FIT je připravený jako první most; u běžných FIT souborů se pokusí načíst souhrnná data.",
     phTeamElevation: "Převýšení m", phTeamAvgSpeed: "Průměr km/h", phTeamSource: "Zdroj dat: ručně / GPX / TCX / FIT", latestRecord: "Poslední záznam", last30Days: "Posledních 30 dní", teamDiaryReady: "Deník smečky je připravený.", openDiaryFirst: "Rozbal deník pro první zápis tréninku nebo závodu.", sourceLabel: "Zdroj", writtenBy: "zapsal/a", season: "Sezóna"
   },
@@ -1978,8 +2098,8 @@ const translations = {
     legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication", legendVet: "vet", legendPhysio: "physio",
     dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Musher", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
     importantContacts: "Contacts", importantContactsTitle: "Important contacts", importantContactsHelp: "Quick list of vets, specialists and emergency clinics for one kennel.", editContacts: "Edit contacts", saveContacts: "Save contacts", noContactFilled: "Not filled in yet",
-    contactPrimaryVet: "1st main vet", contactSecondVet: "2nd vet", contactSpecialist: "3rd specialist", contactPhysio: "Physiotherapy", contactEmergency1: "1st emergency", contactEmergency2: "2nd emergency",
-    contactName: "Name", contactPhone1: "1st phone", contactPhone2: "2nd phone", contactPhone: "Phone", contactEmail: "Email", contactWeb: "Website", contactBooking: "Booking system", contactAddress: "Address", callNow: "Call", openWeb: "Website", openBooking: "Booking", writeEmail: "Email",
+    contactPrimaryVet: "1st vet", contactSecondVet: "2nd vet", contactSpecialist: "1st specialist", contactSpecialist2: "2nd specialist", contactPhysio: "Physiotherapy", contactFeeding: "Feeding", contactEmergency1: "1st emergency", contactEmergency2: "2nd emergency",
+    contactName: "Name", contactPhone1: "1st phone", contactPhone2: "2nd phone", contactPhone: "Phone", contactEmail: "Email", contactWeb: "Website", contactBooking: "Booking system", contactAddress: "Address", callNow: "Call", openWeb: "Website", openBooking: "Booking", writeEmail: "Email", addContact: "Add contact", editContact: "Edit", saveContact: "Save contact", cancel: "Cancel", filledContacts: "Filled contacts", contactsToAdd: "Contacts to add", noContactsYet: "No contacts have been filled in yet.",
     importTrack: "Import GPX / TCX / FIT from watches", chooseTrackFile: "Choose file", clearTrackImport: "Clear import", importTrackHelp: "GPX and TCX are loaded directly. FIT is prepared as a first bridge; common FIT files are parsed for summary data when possible.",
     phTeamElevation: "Elevation gain m", phTeamAvgSpeed: "Average km/h", phTeamSource: "Data source: manual / GPX / TCX / FIT", latestRecord: "Latest record", last30Days: "Last 30 days", teamDiaryReady: "Team diary is ready.", openDiaryFirst: "Open the diary to add the first training or race.", sourceLabel: "Source", writtenBy: "written by", season: "Season"
   }
@@ -4095,18 +4215,22 @@ function serializeChiplistTemplate(){
 
 
 // --- Important contacts microsite ---
+let editingContactKey = null;
+
 function normalizeImportantContacts(source){
   const fullFields=['name','phone1','phone2','email','web','booking'];
   const emergencyFields=['name','address','phone'];
   const makeFull=()=>Object.fromEntries(fullFields.map(f=>[f,'']));
   const makeEmergency=()=>Object.fromEntries(emergencyFields.map(f=>[f,'']));
   const base={
+    emergency1: makeEmergency(),
+    emergency2: makeEmergency(),
     primaryVet: makeFull(),
     secondVet: makeFull(),
-    specialist: makeFull(),
+    specialist: makeFull(),      // původní specialista = nově 1. specialista
+    specialist2: makeFull(),
     physio: makeFull(),
-    emergency1: makeEmergency(),
-    emergency2: makeEmergency()
+    feeding: makeFull()
   };
   source = (source && typeof source === 'object') ? source : {};
   Object.keys(base).forEach(key=>{
@@ -4117,12 +4241,14 @@ function normalizeImportantContacts(source){
 }
 function contactDefinitions(){
   return [
+    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency', priority:true},
+    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency', priority:true},
     {key:'primaryVet', title:t('contactPrimaryVet'), kind:'full'},
     {key:'secondVet', title:t('contactSecondVet'), kind:'full'},
     {key:'specialist', title:t('contactSpecialist'), kind:'full'},
+    {key:'specialist2', title:t('contactSpecialist2'), kind:'full'},
     {key:'physio', title:t('contactPhysio'), kind:'full'},
-    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency'},
-    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency'}
+    {key:'feeding', title:t('contactFeeding'), kind:'full'}
   ];
 }
 function contactFieldDefinitions(kind){
@@ -4149,13 +4275,14 @@ function hasAnyContactValue(c){
 }
 function renderContactPreviewCard(def, contacts){
   const c=contacts[def.key] || {};
+  if(!hasAnyContactValue(c)) return '';
   if(def.kind === 'emergency'){
-    const has=hasAnyContactValue(c);
-    return `<div class="contact-view-card emergency">
+    return `<div class="contact-view-card compact emergency">
       <div class="contact-view-title">${escapeHtml(def.title)}</div>
       <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
       ${c.address?`<div class="contact-line">📍 ${escapeHtml(c.address)}</div>`:''}
-      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:(has?'':`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`)}
+      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:''}
+      <div class="contact-card-actions"><button type="button" class="secondary" onclick="openContactEditor('${escapeAttr(def.key)}')">${escapeHtml(t('editContact'))}</button></div>
     </div>`;
   }
   const web=normalizeUrl(c.web), booking=normalizeUrl(c.booking);
@@ -4165,20 +4292,21 @@ function renderContactPreviewCard(def, contacts){
   if(c.email) links.push(`<a class="contact-link-pill" href="mailto:${escapeAttr(c.email)}">✉ ${escapeHtml(t('writeEmail'))}</a>`);
   if(web) links.push(`<a class="contact-link-pill" href="${escapeAttr(web)}" target="_blank" rel="noopener">🌐 ${escapeHtml(t('openWeb'))}</a>`);
   if(booking) links.push(`<a class="contact-link-pill" href="${escapeAttr(booking)}" target="_blank" rel="noopener">📅 ${escapeHtml(t('openBooking'))}</a>`);
-  return `<div class="contact-view-card">
+  return `<div class="contact-view-card compact">
     <div class="contact-view-title">${escapeHtml(def.title)}</div>
     <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
     ${c.phone1?`<div class="contact-line">☎ ${escapeHtml(c.phone1)}</div>`:''}
     ${c.phone2?`<div class="contact-line">☎ ${escapeHtml(c.phone2)}</div>`:''}
     ${c.email?`<div class="contact-line">✉ ${escapeHtml(c.email)}</div>`:''}
-    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:(!hasAnyContactValue(c)?`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`:'')}
+    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:''}
+    <div class="contact-card-actions"><button type="button" class="secondary" onclick="openContactEditor('${escapeAttr(def.key)}')">${escapeHtml(t('editContact'))}</button></div>
   </div>`;
 }
-function renderContactFormCard(def, contacts){
-  const c=contacts[def.key] || {};
-  return `<div class="contact-form-card">
-    <h3>${escapeHtml(def.title)}</h3>
-    ${contactFieldDefinitions(def.kind).map(f=>`<label>${escapeHtml(f.label)}<input id="contact_${def.key}_${f.key}" type="${f.type}" value="${escapeAttr(c[f.key]||'')}"></label>`).join('')}
+function renderContactAddRow(def){
+  const emergencyClass = def.kind === 'emergency' ? ' emergency' : '';
+  return `<div class="contact-row-empty${emergencyClass}">
+    <div class="contact-row-title">${escapeHtml(def.title)}</div>
+    <button type="button" class="contact-add-btn" onclick="openContactEditor('${escapeAttr(def.key)}')" aria-label="${escapeAttr(t('addContact'))}: ${escapeAttr(def.title)}">+</button>
   </div>`;
 }
 function renderImportantContactsModal(){
@@ -4188,10 +4316,18 @@ function renderImportantContactsModal(){
   const defs=contactDefinitions();
   const title=document.getElementById('contactsModalTitle'); if(title) title.textContent=t('importantContactsTitle');
   const help=document.getElementById('contactsModalHelp'); if(help) help.textContent=t('importantContactsHelp');
-  const summary=document.getElementById('contactsEditSummary'); if(summary) summary.textContent=t('editContacts');
-  const preview=document.getElementById('contactsPreview'); if(preview) preview.innerHTML=defs.map(def=>renderContactPreviewCard(def, contacts)).join('');
-  const grid=document.getElementById('contactsSettingsGrid'); if(grid) grid.innerHTML=defs.map(def=>renderContactFormCard(def, contacts)).join('');
-  const saveBtn=document.getElementById('saveContactsBtn'); if(saveBtn) saveBtn.textContent=t('saveContacts');
+  const preview=document.getElementById('contactsPreview');
+  if(preview){
+    const filled=defs.filter(def=>hasAnyContactValue(contacts[def.key]));
+    const empty=defs.filter(def=>!hasAnyContactValue(contacts[def.key]));
+    const filledHtml=filled.length
+      ? `<div class="contacts-section-label">${escapeHtml(t('filledContacts'))}</div>${filled.map(def=>renderContactPreviewCard(def, contacts)).join('')}`
+      : `<div class="contact-line">${escapeHtml(t('noContactsYet'))}</div>`;
+    const emptyHtml=empty.length
+      ? `<div class="contacts-section-label">${escapeHtml(t('contactsToAdd'))}</div>${empty.map(renderContactAddRow).join('')}`
+      : '';
+    preview.innerHTML = filledHtml + emptyHtml;
+  }
   const closeBtn=document.getElementById('closeContactsBtn'); if(closeBtn) closeBtn.textContent=t('close');
 }
 function openImportantContactsModal(){
@@ -4201,22 +4337,55 @@ function openImportantContactsModal(){
   if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
 }
 function closeImportantContactsModal(){
+  closeContactEditor();
   const modal=document.getElementById('importantContactsModal');
   if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
 }
-function saveImportantContactsFromForm(){
+function openContactEditor(key){
   const contacts=getImportantContacts();
-  contactDefinitions().forEach(def=>{
-    contactFieldDefinitions(def.kind).forEach(f=>{
-      const el=document.getElementById(`contact_${def.key}_${f.key}`);
-      if(el) contacts[def.key][f.key]=el.value.trim();
-    });
+  const def=contactDefinitions().find(d=>d.key===key);
+  const host=document.getElementById('contactEditorHost');
+  if(!def || !host) return;
+  editingContactKey=key;
+  const c=contacts[key] || {};
+  const fields=contactFieldDefinitions(def.kind).map(f=>`
+    <label>${escapeHtml(f.label)}
+      <input id="contactEdit_${def.key}_${f.key}" type="${f.type}" value="${escapeAttr(c[f.key]||'')}">
+    </label>`).join('');
+  host.innerHTML=`<div class="contact-editor-overlay" role="dialog" aria-modal="true">
+    <div class="contact-editor-card">
+      <h3>${escapeHtml(def.title)}</h3>
+      ${fields}
+      <div class="contact-editor-actions">
+        <button type="button" onclick="saveContactEditor()">${escapeHtml(t('saveContact'))}</button>
+        <button type="button" class="secondary" onclick="closeContactEditor()">${escapeHtml(t('cancel'))}</button>
+      </div>
+    </div>
+  </div>`;
+}
+function closeContactEditor(){
+  editingContactKey=null;
+  const host=document.getElementById('contactEditorHost');
+  if(host) host.innerHTML='';
+}
+function saveContactEditor(){
+  if(!editingContactKey) return;
+  const contacts=getImportantContacts();
+  const def=contactDefinitions().find(d=>d.key===editingContactKey);
+  if(!def) return;
+  contactFieldDefinitions(def.kind).forEach(f=>{
+    const el=document.getElementById(`contactEdit_${def.key}_${f.key}`);
+    if(el) contacts[def.key][f.key]=el.value.trim();
   });
   data.contacts=normalizeImportantContacts(contacts);
   saveData();
+  closeContactEditor();
   renderImportantContactsModal();
 }
-
+function saveImportantContactsFromForm(){
+  // Backward-compatible hook used by older markup. New UI saves each contact from its own small editor.
+  saveContactEditor();
+}
 
 async function refreshAppAdminPanel(){
   if(!firebaseReady || !firebaseDb || !cloudUser) return;

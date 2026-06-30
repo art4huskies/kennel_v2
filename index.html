@@ -1607,138 +1607,6 @@ main.app > section.panel:first-of-type .eventline{
   main.app > section.panel:first-of-type .formgrid{padding:10px;}
 }
 
-
-
-/* --- Contacts redesign: emergency first + compact empty rows --- */
-.contacts-card-clean{
-  width:min(760px,96vw);
-}
-.contacts-preview-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:9px;
-  margin:12px 0 14px;
-}
-.contact-view-card{
-  min-height:auto;
-  padding:11px 12px;
-  border-radius:18px;
-}
-.contact-view-card.emergency{
-  order:-10;
-  border-width:1px;
-  background:linear-gradient(135deg, rgba(255,91,110,.14), rgba(255,255,255,.055));
-}
-.contact-view-card.filled-contact{
-  background:rgba(255,255,255,.075);
-}
-.contact-empty-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  min-height:54px;
-  padding:11px 12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.10);
-}
-.contact-empty-title{
-  font-weight:650;
-  color:#eafcff;
-  letter-spacing:.01em;
-}
-.contact-empty-plus,
-.contact-edit-small-btn{
-  width:34px;
-  height:34px;
-  min-width:34px;
-  border-radius:50%;
-  padding:0;
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  line-height:1;
-  font-weight:650;
-  background:rgba(255,255,255,.10);
-  color:#eafcff;
-  border:1px solid rgba(255,255,255,.18);
-}
-.contact-edit-small-btn{
-  width:auto;
-  min-width:0;
-  height:32px;
-  border-radius:999px;
-  padding:0 10px;
-  font-size:12px;
-}
-.contact-view-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
-}
-.contact-view-name{
-  font-weight:650;
-}
-.emergency-phone-link{
-  font-weight:750;
-}
-.contacts-edit-panel{
-  display:none;
-}
-.contact-editor-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:420;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.58);
-  padding:16px;
-}
-.contact-editor-backdrop.open{display:flex;}
-.contact-editor-card{
-  width:min(520px,96vw);
-  max-height:92vh;
-  overflow:auto;
-  border-radius:22px;
-  padding:16px;
-  background:rgba(20,54,71,.98);
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 22px 64px rgba(0,0,0,.44);
-}
-.contact-editor-card h3{
-  margin:0 0 10px;
-  color:#eafcff;
-  font-size:18px;
-  font-weight:650;
-}
-.contact-editor-card label{
-  display:block;
-  margin:8px 0;
-  color:var(--muted);
-  font-size:12px;
-}
-.contact-editor-card input{
-  margin-top:4px;
-}
-.contact-editor-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  margin-top:12px;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,.10);
-}
-@media(max-width:760px){
-  .contacts-card-clean{padding:15px;width:96vw;}
-  .contact-view-card{padding:10px 11px;}
-  .emergency-phone-link{font-size:22px;}
-  .contact-empty-row{min-height:50px;}
-}
-
 </style>
 
   <!-- PWA / mobile home screen icon -->
@@ -3119,139 +2987,7 @@ function printChiplist(){
     .ifss-dog-input{font-size:2.9mm!important;height:3.9mm!important;line-height:3.7mm!important}.ifss-small-input{text-align:center!important}.ifss-sign-input{font-size:3.2mm!important}
     @page{size:A4 portrait;margin:10mm}
     @media print{.ifss-template{width:190mm;height:269mm}.ifss-overlay-input{color:#000!important;background:transparent!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-  
-
-/* --- Contacts redesign: emergency first + compact empty rows --- */
-.contacts-card-clean{
-  width:min(760px,96vw);
-}
-.contacts-preview-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:9px;
-  margin:12px 0 14px;
-}
-.contact-view-card{
-  min-height:auto;
-  padding:11px 12px;
-  border-radius:18px;
-}
-.contact-view-card.emergency{
-  order:-10;
-  border-width:1px;
-  background:linear-gradient(135deg, rgba(255,91,110,.14), rgba(255,255,255,.055));
-}
-.contact-view-card.filled-contact{
-  background:rgba(255,255,255,.075);
-}
-.contact-empty-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  min-height:54px;
-  padding:11px 12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.10);
-}
-.contact-empty-title{
-  font-weight:650;
-  color:#eafcff;
-  letter-spacing:.01em;
-}
-.contact-empty-plus,
-.contact-edit-small-btn{
-  width:34px;
-  height:34px;
-  min-width:34px;
-  border-radius:50%;
-  padding:0;
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  line-height:1;
-  font-weight:650;
-  background:rgba(255,255,255,.10);
-  color:#eafcff;
-  border:1px solid rgba(255,255,255,.18);
-}
-.contact-edit-small-btn{
-  width:auto;
-  min-width:0;
-  height:32px;
-  border-radius:999px;
-  padding:0 10px;
-  font-size:12px;
-}
-.contact-view-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
-}
-.contact-view-name{
-  font-weight:650;
-}
-.emergency-phone-link{
-  font-weight:750;
-}
-.contacts-edit-panel{
-  display:none;
-}
-.contact-editor-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:420;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.58);
-  padding:16px;
-}
-.contact-editor-backdrop.open{display:flex;}
-.contact-editor-card{
-  width:min(520px,96vw);
-  max-height:92vh;
-  overflow:auto;
-  border-radius:22px;
-  padding:16px;
-  background:rgba(20,54,71,.98);
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 22px 64px rgba(0,0,0,.44);
-}
-.contact-editor-card h3{
-  margin:0 0 10px;
-  color:#eafcff;
-  font-size:18px;
-  font-weight:650;
-}
-.contact-editor-card label{
-  display:block;
-  margin:8px 0;
-  color:var(--muted);
-  font-size:12px;
-}
-.contact-editor-card input{
-  margin-top:4px;
-}
-.contact-editor-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  margin-top:12px;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,.10);
-}
-@media(max-width:760px){
-  .contacts-card-clean{padding:15px;width:96vw;}
-  .contact-view-card{padding:10px 11px;}
-  .emergency-phone-link{font-size:22px;}
-  .contact-empty-row{min-height:50px;}
-}
-
-</style></head><body>${serializeChiplistTemplate()}<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>`;
+  </style></head><body>${serializeChiplistTemplate()}<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>`;
   const win=window.open('', '_blank');
   if(!win){
     window.print();
@@ -3295,139 +3031,7 @@ function exportChiplistXls(){
   ];
   const header=['','Name','Sex M/F','Year','Micro-Chips','Drugs?','Racing Dog?'];
   const allRows=[...metaRows, header, ...rows, [], ['All your dogs must be on the list! All running dogs has to be marked with yes in column "Racing Dogs".'], ['Any dog who gets some drugs has to be marked in column "Drugs".'], [], ['Unterschrift / Signature:', readInputValue('ifssSignature')]];
-  const html='<!doctype html><html><head><meta charset="utf-8"><style>td{border:1px solid #999;padding:4px;font-family:Arial;font-size:11pt}.h{background:#8fb5df;font-weight:bold}.nob{border:0}
-
-/* --- Contacts redesign: emergency first + compact empty rows --- */
-.contacts-card-clean{
-  width:min(760px,96vw);
-}
-.contacts-preview-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:9px;
-  margin:12px 0 14px;
-}
-.contact-view-card{
-  min-height:auto;
-  padding:11px 12px;
-  border-radius:18px;
-}
-.contact-view-card.emergency{
-  order:-10;
-  border-width:1px;
-  background:linear-gradient(135deg, rgba(255,91,110,.14), rgba(255,255,255,.055));
-}
-.contact-view-card.filled-contact{
-  background:rgba(255,255,255,.075);
-}
-.contact-empty-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  min-height:54px;
-  padding:11px 12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.10);
-}
-.contact-empty-title{
-  font-weight:650;
-  color:#eafcff;
-  letter-spacing:.01em;
-}
-.contact-empty-plus,
-.contact-edit-small-btn{
-  width:34px;
-  height:34px;
-  min-width:34px;
-  border-radius:50%;
-  padding:0;
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  line-height:1;
-  font-weight:650;
-  background:rgba(255,255,255,.10);
-  color:#eafcff;
-  border:1px solid rgba(255,255,255,.18);
-}
-.contact-edit-small-btn{
-  width:auto;
-  min-width:0;
-  height:32px;
-  border-radius:999px;
-  padding:0 10px;
-  font-size:12px;
-}
-.contact-view-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start;
-}
-.contact-view-name{
-  font-weight:650;
-}
-.emergency-phone-link{
-  font-weight:750;
-}
-.contacts-edit-panel{
-  display:none;
-}
-.contact-editor-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:420;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.58);
-  padding:16px;
-}
-.contact-editor-backdrop.open{display:flex;}
-.contact-editor-card{
-  width:min(520px,96vw);
-  max-height:92vh;
-  overflow:auto;
-  border-radius:22px;
-  padding:16px;
-  background:rgba(20,54,71,.98);
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 22px 64px rgba(0,0,0,.44);
-}
-.contact-editor-card h3{
-  margin:0 0 10px;
-  color:#eafcff;
-  font-size:18px;
-  font-weight:650;
-}
-.contact-editor-card label{
-  display:block;
-  margin:8px 0;
-  color:var(--muted);
-  font-size:12px;
-}
-.contact-editor-card input{
-  margin-top:4px;
-}
-.contact-editor-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-  margin-top:12px;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,.10);
-}
-@media(max-width:760px){
-  .contacts-card-clean{padding:15px;width:96vw;}
-  .contact-view-card{padding:10px 11px;}
-  .emergency-phone-link{font-size:22px;}
-  .contact-empty-row{min-height:50px;}
-}
-
-</style></head><body><table>'+allRows.map((r,idx)=>'<tr>'+r.map(c=>`<td class="${idx===7?'h':''}">${escapeHtml(c)}</td>`).join('')+'</tr>').join('')+'</table></body></html>';
+  const html='<!doctype html><html><head><meta charset="utf-8"><style>td{border:1px solid #999;padding:4px;font-family:Arial;font-size:11pt}.h{background:#8fb5df;font-weight:bold}.nob{border:0}</style></head><body><table>'+allRows.map((r,idx)=>'<tr>'+r.map(c=>`<td class="${idx===7?'h':''}">${escapeHtml(c)}</td>`).join('')+'</tr>').join('')+'</table></body></html>';
   const blob=new Blob(['\ufeff', html], {type:'application/vnd.ms-excel'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download='ifss_chiplist.xls'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
@@ -4512,14 +4116,13 @@ function normalizeImportantContacts(source){
   return base;
 }
 function contactDefinitions(){
-  // Pohotovosti držíme nahoře, protože jsou nejdůležitější v akutní situaci.
   return [
-    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency', priority:1},
-    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency', priority:2},
-    {key:'primaryVet', title:t('contactPrimaryVet'), kind:'full', priority:3},
-    {key:'secondVet', title:t('contactSecondVet'), kind:'full', priority:4},
-    {key:'specialist', title:t('contactSpecialist'), kind:'full', priority:5},
-    {key:'physio', title:t('contactPhysio'), kind:'full', priority:6}
+    {key:'primaryVet', title:t('contactPrimaryVet'), kind:'full'},
+    {key:'secondVet', title:t('contactSecondVet'), kind:'full'},
+    {key:'specialist', title:t('contactSpecialist'), kind:'full'},
+    {key:'physio', title:t('contactPhysio'), kind:'full'},
+    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency'},
+    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency'}
   ];
 }
 function contactFieldDefinitions(kind){
@@ -4544,42 +4147,15 @@ function normalizeUrl(url){
 function hasAnyContactValue(c){
   return c && Object.values(c).some(v=>String(v||'').trim());
 }
-function contactUiText(key){
-  const en=currentLang==='en';
-  const dict={
-    add: en?'Add':'Přidat',
-    edit: en?'Edit':'Upravit',
-    save: en?'Save':'Uložit',
-    cancel: en?'Cancel':'Zrušit',
-    clear: en?'Clear contact':'Vyčistit kontakt',
-    confirmClear: en?'Clear this contact?':'Vyčistit tento kontakt?',
-    addContact: en?'Add contact':'Přidat kontakt'
-  };
-  return dict[key] || key;
-}
-function contactDefinitionByKey(key){
-  return contactDefinitions().find(d=>d.key===key) || null;
-}
 function renderContactPreviewCard(def, contacts){
   const c=contacts[def.key] || {};
-  const filled=hasAnyContactValue(c);
-  if(!filled){
-    return `<div class="contact-empty-row" data-contact-key="${escapeAttr(def.key)}">
-      <div class="contact-empty-title">${escapeHtml(def.title)}</div>
-      <button class="contact-empty-plus" type="button" onclick="openSingleContactEditor('${escapeAttr(def.key)}')" aria-label="${escapeAttr(contactUiText('addContact'))}">+</button>
-    </div>`;
-  }
   if(def.kind === 'emergency'){
-    return `<div class="contact-view-card emergency filled-contact">
-      <div class="contact-view-head">
-        <div>
-          <div class="contact-view-title">${escapeHtml(def.title)}</div>
-          <div class="contact-view-name">${escapeHtml(c.name || def.title)}</div>
-        </div>
-        <button class="contact-edit-small-btn" type="button" onclick="openSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('edit'))}</button>
-      </div>
+    const has=hasAnyContactValue(c);
+    return `<div class="contact-view-card emergency">
+      <div class="contact-view-title">${escapeHtml(def.title)}</div>
+      <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
       ${c.address?`<div class="contact-line">📍 ${escapeHtml(c.address)}</div>`:''}
-      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:''}
+      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:(has?'':`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`)}
     </div>`;
   }
   const web=normalizeUrl(c.web), booking=normalizeUrl(c.booking);
@@ -4589,18 +4165,13 @@ function renderContactPreviewCard(def, contacts){
   if(c.email) links.push(`<a class="contact-link-pill" href="mailto:${escapeAttr(c.email)}">✉ ${escapeHtml(t('writeEmail'))}</a>`);
   if(web) links.push(`<a class="contact-link-pill" href="${escapeAttr(web)}" target="_blank" rel="noopener">🌐 ${escapeHtml(t('openWeb'))}</a>`);
   if(booking) links.push(`<a class="contact-link-pill" href="${escapeAttr(booking)}" target="_blank" rel="noopener">📅 ${escapeHtml(t('openBooking'))}</a>`);
-  return `<div class="contact-view-card filled-contact">
-    <div class="contact-view-head">
-      <div>
-        <div class="contact-view-title">${escapeHtml(def.title)}</div>
-        <div class="contact-view-name">${escapeHtml(c.name || def.title)}</div>
-      </div>
-      <button class="contact-edit-small-btn" type="button" onclick="openSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('edit'))}</button>
-    </div>
+  return `<div class="contact-view-card">
+    <div class="contact-view-title">${escapeHtml(def.title)}</div>
+    <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
     ${c.phone1?`<div class="contact-line">☎ ${escapeHtml(c.phone1)}</div>`:''}
     ${c.phone2?`<div class="contact-line">☎ ${escapeHtml(c.phone2)}</div>`:''}
     ${c.email?`<div class="contact-line">✉ ${escapeHtml(c.email)}</div>`:''}
-    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:''}
+    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:(!hasAnyContactValue(c)?`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`:'')}
   </div>`;
 }
 function renderContactFormCard(def, contacts){
@@ -4619,66 +4190,9 @@ function renderImportantContactsModal(){
   const help=document.getElementById('contactsModalHelp'); if(help) help.textContent=t('importantContactsHelp');
   const summary=document.getElementById('contactsEditSummary'); if(summary) summary.textContent=t('editContacts');
   const preview=document.getElementById('contactsPreview'); if(preview) preview.innerHTML=defs.map(def=>renderContactPreviewCard(def, contacts)).join('');
-  const grid=document.getElementById('contactsSettingsGrid'); if(grid) grid.innerHTML='';
-  const saveBtn=document.getElementById('saveContactsBtn'); if(saveBtn) saveBtn.style.display='none';
+  const grid=document.getElementById('contactsSettingsGrid'); if(grid) grid.innerHTML=defs.map(def=>renderContactFormCard(def, contacts)).join('');
+  const saveBtn=document.getElementById('saveContactsBtn'); if(saveBtn) saveBtn.textContent=t('saveContacts');
   const closeBtn=document.getElementById('closeContactsBtn'); if(closeBtn) closeBtn.textContent=t('close');
-  ensureSingleContactEditor();
-}
-function ensureSingleContactEditor(){
-  let editor=document.getElementById('singleContactEditor');
-  if(editor) return editor;
-  editor=document.createElement('div');
-  editor.id='singleContactEditor';
-  editor.className='contact-editor-backdrop';
-  editor.setAttribute('aria-hidden','true');
-  editor.innerHTML='<div class="contact-editor-card" id="singleContactEditorCard"></div>';
-  document.body.appendChild(editor);
-  editor.addEventListener('click', ev=>{ if(ev.target===editor) closeSingleContactEditor(); });
-  return editor;
-}
-function openSingleContactEditor(key){
-  const def=contactDefinitionByKey(key); if(!def) return;
-  const contacts=getImportantContacts();
-  const c=contacts[def.key] || {};
-  const editor=ensureSingleContactEditor();
-  const card=document.getElementById('singleContactEditorCard'); if(!card) return;
-  card.innerHTML=`
-    <h3>${escapeHtml(def.title)}</h3>
-    ${contactFieldDefinitions(def.kind).map(f=>`<label>${escapeHtml(f.label)}<input id="single_contact_${def.key}_${f.key}" type="${f.type}" value="${escapeAttr(c[f.key]||'')}"></label>`).join('')}
-    <div class="contact-editor-actions">
-      <button class="secondary" type="button" onclick="clearSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('clear'))}</button>
-      <button class="secondary" type="button" onclick="closeSingleContactEditor()">${escapeHtml(contactUiText('cancel'))}</button>
-      <button type="button" data-write="1" onclick="saveSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('save'))}</button>
-    </div>`;
-  editor.classList.add('open');
-  editor.setAttribute('aria-hidden','false');
-  setTimeout(()=>card.querySelector('input')?.focus(), 50);
-}
-function closeSingleContactEditor(){
-  const editor=document.getElementById('singleContactEditor');
-  if(editor){ editor.classList.remove('open'); editor.setAttribute('aria-hidden','true'); }
-}
-function saveSingleContactEditor(key){
-  const def=contactDefinitionByKey(key); if(!def) return;
-  const contacts=getImportantContacts();
-  contactFieldDefinitions(def.kind).forEach(f=>{
-    const el=document.getElementById(`single_contact_${def.key}_${f.key}`);
-    if(el) contacts[def.key][f.key]=el.value.trim();
-  });
-  data.contacts=normalizeImportantContacts(contacts);
-  saveData();
-  closeSingleContactEditor();
-  renderImportantContactsModal();
-}
-function clearSingleContactEditor(key){
-  if(!confirm(contactUiText('confirmClear'))) return;
-  const def=contactDefinitionByKey(key); if(!def) return;
-  const contacts=getImportantContacts();
-  contactFieldDefinitions(def.kind).forEach(f=>{ contacts[def.key][f.key]=''; });
-  data.contacts=normalizeImportantContacts(contacts);
-  saveData();
-  closeSingleContactEditor();
-  renderImportantContactsModal();
 }
 function openImportantContactsModal(){
   migrateData();
@@ -4687,12 +4201,10 @@ function openImportantContactsModal(){
   if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
 }
 function closeImportantContactsModal(){
-  closeSingleContactEditor();
   const modal=document.getElementById('importantContactsModal');
   if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
 }
 function saveImportantContactsFromForm(){
-  // Backwards-compatible fallback: old bulk editor is hidden, but this keeps older buttons safe.
   const contacts=getImportantContacts();
   contactDefinitions().forEach(def=>{
     contactFieldDefinitions(def.kind).forEach(f=>{
@@ -4704,7 +4216,6 @@ function saveImportantContactsFromForm(){
   saveData();
   renderImportantContactsModal();
 }
-
 
 
 async function refreshAppAdminPanel(){

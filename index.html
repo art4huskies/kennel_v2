@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kennel v2 – Deník smečky</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;800&display=swap" rel="stylesheet">
-<title>Kennel v2 – Deník smečky</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --night:#081923;
@@ -1466,226 +1466,277 @@ body[data-theme="forest"] .team-log-30-card{background:linear-gradient(135deg, r
 
 
 
-/* --- Kennel Book visual refinement: Inter, calmer hierarchy, light dog card --- */
+/* --- Kennel Book polish 2026: Inter, lighter dog card, more breathing room --- */
 :root{
-  --kb-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  --kb-radius-lg: 22px;
-  --kb-radius-md: 16px;
+  --font-app: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dogpaper-bg:#fff3f8;
+  --dogpaper-bg-soft:#fff9fc;
+  --dogpaper-text:#2c1b28;
+  --dogpaper-muted:#73586a;
+  --dogpaper-border:#efc2d7;
+  --dogpaper-line:rgba(67,33,53,.14);
 }
-body{
-  font-family:var(--kb-font);
-  font-weight:400;
-  letter-spacing:-0.01em;
-}
-.panel{
-  padding:18px;
-  border-radius:22px;
-}
-h2{
-  font-size:18px;
-  font-weight:650;
-  letter-spacing:-0.015em;
-}
-h3{
-  font-size:14px;
-  font-weight:600;
-  letter-spacing:-0.01em;
-}
-button{
-  font-weight:650;
-  letter-spacing:-0.01em;
-}
-input,select,textarea,button{
-  font-family:var(--kb-font);
-}
-.app{
-  gap:22px;
-  padding:22px;
-}
-.team-log-panel,.weather-strip-panel{
-  margin-left:22px;
-  margin-right:22px;
-}
-.badge,.small,.admin-status-pill,.cloud-status-pill{
-  letter-spacing:0;
-}
-.brand-text-clean h1{
-  font-weight:700;
-  letter-spacing:.045em;
-}
-.brand-subtitle-clean{
-  font-weight:500;
-}
-.dog-sidebar #dogSidebarTitle{
-  font-weight:650;
-}
-.compact-dog-name{
-  font-weight:650;
-}
-.team-log-toggle-btn,.admin-user-summary,.mass-tools summary,.contacts-edit-panel summary,.track-import-panel summary{
-  font-weight:650;
-}
-
-/* Theme-aware light working surface for the dog card */
 body[data-theme="aurora"]{
-  --dog-card-bg:#e9fbfb;
-  --dog-card-bg-soft:#f7ffff;
-  --dog-card-bg-panel:#ddf5f5;
-  --dog-card-text:#12323a;
-  --dog-card-muted:#527178;
-  --dog-card-border:#b7e5e6;
-  --dog-card-shadow:0 14px 36px rgba(0,32,40,.18);
+  --dogpaper-bg:#e9fbfb;
+  --dogpaper-bg-soft:#f7ffff;
+  --dogpaper-text:#14343c;
+  --dogpaper-muted:#527178;
+  --dogpaper-border:#b8e8e8;
+  --dogpaper-line:rgba(20,52,60,.15);
 }
 body[data-theme="forest"]{
-  --dog-card-bg:#eaf7f1;
-  --dog-card-bg-soft:#f7fbf8;
-  --dog-card-bg-panel:#dff1e8;
-  --dog-card-text:#173336;
-  --dog-card-muted:#55706d;
-  --dog-card-border:#b8ddd2;
-  --dog-card-shadow:0 14px 36px rgba(0,28,18,.18);
+  --dogpaper-bg:#eaf7f1;
+  --dogpaper-bg-soft:#f6fbf8;
+  --dogpaper-text:#173336;
+  --dogpaper-muted:#55706d;
+  --dogpaper-border:#b8ddd2;
+  --dogpaper-line:rgba(23,51,54,.15);
 }
-body[data-theme="classic"], body:not([data-theme]){
-  --dog-card-bg:#fff1f7;
-  --dog-card-bg-soft:#fff8fb;
-  --dog-card-bg-panel:#f9e3ee;
-  --dog-card-text:#3c1d2d;
-  --dog-card-muted:#76576a;
-  --dog-card-border:#f2bfd7;
-  --dog-card-shadow:0 14px 36px rgba(50,0,28,.18);
+html,body,input,select,textarea,button{font-family:var(--font-app)!important;}
+body{font-weight:400;letter-spacing:-.01em;}
+.app{gap:22px;padding:22px;align-items:start;}
+.panel{padding:18px;border-radius:22px;}
+h2{font-size:18px;font-weight:600;letter-spacing:-.015em;}
+h3{font-size:14px;font-weight:600;letter-spacing:-.005em;}
+button{font-weight:600;letter-spacing:-.01em;}
+.brand-text-clean h1{font-weight:700;letter-spacing:.045em;}
+.brand-subtitle-clean{font-weight:500;}
+.team-log-title-block h2{font-weight:650;}
+.compact-dog-name{font-weight:650;}
+.dog-item strong,.admin-user-title strong,.contact-view-name{font-weight:650;}
+.badge{font-weight:500;}
+input,select,textarea{font-weight:400;}
+
+main.app > section.panel:first-of-type{
+  background:linear-gradient(180deg,var(--dogpaper-bg),var(--dogpaper-bg-soft));
+  color:var(--dogpaper-text);
+  border:1px solid var(--dogpaper-border);
+  box-shadow:0 16px 40px rgba(0,0,0,.22);
 }
-.dog-card-panel{
-  background:linear-gradient(180deg,var(--dog-card-bg),var(--dog-card-bg-soft));
-  color:var(--dog-card-text);
-  border-color:rgba(255,255,255,.55);
-  box-shadow:var(--dog-card-shadow);
+main.app > section.panel:first-of-type h2,
+main.app > section.panel:first-of-type h3{
+  color:var(--dogpaper-text);
 }
-.dog-card-panel h2,
-.dog-card-panel h3,
-.dog-card-panel b,
-.dog-card-panel strong{
-  color:var(--dog-card-text);
+main.app > section.panel:first-of-type .small{
+  color:var(--dogpaper-muted)!important;
 }
-.dog-card-panel .small,
-.dog-card-panel .table th,
-.dog-card-panel .badge{
-  color:var(--dog-card-muted);
+main.app > section.panel:first-of-type .card-top{
+  gap:20px;
+  padding:2px 0 8px;
 }
-#dogCard .card-top{
-  background:rgba(255,255,255,.46);
-  border:1px solid var(--dog-card-border);
-  border-radius:var(--kb-radius-lg);
-  padding:16px;
-  margin-bottom:16px;
+main.app > section.panel:first-of-type .portrait{
+  background:linear-gradient(180deg,#fff,rgba(255,255,255,.84));
+  border:1px solid rgba(0,0,0,.08);
+  color:var(--dogpaper-text);
+  box-shadow:0 10px 22px rgba(0,0,0,.10);
 }
-#dogCard .portrait{
-  background:linear-gradient(180deg,#ffffff,var(--dog-card-bg-panel));
-  color:var(--dog-card-text);
-  border:1px solid var(--dog-card-border);
-  box-shadow:0 8px 18px rgba(0,0,0,.08);
-}
-#dogCard .portrait .small{
-  color:var(--dog-card-muted)!important;
-}
-#dogCard input:not(.ifss-overlay-input),
-#dogCard select,
-#dogCard textarea{
-  background:rgba(255,255,255,.78);
-  color:var(--dog-card-text);
-  border-color:var(--dog-card-border);
+main.app > section.panel:first-of-type input,
+main.app > section.panel:first-of-type select,
+main.app > section.panel:first-of-type textarea{
+  background:rgba(255,255,255,.72);
+  color:var(--dogpaper-text);
+  border:1px solid var(--dogpaper-border);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
 }
-#dogCard input:not(.ifss-overlay-input)::placeholder,
-#dogCard textarea::placeholder{
-  color:color-mix(in srgb, var(--dog-card-muted) 86%, transparent);
+main.app > section.panel:first-of-type input::placeholder,
+main.app > section.panel:first-of-type textarea::placeholder{
+  color:color-mix(in srgb, var(--dogpaper-muted) 78%, transparent);
 }
-#dogCard select option{color:#111;background:#fff;}
-#dogCard .badge{
-  background:rgba(255,255,255,.62);
-  border-color:var(--dog-card-border);
+main.app > section.panel:first-of-type select option{color:#111;}
+main.app > section.panel:first-of-type .badge,
+main.app > section.panel:first-of-type .archive-notice,
+main.app > section.panel:first-of-type .photo-tools label,
+main.app > section.panel:first-of-type .weight-chart,
+main.app > section.panel:first-of-type .weight-summary .badge,
+main.app > section.panel:first-of-type .weight-insight .badge{
+  background:rgba(255,255,255,.54);
+  color:var(--dogpaper-text);
+  border:1px solid var(--dogpaper-border);
 }
-#dogCard .tabs{
-  gap:7px;
-  margin:16px 0 14px;
-  padding-bottom:2px;
+main.app > section.panel:first-of-type .tabs{
+  margin:20px 0 16px;
+  padding-top:12px;
+  border-top:1px solid var(--dogpaper-line);
 }
-#dogCard .tab{
-  background:rgba(255,255,255,.55);
-  color:var(--dog-card-text);
-  border:1px solid var(--dog-card-border);
+main.app > section.panel:first-of-type .tab{
+  background:rgba(255,255,255,.48);
+  color:var(--dogpaper-text);
+  border:1px solid var(--dogpaper-border);
   font-weight:600;
 }
-#dogCard .tab.active{
+main.app > section.panel:first-of-type .tab.active{
   background:linear-gradient(135deg,var(--aurora),var(--aurora2));
-  color:#06232b;
+  color:#03202a;
   border-color:transparent;
 }
-#dogCard #tabContent,
-#dogCard .weight-chart,
-#dogCard .weight-insight,
-#dogCard .chiplist-prep,
-#dogCard .mass-selected-summary,
-#dogCard .archive-notice{
-  color:var(--dog-card-text);
+main.app > section.panel:first-of-type .table th,
+main.app > section.panel:first-of-type .table td{
+  border-bottom:1px solid var(--dogpaper-line);
+  color:var(--dogpaper-text);
 }
-#dogCard #tabContent > .formgrid,
-#dogCard #tabContent > .row,
-#dogCard .weight-chart,
-#dogCard .eventline,
-#dogCard .chiplist-prep{
-  background:rgba(255,255,255,.46);
-  border:1px solid var(--dog-card-border);
-  border-radius:var(--kb-radius-md);
-  padding:12px;
-}
-#dogCard .eventline{
-  color:var(--dog-card-text);
-  background:rgba(255,255,255,.55)!important;
-}
-#dogCard .table th,
-#dogCard .table td{
-  border-bottom:1px solid var(--dog-card-border);
-}
-#dogCard .table th{
-  color:var(--dog-card-muted);
-  font-weight:650;
-}
-#dogCard .table td{
-  color:var(--dog-card-text);
-}
-#dogCard button.secondary,
-#dogCard .photo-tools label,
-#dogCard label.secondary{
-  background:rgba(255,255,255,.64);
-  color:var(--dog-card-text);
-  border:1px solid var(--dog-card-border);
+main.app > section.panel:first-of-type .table th{
+  color:var(--dogpaper-muted);
   font-weight:600;
 }
-#dogCard button:not(.secondary):not(.tab),
-#dogCard .track-file-label{
-  font-weight:650;
+main.app > section.panel:first-of-type button.secondary{
+  background:rgba(255,255,255,.58);
+  color:var(--dogpaper-text);
+  border:1px solid var(--dogpaper-border);
 }
-#dogCard .danger-secondary{
-  background:rgba(255,91,110,.12)!important;
-  color:#7a1f2b!important;
-  border-color:rgba(255,91,110,.28)!important;
+main.app > section.panel:first-of-type button.danger-secondary{
+  background:rgba(255,91,110,.10);
+  color:#9c2434;
+  border-color:rgba(255,91,110,.26);
 }
-#dogCard .photo-tools{
-  margin-top:4px;
+main.app > section.panel:first-of-type .formgrid{
+  gap:12px;
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.32);
+  border:1px solid rgba(255,255,255,.45);
 }
-#dogCard .ifss-template,
-#dogCard .ifss-template *{
-  color:#000;
-}
-#dogCard .ifss-overlay-input{
-  box-shadow:none!important;
+main.app > section.panel:first-of-type .eventline{
+  color:var(--dogpaper-text);
+  background:rgba(255,255,255,.48);
+  border-color:var(--dogpaper-border);
 }
 @media(max-width:760px){
-  .app{padding:14px;gap:14px}
-  .panel{padding:15px;border-radius:20px}
-  .team-log-panel,.weather-strip-panel{margin-left:12px;margin-right:12px}
-  #dogCard .card-top{padding:13px;border-radius:18px}
-  .brand-text-clean h1{font-weight:700}
+  .app{padding:12px;gap:14px;}
+  .panel{padding:15px;border-radius:19px;}
+  main.app > section.panel:first-of-type .card-top{grid-template-columns:86px 1fr;gap:13px;}
+  main.app > section.panel:first-of-type .formgrid{padding:10px;}
+}
+
+
+
+/* --- Contacts redesign: emergency first + compact empty rows --- */
+.contacts-card-clean{
+  width:min(760px,96vw);
+}
+.contacts-preview-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+  margin:12px 0 14px;
+}
+.contact-view-card{
+  min-height:auto;
+  padding:11px 12px;
+  border-radius:18px;
+}
+.contact-view-card.emergency{
+  order:-10;
+  border-width:1px;
+  background:linear-gradient(135deg, rgba(255,91,110,.14), rgba(255,255,255,.055));
+}
+.contact-view-card.filled-contact{
+  background:rgba(255,255,255,.075);
+}
+.contact-empty-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:54px;
+  padding:11px 12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+}
+.contact-empty-title{
+  font-weight:650;
+  color:#eafcff;
+  letter-spacing:.01em;
+}
+.contact-empty-plus,
+.contact-edit-small-btn{
+  width:34px;
+  height:34px;
+  min-width:34px;
+  border-radius:50%;
+  padding:0;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  line-height:1;
+  font-weight:650;
+  background:rgba(255,255,255,.10);
+  color:#eafcff;
+  border:1px solid rgba(255,255,255,.18);
+}
+.contact-edit-small-btn{
+  width:auto;
+  min-width:0;
+  height:32px;
+  border-radius:999px;
+  padding:0 10px;
+  font-size:12px;
+}
+.contact-view-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+.contact-view-name{
+  font-weight:650;
+}
+.emergency-phone-link{
+  font-weight:750;
+}
+.contacts-edit-panel{
+  display:none;
+}
+.contact-editor-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:420;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.58);
+  padding:16px;
+}
+.contact-editor-backdrop.open{display:flex;}
+.contact-editor-card{
+  width:min(520px,96vw);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:16px;
+  background:rgba(20,54,71,.98);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 22px 64px rgba(0,0,0,.44);
+}
+.contact-editor-card h3{
+  margin:0 0 10px;
+  color:#eafcff;
+  font-size:18px;
+  font-weight:650;
+}
+.contact-editor-card label{
+  display:block;
+  margin:8px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.contact-editor-card input{
+  margin-top:4px;
+}
+.contact-editor-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+@media(max-width:760px){
+  .contacts-card-clean{padding:15px;width:96vw;}
+  .contact-view-card{padding:10px 11px;}
+  .emergency-phone-link{font-size:22px;}
+  .contact-empty-row{min-height:50px;}
 }
 
 </style>
@@ -1931,18 +1982,18 @@ body[data-theme="classic"], body:not([data-theme]){
     <div id="massActionBox"></div>
     <div id="cloudReadyNote" class="small" style="margin-top:10px"></div>
     <div class="sidebar-tools">
-      <h3>Nástroje / záloha</h3>
+      <h3 id="toolsBackupTitle">Nástroje / záloha</h3>
       <div class="actions">
         <button class="secondary" onclick="exportData()">Export JSON</button>
         <label class="secondary" style="padding:9px 12px;border-radius:12px;cursor:pointer">
           Import JSON <input type="file" id="importFile" accept=".json" hidden onchange="importData(event)">
         </label>
       </div>
-      <div class="small full" style="margin-top:8px">Fotky psů se ukládají jako malé náhledy. JSON export slouží jako bezpečná záloha.</div>
+      <div id="exportNoteText" class="small full" style="margin-top:8px">Fotky psů se ukládají jako malé náhledy. JSON export slouží jako bezpečná záloha.</div>
     </div>
   </aside>
 
-  <section class="panel dog-card-panel">
+  <section class="panel">
     <h2>Karta psa</h2>
     <div id="dogCard"></div>
   </section>
@@ -2034,7 +2085,7 @@ const translations = {
     massConfirm: "Přidat stejný záznam vybraným psům?", noMassDogs: "Vyber alespoň jednoho psa.",
     teamLog: "🐾 Deník smečky", teamLogHelp: "Zápis tréninku nebo závodu celé smečky. Vybraným psům se záznam automaticky uloží do karty.", clearForm: "Vyčistit formulář", team: "Spřežení", saveTeamLog: "Uložit záznam", latestTeamLogs: "Poslední záznamy smečky",
     phTeamKm: "Km", phTeamTime: "Čas na trati, např. 1:12", phTeamTitle: "Název / místo, např. ranní trénink, Šediváčkův long", phTeamNote: "Poznámka: teplota, trať, tempo, krmení, počasí...",
-    phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se v cloudu ukládají odděleně jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON",
+    phDogName: "Jméno psa", phBreed: "Plemeno", exportNote: "Fotky psů se v cloudu ukládají odděleně jako malé náhledy. Přesto pravidelně zálohuj přes Export JSON.", importJson: "Import JSON", toolsBackup: "Nástroje / záloha",
     legendVaccination: "očkování", legendDeworming: "odčervení", legendAcute: "záchvat/akutní", legendTraining: "trénink", legendHeatBreeding: "hárání/krytí", legendRace: "závod", legendMeds: "léky", legendVet: "veterina", legendPhysio: "fyzio",
     dayEventsTitle: "Události vybraného dne", clickCalendarDay: "Klikni na den v kalendáři.", musherProfiles: "Musheři", musherProfilesHelp: "Můžeš uložit až 4 mushery pro jeden kennel. Při tvorbě chiplistu lze nechat mushera prázdného.", noMusher: "Nevyplňovat", firstName: "Jméno", lastName: "Příjmení", did: "DID", country: "Země", chiplistPrep: "Údaje pro chiplist", raceEvent: "Závod / event", raceEventHelp: "Závod je jen pomocný údaj pro přípravu; oficiální IFSS formulář pro něj nemá samostatné pole.", teamMusher: "Musher", teamRoleHelp: "Vyber psy a případně označ jejich roli: L = leader, T = team, W = wheel.", noRole: "bez role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
     importantContacts: "Kontakty", importantContactsTitle: "Důležité kontakty", importantContactsHelp: "Rychlý seznam veterin, specialistů a pohotovostí pro jeden kennel.", editContacts: "Upravit kontakty", saveContacts: "Uložit kontakty", noContactFilled: "Zatím nevyplněno",
@@ -2055,7 +2106,7 @@ const translations = {
     massConfirm: "Add the same record to selected dogs?", noMassDogs: "Select at least one dog.",
     teamLog: "🐾 Team diary", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save record", latestTeamLogs: "Latest team records",
     phTeamKm: "Km", phTeamTime: "Time on trail, e.g. 1:12", phTeamTitle: "Title / place, e.g. morning training, long-distance race", phTeamNote: "Note: temperature, trail, pace, feeding, weather...",
-    phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are stored separately as small thumbnails in cloud mode. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
+    phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are stored separately as small thumbnails in cloud mode. Still, make a regular backup with Export JSON.", importJson: "Import JSON", toolsBackup: "Tools / backup",
     legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication", legendVet: "vet", legendPhysio: "physio",
     dayEventsTitle: "Events on selected day", clickCalendarDay: "Click a day in the calendar.", musherProfiles: "Mushers", musherProfilesHelp: "You can save up to 4 mushers for one kennel. When creating a chiplist, the musher can be left blank.", noMusher: "Leave blank", firstName: "First name", lastName: "Last name", did: "DID", country: "Country", chiplistPrep: "Chiplist details", raceEvent: "Race / event", raceEventHelp: "The race field is only a helper for preparation; the official IFSS form has no separate event field.", teamMusher: "Musher", teamRoleHelp: "Select dogs and optionally mark their role: L = leader, T = team, W = wheel.", noRole: "no role", lead: "Leader", teamRow: "Team", wheel: "Wheel", classicTheme: "Classic", auroraTheme: "Aurora", forestTheme: "Forest",
     importantContacts: "Contacts", importantContactsTitle: "Important contacts", importantContactsHelp: "Quick list of vets, specialists and emergency clinics for one kennel.", editContacts: "Edit contacts", saveContacts: "Save contacts", noContactFilled: "Not filled in yet",
@@ -3068,7 +3119,139 @@ function printChiplist(){
     .ifss-dog-input{font-size:2.9mm!important;height:3.9mm!important;line-height:3.7mm!important}.ifss-small-input{text-align:center!important}.ifss-sign-input{font-size:3.2mm!important}
     @page{size:A4 portrait;margin:10mm}
     @media print{.ifss-template{width:190mm;height:269mm}.ifss-overlay-input{color:#000!important;background:transparent!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-  </style></head><body>${serializeChiplistTemplate()}<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>`;
+  
+
+/* --- Contacts redesign: emergency first + compact empty rows --- */
+.contacts-card-clean{
+  width:min(760px,96vw);
+}
+.contacts-preview-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+  margin:12px 0 14px;
+}
+.contact-view-card{
+  min-height:auto;
+  padding:11px 12px;
+  border-radius:18px;
+}
+.contact-view-card.emergency{
+  order:-10;
+  border-width:1px;
+  background:linear-gradient(135deg, rgba(255,91,110,.14), rgba(255,255,255,.055));
+}
+.contact-view-card.filled-contact{
+  background:rgba(255,255,255,.075);
+}
+.contact-empty-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:54px;
+  padding:11px 12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+}
+.contact-empty-title{
+  font-weight:650;
+  color:#eafcff;
+  letter-spacing:.01em;
+}
+.contact-empty-plus,
+.contact-edit-small-btn{
+  width:34px;
+  height:34px;
+  min-width:34px;
+  border-radius:50%;
+  padding:0;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  line-height:1;
+  font-weight:650;
+  background:rgba(255,255,255,.10);
+  color:#eafcff;
+  border:1px solid rgba(255,255,255,.18);
+}
+.contact-edit-small-btn{
+  width:auto;
+  min-width:0;
+  height:32px;
+  border-radius:999px;
+  padding:0 10px;
+  font-size:12px;
+}
+.contact-view-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+.contact-view-name{
+  font-weight:650;
+}
+.emergency-phone-link{
+  font-weight:750;
+}
+.contacts-edit-panel{
+  display:none;
+}
+.contact-editor-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:420;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.58);
+  padding:16px;
+}
+.contact-editor-backdrop.open{display:flex;}
+.contact-editor-card{
+  width:min(520px,96vw);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:16px;
+  background:rgba(20,54,71,.98);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 22px 64px rgba(0,0,0,.44);
+}
+.contact-editor-card h3{
+  margin:0 0 10px;
+  color:#eafcff;
+  font-size:18px;
+  font-weight:650;
+}
+.contact-editor-card label{
+  display:block;
+  margin:8px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.contact-editor-card input{
+  margin-top:4px;
+}
+.contact-editor-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+@media(max-width:760px){
+  .contacts-card-clean{padding:15px;width:96vw;}
+  .contact-view-card{padding:10px 11px;}
+  .emergency-phone-link{font-size:22px;}
+  .contact-empty-row{min-height:50px;}
+}
+
+</style></head><body>${serializeChiplistTemplate()}<script>window.onload=function(){setTimeout(function(){window.print()},500)}<\/script></body></html>`;
   const win=window.open('', '_blank');
   if(!win){
     window.print();
@@ -3112,7 +3295,139 @@ function exportChiplistXls(){
   ];
   const header=['','Name','Sex M/F','Year','Micro-Chips','Drugs?','Racing Dog?'];
   const allRows=[...metaRows, header, ...rows, [], ['All your dogs must be on the list! All running dogs has to be marked with yes in column "Racing Dogs".'], ['Any dog who gets some drugs has to be marked in column "Drugs".'], [], ['Unterschrift / Signature:', readInputValue('ifssSignature')]];
-  const html='<!doctype html><html><head><meta charset="utf-8"><style>td{border:1px solid #999;padding:4px;font-family:Arial;font-size:11pt}.h{background:#8fb5df;font-weight:bold}.nob{border:0}</style></head><body><table>'+allRows.map((r,idx)=>'<tr>'+r.map(c=>`<td class="${idx===7?'h':''}">${escapeHtml(c)}</td>`).join('')+'</tr>').join('')+'</table></body></html>';
+  const html='<!doctype html><html><head><meta charset="utf-8"><style>td{border:1px solid #999;padding:4px;font-family:Arial;font-size:11pt}.h{background:#8fb5df;font-weight:bold}.nob{border:0}
+
+/* --- Contacts redesign: emergency first + compact empty rows --- */
+.contacts-card-clean{
+  width:min(760px,96vw);
+}
+.contacts-preview-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+  margin:12px 0 14px;
+}
+.contact-view-card{
+  min-height:auto;
+  padding:11px 12px;
+  border-radius:18px;
+}
+.contact-view-card.emergency{
+  order:-10;
+  border-width:1px;
+  background:linear-gradient(135deg, rgba(255,91,110,.14), rgba(255,255,255,.055));
+}
+.contact-view-card.filled-contact{
+  background:rgba(255,255,255,.075);
+}
+.contact-empty-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:54px;
+  padding:11px 12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.10);
+}
+.contact-empty-title{
+  font-weight:650;
+  color:#eafcff;
+  letter-spacing:.01em;
+}
+.contact-empty-plus,
+.contact-edit-small-btn{
+  width:34px;
+  height:34px;
+  min-width:34px;
+  border-radius:50%;
+  padding:0;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+  line-height:1;
+  font-weight:650;
+  background:rgba(255,255,255,.10);
+  color:#eafcff;
+  border:1px solid rgba(255,255,255,.18);
+}
+.contact-edit-small-btn{
+  width:auto;
+  min-width:0;
+  height:32px;
+  border-radius:999px;
+  padding:0 10px;
+  font-size:12px;
+}
+.contact-view-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+.contact-view-name{
+  font-weight:650;
+}
+.emergency-phone-link{
+  font-weight:750;
+}
+.contacts-edit-panel{
+  display:none;
+}
+.contact-editor-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:420;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.58);
+  padding:16px;
+}
+.contact-editor-backdrop.open{display:flex;}
+.contact-editor-card{
+  width:min(520px,96vw);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:16px;
+  background:rgba(20,54,71,.98);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 22px 64px rgba(0,0,0,.44);
+}
+.contact-editor-card h3{
+  margin:0 0 10px;
+  color:#eafcff;
+  font-size:18px;
+  font-weight:650;
+}
+.contact-editor-card label{
+  display:block;
+  margin:8px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.contact-editor-card input{
+  margin-top:4px;
+}
+.contact-editor-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+@media(max-width:760px){
+  .contacts-card-clean{padding:15px;width:96vw;}
+  .contact-view-card{padding:10px 11px;}
+  .emergency-phone-link{font-size:22px;}
+  .contact-empty-row{min-height:50px;}
+}
+
+</style></head><body><table>'+allRows.map((r,idx)=>'<tr>'+r.map(c=>`<td class="${idx===7?'h':''}">${escapeHtml(c)}</td>`).join('')+'</tr>').join('')+'</table></body></html>';
   const blob=new Blob(['\ufeff', html], {type:'application/vnd.ms-excel'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a'); a.href=url; a.download='ifss_chiplist.xls'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
@@ -3210,7 +3525,7 @@ function recordAuthorLine(e){
   const when=e?.createdAt || e?.updatedAt || '';
   if(!email) return '';
   const datePart = when ? ` · ${escapeHtml(String(when).slice(0,10))}` : '';
-  return `<div class="small">zapsal/a: ${escapeHtml(email)}${datePart}</div>`;
+  return `<div class="small">${escapeHtml(t('writtenBy'))}: ${escapeHtml(email)}${datePart}</div>`;
 }
 function renderEventsTable(events){
   events=[...events].sort((a,b)=>b.date.localeCompare(a.date));
@@ -4027,7 +4342,8 @@ function applyLanguageToStatic(){
   const newName=document.getElementById('newName'); if(newName) newName.placeholder=t('phDogName');
   const newBreed=document.getElementById('newBreed'); if(newBreed) newBreed.placeholder=t('phBreed');
   const addDogBtn=document.getElementById('addDogBtn') || document.querySelector('aside.panel .row button'); if(addDogBtn) addDogBtn.textContent=t('addDog');
-  const exportNote=document.querySelector('aside.panel .actions .small.full'); if(exportNote) exportNote.textContent=t('exportNote');
+  const toolsBackupTitle=document.getElementById('toolsBackupTitle'); if(toolsBackupTitle) toolsBackupTitle.textContent=t('toolsBackup');
+  const exportNote=document.getElementById('exportNoteText') || document.querySelector('aside.panel .small.full'); if(exportNote) exportNote.textContent=t('exportNote');
   const importLabel=[...document.querySelectorAll('aside.panel label.secondary')].find(l=>l.querySelector('#importFile')); if(importLabel && importLabel.firstChild) importLabel.firstChild.nodeValue=t('importJson')+' ';
 
   const cardTitle=[...document.querySelectorAll("main.app section.panel h2")][0]; if(cardTitle) cardTitle.textContent=t('dogCard');
@@ -4196,13 +4512,14 @@ function normalizeImportantContacts(source){
   return base;
 }
 function contactDefinitions(){
+  // Pohotovosti držíme nahoře, protože jsou nejdůležitější v akutní situaci.
   return [
-    {key:'primaryVet', title:t('contactPrimaryVet'), kind:'full'},
-    {key:'secondVet', title:t('contactSecondVet'), kind:'full'},
-    {key:'specialist', title:t('contactSpecialist'), kind:'full'},
-    {key:'physio', title:t('contactPhysio'), kind:'full'},
-    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency'},
-    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency'}
+    {key:'emergency1', title:t('contactEmergency1'), kind:'emergency', priority:1},
+    {key:'emergency2', title:t('contactEmergency2'), kind:'emergency', priority:2},
+    {key:'primaryVet', title:t('contactPrimaryVet'), kind:'full', priority:3},
+    {key:'secondVet', title:t('contactSecondVet'), kind:'full', priority:4},
+    {key:'specialist', title:t('contactSpecialist'), kind:'full', priority:5},
+    {key:'physio', title:t('contactPhysio'), kind:'full', priority:6}
   ];
 }
 function contactFieldDefinitions(kind){
@@ -4227,15 +4544,42 @@ function normalizeUrl(url){
 function hasAnyContactValue(c){
   return c && Object.values(c).some(v=>String(v||'').trim());
 }
+function contactUiText(key){
+  const en=currentLang==='en';
+  const dict={
+    add: en?'Add':'Přidat',
+    edit: en?'Edit':'Upravit',
+    save: en?'Save':'Uložit',
+    cancel: en?'Cancel':'Zrušit',
+    clear: en?'Clear contact':'Vyčistit kontakt',
+    confirmClear: en?'Clear this contact?':'Vyčistit tento kontakt?',
+    addContact: en?'Add contact':'Přidat kontakt'
+  };
+  return dict[key] || key;
+}
+function contactDefinitionByKey(key){
+  return contactDefinitions().find(d=>d.key===key) || null;
+}
 function renderContactPreviewCard(def, contacts){
   const c=contacts[def.key] || {};
+  const filled=hasAnyContactValue(c);
+  if(!filled){
+    return `<div class="contact-empty-row" data-contact-key="${escapeAttr(def.key)}">
+      <div class="contact-empty-title">${escapeHtml(def.title)}</div>
+      <button class="contact-empty-plus" type="button" onclick="openSingleContactEditor('${escapeAttr(def.key)}')" aria-label="${escapeAttr(contactUiText('addContact'))}">+</button>
+    </div>`;
+  }
   if(def.kind === 'emergency'){
-    const has=hasAnyContactValue(c);
-    return `<div class="contact-view-card emergency">
-      <div class="contact-view-title">${escapeHtml(def.title)}</div>
-      <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
+    return `<div class="contact-view-card emergency filled-contact">
+      <div class="contact-view-head">
+        <div>
+          <div class="contact-view-title">${escapeHtml(def.title)}</div>
+          <div class="contact-view-name">${escapeHtml(c.name || def.title)}</div>
+        </div>
+        <button class="contact-edit-small-btn" type="button" onclick="openSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('edit'))}</button>
+      </div>
       ${c.address?`<div class="contact-line">📍 ${escapeHtml(c.address)}</div>`:''}
-      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:(has?'':`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`)}
+      ${c.phone?`<a class="emergency-phone-link" href="${escapeAttr(sanitizePhoneHref(c.phone))}">☎ ${escapeHtml(c.phone)}</a>`:''}
     </div>`;
   }
   const web=normalizeUrl(c.web), booking=normalizeUrl(c.booking);
@@ -4245,13 +4589,18 @@ function renderContactPreviewCard(def, contacts){
   if(c.email) links.push(`<a class="contact-link-pill" href="mailto:${escapeAttr(c.email)}">✉ ${escapeHtml(t('writeEmail'))}</a>`);
   if(web) links.push(`<a class="contact-link-pill" href="${escapeAttr(web)}" target="_blank" rel="noopener">🌐 ${escapeHtml(t('openWeb'))}</a>`);
   if(booking) links.push(`<a class="contact-link-pill" href="${escapeAttr(booking)}" target="_blank" rel="noopener">📅 ${escapeHtml(t('openBooking'))}</a>`);
-  return `<div class="contact-view-card">
-    <div class="contact-view-title">${escapeHtml(def.title)}</div>
-    <div class="contact-view-name">${escapeHtml(c.name || t('noContactFilled'))}</div>
+  return `<div class="contact-view-card filled-contact">
+    <div class="contact-view-head">
+      <div>
+        <div class="contact-view-title">${escapeHtml(def.title)}</div>
+        <div class="contact-view-name">${escapeHtml(c.name || def.title)}</div>
+      </div>
+      <button class="contact-edit-small-btn" type="button" onclick="openSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('edit'))}</button>
+    </div>
     ${c.phone1?`<div class="contact-line">☎ ${escapeHtml(c.phone1)}</div>`:''}
     ${c.phone2?`<div class="contact-line">☎ ${escapeHtml(c.phone2)}</div>`:''}
     ${c.email?`<div class="contact-line">✉ ${escapeHtml(c.email)}</div>`:''}
-    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:(!hasAnyContactValue(c)?`<div class="contact-line">${escapeHtml(t('noContactFilled'))}</div>`:'')}
+    ${links.length?`<div class="contact-link-row">${links.join('')}</div>`:''}
   </div>`;
 }
 function renderContactFormCard(def, contacts){
@@ -4270,9 +4619,66 @@ function renderImportantContactsModal(){
   const help=document.getElementById('contactsModalHelp'); if(help) help.textContent=t('importantContactsHelp');
   const summary=document.getElementById('contactsEditSummary'); if(summary) summary.textContent=t('editContacts');
   const preview=document.getElementById('contactsPreview'); if(preview) preview.innerHTML=defs.map(def=>renderContactPreviewCard(def, contacts)).join('');
-  const grid=document.getElementById('contactsSettingsGrid'); if(grid) grid.innerHTML=defs.map(def=>renderContactFormCard(def, contacts)).join('');
-  const saveBtn=document.getElementById('saveContactsBtn'); if(saveBtn) saveBtn.textContent=t('saveContacts');
+  const grid=document.getElementById('contactsSettingsGrid'); if(grid) grid.innerHTML='';
+  const saveBtn=document.getElementById('saveContactsBtn'); if(saveBtn) saveBtn.style.display='none';
   const closeBtn=document.getElementById('closeContactsBtn'); if(closeBtn) closeBtn.textContent=t('close');
+  ensureSingleContactEditor();
+}
+function ensureSingleContactEditor(){
+  let editor=document.getElementById('singleContactEditor');
+  if(editor) return editor;
+  editor=document.createElement('div');
+  editor.id='singleContactEditor';
+  editor.className='contact-editor-backdrop';
+  editor.setAttribute('aria-hidden','true');
+  editor.innerHTML='<div class="contact-editor-card" id="singleContactEditorCard"></div>';
+  document.body.appendChild(editor);
+  editor.addEventListener('click', ev=>{ if(ev.target===editor) closeSingleContactEditor(); });
+  return editor;
+}
+function openSingleContactEditor(key){
+  const def=contactDefinitionByKey(key); if(!def) return;
+  const contacts=getImportantContacts();
+  const c=contacts[def.key] || {};
+  const editor=ensureSingleContactEditor();
+  const card=document.getElementById('singleContactEditorCard'); if(!card) return;
+  card.innerHTML=`
+    <h3>${escapeHtml(def.title)}</h3>
+    ${contactFieldDefinitions(def.kind).map(f=>`<label>${escapeHtml(f.label)}<input id="single_contact_${def.key}_${f.key}" type="${f.type}" value="${escapeAttr(c[f.key]||'')}"></label>`).join('')}
+    <div class="contact-editor-actions">
+      <button class="secondary" type="button" onclick="clearSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('clear'))}</button>
+      <button class="secondary" type="button" onclick="closeSingleContactEditor()">${escapeHtml(contactUiText('cancel'))}</button>
+      <button type="button" data-write="1" onclick="saveSingleContactEditor('${escapeAttr(def.key)}')">${escapeHtml(contactUiText('save'))}</button>
+    </div>`;
+  editor.classList.add('open');
+  editor.setAttribute('aria-hidden','false');
+  setTimeout(()=>card.querySelector('input')?.focus(), 50);
+}
+function closeSingleContactEditor(){
+  const editor=document.getElementById('singleContactEditor');
+  if(editor){ editor.classList.remove('open'); editor.setAttribute('aria-hidden','true'); }
+}
+function saveSingleContactEditor(key){
+  const def=contactDefinitionByKey(key); if(!def) return;
+  const contacts=getImportantContacts();
+  contactFieldDefinitions(def.kind).forEach(f=>{
+    const el=document.getElementById(`single_contact_${def.key}_${f.key}`);
+    if(el) contacts[def.key][f.key]=el.value.trim();
+  });
+  data.contacts=normalizeImportantContacts(contacts);
+  saveData();
+  closeSingleContactEditor();
+  renderImportantContactsModal();
+}
+function clearSingleContactEditor(key){
+  if(!confirm(contactUiText('confirmClear'))) return;
+  const def=contactDefinitionByKey(key); if(!def) return;
+  const contacts=getImportantContacts();
+  contactFieldDefinitions(def.kind).forEach(f=>{ contacts[def.key][f.key]=''; });
+  data.contacts=normalizeImportantContacts(contacts);
+  saveData();
+  closeSingleContactEditor();
+  renderImportantContactsModal();
 }
 function openImportantContactsModal(){
   migrateData();
@@ -4281,10 +4687,12 @@ function openImportantContactsModal(){
   if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
 }
 function closeImportantContactsModal(){
+  closeSingleContactEditor();
   const modal=document.getElementById('importantContactsModal');
   if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
 }
 function saveImportantContactsFromForm(){
+  // Backwards-compatible fallback: old bulk editor is hidden, but this keeps older buttons safe.
   const contacts=getImportantContacts();
   contactDefinitions().forEach(def=>{
     contactFieldDefinitions(def.kind).forEach(f=>{
@@ -4296,6 +4704,7 @@ function saveImportantContactsFromForm(){
   saveData();
   renderImportantContactsModal();
 }
+
 
 
 async function refreshAppAdminPanel(){
@@ -4393,7 +4802,7 @@ function renderAdminUserPanel(u,isOwn=false){
   const defaultMode = u.activeKennelId ? 'keep' : 'new';
   const currentOption = u.activeKennelId && !appAdminKennelsCache.some(k=>k.id===u.activeKennelId) ? `<option value="${escapeAttr(u.activeKennelId)}" selected>${escapeHtml(u.kennelName || u.activeKennelId)} · ${escapeHtml(u.activeKennelId)}</option>` : '';
   const kennelOptions = currentOption + appAdminKennelsCache.map(k=>`<option value="${escapeAttr(k.id)}" ${u.activeKennelId===k.id?'selected':''} data-search="${escapeAttr(adminKennelLabel(k).toLowerCase())}">${escapeHtml(adminKennelLabel(k))}</option>`).join('');
-  const memberPanel = !isOwn ? `<details id="adminMemberPanel_${uid}" class="admin-member-panel is-hidden"><summary>Přidat jako dalšího člena existujícího kennelu</summary><div class="admin-confirm-note">Používej jen tehdy, když jde o druhý účet stejné domácnosti/kennelu. Uživatel uvidí data vybraného kennelu podle zvolené role.</div><div class="admin-existing-tools"><input id="adminExistingSearch_${uid}" type="search" placeholder="Vyhledat existující kennel podle názvu, e-mailu nebo ID…" oninput="filterAdminKennelOptions('${uid}')"><button type="button" class="secondary" onclick="clearAdminKennelSearch('${uid}')">Vyčistit</button></div><label>Vybrat existující kennel<select id="adminExistingKennel_${uid}">${kennelOptions}</select><div class="admin-kennel-select-hint">Nejprve vyber režim „Připojit k existujícímu kennelu“, potom zde zvol konkrétní kennel.</div></label></details>` : `<input id="adminExistingKennel_${uid}" type="hidden" value="${escapeAttr(u.activeKennelId||'')}">`;
+  const memberPanel = !isOwn ? `<details id="adminMemberPanel_${uid}" class="admin-member-panel is-hidden"><summary>${currentLang==='en'?'Add as another member of an existing kennel':'Přidat jako dalšího člena existujícího kennelu'}</summary><div class="admin-confirm-note">${currentLang==='en'?'Use this only for a second account from the same household/kennel. The user will see the selected kennel data according to the chosen role.':'Používej jen tehdy, když jde o druhý účet stejné domácnosti/kennelu. Uživatel uvidí data vybraného kennelu podle zvolené role.'}</div><div class="admin-existing-tools"><input id="adminExistingSearch_${uid}" type="search" placeholder="${currentLang==='en'?'Search existing kennel by name, e-mail or ID…':'Vyhledat existující kennel podle názvu, e-mailu nebo ID…'}" oninput="filterAdminKennelOptions('${uid}')"><button type="button" class="secondary" onclick="clearAdminKennelSearch('${uid}')">${currentLang==='en'?'Clear':'Vyčistit'}</button></div><label>${currentLang==='en'?'Select existing kennel':'Vybrat existující kennel'}<select id="adminExistingKennel_${uid}">${kennelOptions}</select><div class="admin-kennel-select-hint">${currentLang==='en'?'First choose “Connect to an existing kennel”, then select the specific kennel here.':'Nejprve vyber režim „Připojit k existujícímu kennelu“, potom zde zvol konkrétní kennel.'}</div></label></details>` : `<input id="adminExistingKennel_${uid}" type="hidden" value="${escapeAttr(u.activeKennelId||'')}">`;
   return `<div class="admin-card ${escapeAttr(status)}">
       <h3>${escapeHtml(u.email || u.id)}${isOwn?' · můj účet':''}</h3>
       <div class="admin-status-pill">UID: ${escapeHtml(u.id)}</div>

@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;800&display=swap" rel="stylesheet">
 <title>Kennel v2 – Deník smečky</title>
 <style>
 :root{
@@ -1461,6 +1464,230 @@ body[data-theme="forest"] .team-log-30-card{background:linear-gradient(135deg, r
   .season-settings-grid{grid-template-columns:1fr}
 }
 
+
+
+/* --- Kennel Book visual refinement: Inter, calmer hierarchy, light dog card --- */
+:root{
+  --kb-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --kb-radius-lg: 22px;
+  --kb-radius-md: 16px;
+}
+body{
+  font-family:var(--kb-font);
+  font-weight:400;
+  letter-spacing:-0.01em;
+}
+.panel{
+  padding:18px;
+  border-radius:22px;
+}
+h2{
+  font-size:18px;
+  font-weight:650;
+  letter-spacing:-0.015em;
+}
+h3{
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+button{
+  font-weight:650;
+  letter-spacing:-0.01em;
+}
+input,select,textarea,button{
+  font-family:var(--kb-font);
+}
+.app{
+  gap:22px;
+  padding:22px;
+}
+.team-log-panel,.weather-strip-panel{
+  margin-left:22px;
+  margin-right:22px;
+}
+.badge,.small,.admin-status-pill,.cloud-status-pill{
+  letter-spacing:0;
+}
+.brand-text-clean h1{
+  font-weight:700;
+  letter-spacing:.045em;
+}
+.brand-subtitle-clean{
+  font-weight:500;
+}
+.dog-sidebar #dogSidebarTitle{
+  font-weight:650;
+}
+.compact-dog-name{
+  font-weight:650;
+}
+.team-log-toggle-btn,.admin-user-summary,.mass-tools summary,.contacts-edit-panel summary,.track-import-panel summary{
+  font-weight:650;
+}
+
+/* Theme-aware light working surface for the dog card */
+body[data-theme="aurora"]{
+  --dog-card-bg:#e9fbfb;
+  --dog-card-bg-soft:#f7ffff;
+  --dog-card-bg-panel:#ddf5f5;
+  --dog-card-text:#12323a;
+  --dog-card-muted:#527178;
+  --dog-card-border:#b7e5e6;
+  --dog-card-shadow:0 14px 36px rgba(0,32,40,.18);
+}
+body[data-theme="forest"]{
+  --dog-card-bg:#eaf7f1;
+  --dog-card-bg-soft:#f7fbf8;
+  --dog-card-bg-panel:#dff1e8;
+  --dog-card-text:#173336;
+  --dog-card-muted:#55706d;
+  --dog-card-border:#b8ddd2;
+  --dog-card-shadow:0 14px 36px rgba(0,28,18,.18);
+}
+body[data-theme="classic"], body:not([data-theme]){
+  --dog-card-bg:#fff1f7;
+  --dog-card-bg-soft:#fff8fb;
+  --dog-card-bg-panel:#f9e3ee;
+  --dog-card-text:#3c1d2d;
+  --dog-card-muted:#76576a;
+  --dog-card-border:#f2bfd7;
+  --dog-card-shadow:0 14px 36px rgba(50,0,28,.18);
+}
+.dog-card-panel{
+  background:linear-gradient(180deg,var(--dog-card-bg),var(--dog-card-bg-soft));
+  color:var(--dog-card-text);
+  border-color:rgba(255,255,255,.55);
+  box-shadow:var(--dog-card-shadow);
+}
+.dog-card-panel h2,
+.dog-card-panel h3,
+.dog-card-panel b,
+.dog-card-panel strong{
+  color:var(--dog-card-text);
+}
+.dog-card-panel .small,
+.dog-card-panel .table th,
+.dog-card-panel .badge{
+  color:var(--dog-card-muted);
+}
+#dogCard .card-top{
+  background:rgba(255,255,255,.46);
+  border:1px solid var(--dog-card-border);
+  border-radius:var(--kb-radius-lg);
+  padding:16px;
+  margin-bottom:16px;
+}
+#dogCard .portrait{
+  background:linear-gradient(180deg,#ffffff,var(--dog-card-bg-panel));
+  color:var(--dog-card-text);
+  border:1px solid var(--dog-card-border);
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+#dogCard .portrait .small{
+  color:var(--dog-card-muted)!important;
+}
+#dogCard input:not(.ifss-overlay-input),
+#dogCard select,
+#dogCard textarea{
+  background:rgba(255,255,255,.78);
+  color:var(--dog-card-text);
+  border-color:var(--dog-card-border);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
+}
+#dogCard input:not(.ifss-overlay-input)::placeholder,
+#dogCard textarea::placeholder{
+  color:color-mix(in srgb, var(--dog-card-muted) 86%, transparent);
+}
+#dogCard select option{color:#111;background:#fff;}
+#dogCard .badge{
+  background:rgba(255,255,255,.62);
+  border-color:var(--dog-card-border);
+}
+#dogCard .tabs{
+  gap:7px;
+  margin:16px 0 14px;
+  padding-bottom:2px;
+}
+#dogCard .tab{
+  background:rgba(255,255,255,.55);
+  color:var(--dog-card-text);
+  border:1px solid var(--dog-card-border);
+  font-weight:600;
+}
+#dogCard .tab.active{
+  background:linear-gradient(135deg,var(--aurora),var(--aurora2));
+  color:#06232b;
+  border-color:transparent;
+}
+#dogCard #tabContent,
+#dogCard .weight-chart,
+#dogCard .weight-insight,
+#dogCard .chiplist-prep,
+#dogCard .mass-selected-summary,
+#dogCard .archive-notice{
+  color:var(--dog-card-text);
+}
+#dogCard #tabContent > .formgrid,
+#dogCard #tabContent > .row,
+#dogCard .weight-chart,
+#dogCard .eventline,
+#dogCard .chiplist-prep{
+  background:rgba(255,255,255,.46);
+  border:1px solid var(--dog-card-border);
+  border-radius:var(--kb-radius-md);
+  padding:12px;
+}
+#dogCard .eventline{
+  color:var(--dog-card-text);
+  background:rgba(255,255,255,.55)!important;
+}
+#dogCard .table th,
+#dogCard .table td{
+  border-bottom:1px solid var(--dog-card-border);
+}
+#dogCard .table th{
+  color:var(--dog-card-muted);
+  font-weight:650;
+}
+#dogCard .table td{
+  color:var(--dog-card-text);
+}
+#dogCard button.secondary,
+#dogCard .photo-tools label,
+#dogCard label.secondary{
+  background:rgba(255,255,255,.64);
+  color:var(--dog-card-text);
+  border:1px solid var(--dog-card-border);
+  font-weight:600;
+}
+#dogCard button:not(.secondary):not(.tab),
+#dogCard .track-file-label{
+  font-weight:650;
+}
+#dogCard .danger-secondary{
+  background:rgba(255,91,110,.12)!important;
+  color:#7a1f2b!important;
+  border-color:rgba(255,91,110,.28)!important;
+}
+#dogCard .photo-tools{
+  margin-top:4px;
+}
+#dogCard .ifss-template,
+#dogCard .ifss-template *{
+  color:#000;
+}
+#dogCard .ifss-overlay-input{
+  box-shadow:none!important;
+}
+@media(max-width:760px){
+  .app{padding:14px;gap:14px}
+  .panel{padding:15px;border-radius:20px}
+  .team-log-panel,.weather-strip-panel{margin-left:12px;margin-right:12px}
+  #dogCard .card-top{padding:13px;border-radius:18px}
+  .brand-text-clean h1{font-weight:700}
+}
+
 </style>
 
   <!-- PWA / mobile home screen icon -->
@@ -1578,8 +1805,8 @@ body[data-theme="forest"] .team-log-30-card{background:linear-gradient(135deg, r
 
 
 <section id="weatherStrip" class="weather-strip-panel" aria-live="polite">
-  <div id="weatherStripLine1" class="weather-strip-row">📍 Počasí se načte podle aktuální polohy.</div>
-  <div id="weatherStripLine2" class="weather-strip-row"><span class="weather-tip ok">✔️ Žádná významná meteorologická upozornění.</span></div>
+  <div id="weatherStripLine1" class="weather-strip-row">📍 Weather loads from current location.</div>
+  <div id="weatherStripLine2" class="weather-strip-row"><span class="weather-tip ok">✔️ No significant weather warnings.</span></div>
 </section>
 
 <section class="team-log-panel panel">
@@ -1595,12 +1822,12 @@ body[data-theme="forest"] .team-log-30-card{background:linear-gradient(135deg, r
 
   <div id="teamLogCompact" class="team-log-compact" aria-live="polite">
     <div class="team-log-info-card team-log-last-card">
-      <div class="team-log-card-label">📅 Poslední záznam</div>
-      <div id="teamLogCompactLine1" class="team-log-compact-line">Deník smečky je připravený.</div>
+      <div class="team-log-card-label">📅 Latest record</div>
+      <div id="teamLogCompactLine1" class="team-log-compact-line">Team diary is ready.</div>
     </div>
     <div class="team-log-info-card team-log-30-card">
-      <div class="team-log-card-label">📈 Posledních 30 dní</div>
-      <div id="teamLogCompactLine2" class="team-log-compact-line">Rozbal deník pro první zápis tréninku nebo závodu.</div>
+      <div class="team-log-card-label">📈 Last 30 days</div>
+      <div id="teamLogCompactLine2" class="team-log-compact-line">Open the diary to add the first training or race.</div>
     </div>
   </div>
 
@@ -1715,7 +1942,7 @@ body[data-theme="forest"] .team-log-30-card{background:linear-gradient(135deg, r
     </div>
   </aside>
 
-  <section class="panel">
+  <section class="panel dog-card-panel">
     <h2>Karta psa</h2>
     <div id="dogCard"></div>
   </section>
@@ -1814,19 +2041,19 @@ const translations = {
     contactPrimaryVet: "1. hlavní veterina", contactSecondVet: "2. druhá veterina", contactSpecialist: "3. specialista", contactPhysio: "Fyzioterapie", contactEmergency1: "1. pohotovost", contactEmergency2: "2. pohotovost",
     contactName: "Název", contactPhone1: "1. telefon", contactPhone2: "2. telefon", contactPhone: "Telefon", contactEmail: "E-mail", contactWeb: "Webovky", contactBooking: "Rezervační systém", contactAddress: "Adresa", callNow: "Volat", openWeb: "Web", openBooking: "Rezervace", writeEmail: "E-mail",
     importTrack: "Import GPX / TCX / FIT z hodinek", chooseTrackFile: "Vybrat soubor", clearTrackImport: "Vyčistit import", importTrackHelp: "GPX a TCX se načtou přímo. FIT je připravený jako první most; u běžných FIT souborů se pokusí načíst souhrnná data.",
-    phTeamElevation: "Převýšení m", phTeamAvgSpeed: "Průměr km/h", phTeamSource: "Zdroj dat: ručně / GPX / TCX / FIT"
+    phTeamElevation: "Převýšení m", phTeamAvgSpeed: "Průměr km/h", phTeamSource: "Zdroj dat: ručně / GPX / TCX / FIT", latestRecord: "Poslední záznam", last30Days: "Posledních 30 dní", teamDiaryReady: "Deník smečky je připravený.", openDiaryFirst: "Rozbal deník pro první zápis tréninku nebo závodu.", sourceLabel: "Zdroj", writtenBy: "zapsal/a", season: "Sezóna"
   },
   en: {
-    dogs: "My team", myDogs: "My dogs", activeDogs: "Active dogs", archivedDogs: "Archive", addDog: "Add dog", dogCard: "Dog card",
-    massAction: "Mass action", addMassRecord: "Add mass record", createChiplist: "Create chiplist", chiplist: "IFSS chiplist", selectedDogs: "Selected dogs", selectAll: "Select all", clearSelection: "Clear selection",
+    dogs: "My team", myDogs: "My dogs", activeDogs: "Active dogs", archivedDogs: "Archived dogs", addDog: "Add dog", dogCard: "Dog profile",
+    massAction: "Bulk actions", addMassRecord: "Add bulk record", createChiplist: "Create chiplist", chiplist: "IFSS chiplist", selectedDogs: "Selected dogs", selectAll: "Select all", clearSelection: "Clear selection",
     noDogs: "Add a dog first.", noRecords: "No records yet.", archiveDog: "Archive dog", restoreDog: "Restore to active", removeDog: "Remove dog",
     archiveReason: "Archive reason", archiveDate: "Archive date", archiveNote: "Archive note", save: "Save", close: "Close", resetDefault: "Reset default",
     overview: "Overview", vaccination: "Vaccination", deworming: "Deworming", health: "Health / meds", training: "Training", weight: "Weight",
     date: "Date", type: "Type", title: "Title / product", note: "Note", delete: "delete", edit: "edit",
-    kennelSettings: "Kennel settings", kennelName: "Kennel name", kennelSubtitle: "Subtitle", kennelLogo: "Kennel logo", theme: "Color theme", language: "Language", cloudReady: "Signed in. Data is protected and saved continuously.",
+    kennelSettings: "Kennel settings", kennelName: "Kennel name", kennelSubtitle: "Subtitle", kennelLogo: "Kennel logo", theme: "Color theme", language: "Language", cloudReady: "Signed in. Data are protected and saved continuously.",
     needName: "Enter dog name.", needDate: "Enter date.", confirmDelete: "Delete this record?", confirmArchive: "Archive this dog? The record will stay in the archive.", confirmRestore: "Restore this dog to active?", confirmRemoveDog: "Permanently remove this dog card? Use only for accidentally created duplicates. The dog history will be deleted.",
     massConfirm: "Add the same record to selected dogs?", noMassDogs: "Select at least one dog.",
-    teamLog: "🐾 Team log", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save team log", latestTeamLogs: "Latest team logs",
+    teamLog: "🐾 Team diary", teamLogHelp: "Record a training session or race for the whole team. The selected dogs automatically receive the record in their cards.", clearForm: "Clear form", team: "Team", saveTeamLog: "Save record", latestTeamLogs: "Latest team records",
     phTeamKm: "Km", phTeamTime: "Time on trail, e.g. 1:12", phTeamTitle: "Title / place, e.g. morning training, long-distance race", phTeamNote: "Note: temperature, trail, pace, feeding, weather...",
     phDogName: "Dog name", phBreed: "Breed", exportNote: "Dog photos are stored separately as small thumbnails in cloud mode. Still, make a regular backup with Export JSON.", importJson: "Import JSON",
     legendVaccination: "vaccination", legendDeworming: "deworming", legendAcute: "seizure/acute", legendTraining: "training", legendHeatBreeding: "heat/breeding", legendRace: "race", legendMeds: "medication", legendVet: "vet", legendPhysio: "physio",
@@ -1835,12 +2062,26 @@ const translations = {
     contactPrimaryVet: "1st main vet", contactSecondVet: "2nd vet", contactSpecialist: "3rd specialist", contactPhysio: "Physiotherapy", contactEmergency1: "1st emergency", contactEmergency2: "2nd emergency",
     contactName: "Name", contactPhone1: "1st phone", contactPhone2: "2nd phone", contactPhone: "Phone", contactEmail: "Email", contactWeb: "Website", contactBooking: "Booking system", contactAddress: "Address", callNow: "Call", openWeb: "Website", openBooking: "Booking", writeEmail: "Email",
     importTrack: "Import GPX / TCX / FIT from watches", chooseTrackFile: "Choose file", clearTrackImport: "Clear import", importTrackHelp: "GPX and TCX are loaded directly. FIT is prepared as a first bridge; common FIT files are parsed for summary data when possible.",
-    phTeamElevation: "Elevation gain m", phTeamAvgSpeed: "Average km/h", phTeamSource: "Data source: manual / GPX / TCX / FIT"
+    phTeamElevation: "Elevation gain m", phTeamAvgSpeed: "Average km/h", phTeamSource: "Data source: manual / GPX / TCX / FIT", latestRecord: "Latest record", last30Days: "Last 30 days", teamDiaryReady: "Team diary is ready.", openDiaryFirst: "Open the diary to add the first training or race.", sourceLabel: "Source", writtenBy: "written by", season: "Season"
   }
 };
 let currentLang = localStorage.getItem("kennelAuroraLang") || "cs";
 function t(key){ return (translations[currentLang] && translations[currentLang][key]) || translations.cs[key] || key; }
 function trEvent(type){ return eventLabels[type] || type; }
+function localizeStoredTitle(title){
+  const raw=String(title||'');
+  const map={
+    "Trénink":"training", "Training":"training",
+    "Závod":"race", "Race":"race",
+    "Očkování":"vaccination", "Vaccination":"vaccination",
+    "Odčervení":"deworming", "Deworming":"deworming",
+    "Léky":"meds", "Medication":"meds",
+    "Veterina":"vet", "Vet":"vet",
+    "Fyzio":"physio", "Physio":"physio",
+    "Poznámka":"note", "Note":"note"
+  };
+  return map[raw] ? trEvent(map[raw]) : raw;
+}
 
 const eventLabelsCS = {
   vaccination:"Očkování", deworming:"Odčervení", seizure:"Epileptický záchvat", acute:"Akutní zdravotní událost",
@@ -3424,7 +3665,7 @@ function saveTeamLog(){
     data.imports.push({id:importMeta.id,teamLogId:log.id,type:"trainingTrack",...importMeta});
   }
   const roleText=formatTeamRoles(roles);
-  const extraBits=[elevation?`↗ ${elevation} m`:"",avgSpeed?`Ø ${avgSpeed} km/h`:"",source&&source!=="manual"?`Zdroj: ${source}`:""].filter(Boolean).join(" · ");
+  const extraBits=[elevation?`↗ ${elevation} m`:"",avgSpeed?`Ø ${avgSpeed} km/h`:"",source&&source!=="manual"?`${t('sourceLabel')}: ${source}`:""].filter(Boolean).join(" · ");
   dogIds.forEach(id=>{
     const d=data.dogs.find(x=>x.id===id); if(!d) return;
     d.events.push(withEditorMeta({
@@ -3500,9 +3741,10 @@ function renderTeamLogEntry(l){
   const roleText=formatTeamRoles(l.roles||[]);
   const elevation=l.elevation?` • ↗ ${escapeHtml(l.elevation)} m`:"";
   const avg=l.avgSpeed?` • Ø ${escapeHtml(l.avgSpeed)} km/h`:"";
-  const source=l.source&&l.source!=="manual"?` • ${escapeHtml(l.source)}`:"";
-  const author = l.createdByEmail ? `<br><span class="small">zapsal/a: ${escapeHtml(l.createdByEmail)}${l.createdAt?' · '+escapeHtml(String(l.createdAt).slice(0,10)):''}</span>` : '';
-  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(l.title)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${elevation}${avg}${source}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${author}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team log':'smazat záznam'}</button></div></div>`;
+  const source=l.source&&l.source!=="manual"?` • ${escapeHtml(t('sourceLabel'))}: ${escapeHtml(l.source)}`:"";
+  const author = l.createdByEmail ? `<br><span class="small">${escapeHtml(t('writtenBy'))}: ${escapeHtml(l.createdByEmail)}${l.createdAt?' · '+escapeHtml(String(l.createdAt).slice(0,10)):''}</span>` : '';
+  const displayTitle = localizeStoredTitle(l.title);
+  return `<div class="team-log-entry ${l.type==='race'?'race':''} ${l.id===selectedTeamLogId?'selected-log':''}" onclick="selectTeamLog('${l.id}')"><b>${fmt(l.date)} – ${l.type==='race'?trEvent('race'):trEvent('training')}: ${escapeHtml(displayTitle)}</b><br>${l.km||"—"} km ${l.time?"• "+escapeHtml(l.time):""}${elevation}${avg}${source}${l.musherName?` • ${escapeHtml(l.musherName)}`:""}<br><span class="small">${(l.dogNames||[]).map(escapeHtml).join(", ")}</span>${roleText?`<br><span class="small">${escapeHtml(roleText)}</span>`:""}${author}${l.note?`<br><span class="small">${escapeHtml(l.note)}</span>`:""}<div style="margin-top:6px"><button class="secondary" onclick="event.stopPropagation();deleteTeamLog('${l.id}')">${currentLang==='en'?'delete team record':'smazat záznam'}</button></div></div>`;
 }
 
 function getTeamLogCollapsed(){
@@ -3580,7 +3822,7 @@ function renderSeasonButton(){
   ensureSeasonSettings();
   const btn=document.getElementById('seasonSettingsBtn');
   if(!btn) return;
-  const label=currentLang==='en'?'Season':'Sezóna';
+  const label=t('season');
   btn.innerHTML=`📅 ${label} ${getSeasonLabel()} <span class="season-muted">· ${formatSeasonDate(data.settings.season.start)} – ${formatSeasonDate(data.settings.season.end)} ▼</span>`;
 }
 function fillSeasonSelects(){
@@ -3622,7 +3864,7 @@ function updateSeasonPreviewFromInputs(){
   const keys=getSeasonInputKeys();
   const old=data.settings?.season ? {...data.settings.season} : {start:'09-01',end:'04-30',repeat:true};
   data.settings=data.settings||{}; data.settings.season={...old,start:keys.start,end:keys.end};
-  box.innerHTML=`📅 ${currentLang==='en'?'Season':'Sezóna'} ${getSeasonLabel()}<br>${formatSeasonDate(keys.start)} – ${formatSeasonDate(keys.end)}`;
+  box.innerHTML=`📅 ${t('season')} ${getSeasonLabel()}<br>${formatSeasonDate(keys.start)} – ${formatSeasonDate(keys.end)}`;
   data.settings.season=old;
 }
 function openSeasonSettings(){
@@ -3660,14 +3902,14 @@ function renderTeamLogCompact(){
   ensureTeamLogData();
   const logs=[...data.teamLogs].sort((a,b)=>b.date.localeCompare(a.date));
   if(!logs.length){
-    line1.textContent = currentLang==='en' ? 'No records yet.' : 'Zatím bez záznamů.';
-    line2.textContent = currentLang==='en' ? 'Open the diary to add the first training or race.' : 'Rozbal deník pro první zápis tréninku nebo závodu.';
+    line1.textContent = t('noRecords');
+    line2.textContent = t('openDiaryFirst');
     return;
   }
   const latest=logs[0];
   const latestDogCount=(latest.dogNames||[]).length;
   const latestType=latest.type==='race' ? trEvent('race') : trEvent('training');
-  const latestTitle=latest.title ? ` · ${latest.title}` : '';
+  const latestTitle=latest.title ? ` · ${localizeStoredTitle(latest.title)}` : '';
   const latestElevation=latest.elevation ? ` · ↗ ${latest.elevation} m` : '';
   line1.textContent = `${fmt(latest.date)} · ${latestType}${latestTitle} · ${latest.km||'—'} km${latestElevation} · ${latestDogCount} ${currentLang==='en'?'dogs':'psů'}`;
   const now=new Date();
@@ -3753,6 +3995,10 @@ function applyLanguageToStatic(){
   if(teamPanel){
     const h2=teamPanel.querySelector('.team-log-head h2'); if(h2) h2.textContent=t('teamLog');
     const help=teamPanel.querySelector('.team-log-head .small'); if(help) help.textContent=t('teamLogHelp');
+    const compactLabels=teamPanel.querySelectorAll('.team-log-card-label');
+    if(compactLabels[0]) compactLabels[0].textContent='📅 '+t('latestRecord');
+    if(compactLabels[1]) compactLabels[1].textContent='📈 '+t('last30Days');
+    const seasonBtn=document.getElementById('seasonSettingsBtn'); if(seasonBtn) renderSeasonButton();
     const toggleBtn=document.getElementById('teamLogToggleBtn'); if(toggleBtn) applyTeamLogCollapsedState();
     const clearBtn=document.getElementById('clearTeamFormBtn'); if(clearBtn) clearBtn.textContent=t('clearForm');
     const typeSel=document.getElementById('teamType'); if(typeSel){ [...typeSel.options].forEach(o=>{ o.textContent=o.value==='race'?trEvent('race'):trEvent('training'); }); }
@@ -4367,16 +4613,17 @@ function weatherRound(v, digits=0){
 }
 function weatherCodeInfo(code){
   const c=Number(code);
-  if(c===0) return ['☀️','Jasno'];
-  if(c===1) return ['🌤','Převážně jasno'];
-  if(c===2) return ['⛅','Polojasno'];
-  if(c===3) return ['☁️','Zataženo'];
-  if(c===45 || c===48) return ['🌫','Mlha'];
-  if([51,53,55,56,57].includes(c)) return ['🌦','Mrholení'];
-  if([61,63,65,66,67,80,81,82].includes(c)) return ['🌧','Déšť'];
-  if([71,73,75,77,85,86].includes(c)) return ['🌨','Sněžení'];
-  if([95,96,99].includes(c)) return ['⛈','Bouřky'];
-  return ['🌡','Počasí'];
+  const en=currentLang==='en';
+  if(c===0) return ['☀️', en?'Clear':'Jasno'];
+  if(c===1) return ['🌤', en?'Mostly clear':'Převážně jasno'];
+  if(c===2) return ['⛅', en?'Partly cloudy':'Polojasno'];
+  if(c===3) return ['☁️', en?'Cloudy':'Zataženo'];
+  if(c===45 || c===48) return ['🌫', en?'Fog':'Mlha'];
+  if([51,53,55,56,57].includes(c)) return ['🌦', en?'Drizzle':'Mrholení'];
+  if([61,63,65,66,67,80,81,82].includes(c)) return ['🌧', en?'Rain':'Déšť'];
+  if([71,73,75,77,85,86].includes(c)) return ['🌨', en?'Snow':'Sněžení'];
+  if([95,96,99].includes(c)) return ['⛈', en?'Thunderstorms':'Bouřky'];
+  return ['🌡', en?'Weather':'Počasí'];
 }
 function weatherMakeTip(values){
   const tempNow=values.currentTemp;
@@ -4387,16 +4634,17 @@ function weatherMakeTip(values){
   const uvMax=values.uvMax;
   const hasStorm=values.hasStorm;
   const icingRisk=values.icingRisk;
+  const en=currentLang==='en';
 
-  if(tempMax >= 32) return ['danger','🔥 Velmi vysoké teploty. Pozor na přehřátí.'];
-  if(tempMax >= 25 || tempNow >= 25) return ['warn','🔥 Vysoké teploty. Dbejte na dostatek vody a chlazení psů.'];
-  if(windMax >= 12) return ['warn','🌬 Silný vítr. Pozor na padající větve a létající předměty. 🛸'];
-  if(hasStorm) return ['warn','⛈ Očekávají se bouřky. Sledujte vývoj počasí.'];
-  if(rainSum > 10) return ['warn','🌧 Vydatné srážky. Počítejte s podmáčeným terénem.'];
-  if(snowSum > 5) return ['warn',`❄️ Napadla nová vrstva sněhu (${weatherRound(snowSum)} cm). Podmínky na trasách se mohou změnit.`];
-  if(icingRisk) return ['warn','🧊 Riziko náledí. Zvýšená opatrnost je na místě.'];
-  if(uvMax >= 7) return ['warn','☀️ Vysoký UV index. Chraňte sebe i psy před dlouhým pobytem na přímém slunci.'];
-  return ['ok','✔️ Žádná významná meteorologická upozornění.'];
+  if(tempMax >= 32) return ['danger', en?'🔥 Very high temperatures. Watch for overheating.':'🔥 Velmi vysoké teploty. Pozor na přehřátí.'];
+  if(tempMax >= 25 || tempNow >= 25) return ['warn', en?'🔥 High temperatures. Keep dogs hydrated and cool.':'🔥 Vysoké teploty. Dbejte na dostatek vody a chlazení psů.'];
+  if(windMax >= 12) return ['warn', en?'🌬 Strong wind. Watch for falling branches and flying objects. 🛸':'🌬 Silný vítr. Pozor na padající větve a létající předměty. 🛸'];
+  if(hasStorm) return ['warn', en?'⛈ Thunderstorms expected. Watch the weather development.':'⛈ Očekávají se bouřky. Sledujte vývoj počasí.'];
+  if(rainSum > 10) return ['warn', en?'🌧 Heavy rainfall. Expect wet and muddy trails.':'🌧 Vydatné srážky. Počítejte s podmáčeným terénem.'];
+  if(snowSum > 5) return ['warn', en?`❄️ New snow layer (${weatherRound(snowSum)} cm). Trail conditions may change.`:`❄️ Napadla nová vrstva sněhu (${weatherRound(snowSum)} cm). Podmínky na trasách se mohou změnit.`];
+  if(icingRisk) return ['warn', en?'🧊 Ice risk. Extra caution is needed.':'🧊 Riziko náledí. Zvýšená opatrnost je na místě.'];
+  if(uvMax >= 7) return ['warn', en?'☀️ High UV index. Protect yourself and your dogs from long direct sun exposure.':'☀️ Vysoký UV index. Chraňte sebe i psy před dlouhým pobytem na přímém slunci.'];
+  return ['ok', en?'✔️ No significant weather warnings.':(currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.')];
 }
 function weatherNearestIndex(times){
   const now=Date.now();
@@ -4430,11 +4678,11 @@ async function initKennelWeather(force=false){
   }
 
   if(!navigator.geolocation){
-    weatherSetLines('📍 Počasí není v tomto prohlížeči dostupné.', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+    weatherSetLines((currentLang==='en'?'📍 Weather is not available in this browser.':'📍 Počasí není v tomto prohlížeči dostupné.'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
     return;
   }
 
-  weatherSetLines('📍 Načítám počasí podle aktuální polohy…', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+  weatherSetLines((currentLang==='en'?'📍 Loading weather from current location…':'📍 Načítám počasí podle aktuální polohy…'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
   navigator.geolocation.getCurrentPosition(async pos=>{
     try{
       const lat=pos.coords.latitude.toFixed(4);
@@ -4447,11 +4695,11 @@ async function initKennelWeather(force=false){
       weatherRenderData(payload);
     }catch(err){
       console.warn('Weather load failed', err);
-      weatherSetLines('🌡 Počasí se teď nepodařilo načíst.', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+      weatherSetLines((currentLang==='en'?'🌡 Weather could not be loaded right now.':'🌡 Počasí se teď nepodařilo načíst.'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
     }
   }, err=>{
     console.warn('Geolocation denied/unavailable', err);
-    weatherSetLines('📍 Počasí podle polohy není povoleno. <button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Povolit</button>', '✔️ Žádná významná meteorologická upozornění.', 'ok');
+    weatherSetLines((currentLang==='en'?'📍 Location weather is not allowed. <button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Allow</button>':'📍 Počasí podle polohy není povoleno. <button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Povolit</button>'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
   }, {enableHighAccuracy:false, timeout:9000, maximumAge:30*60*1000});
 }
 function weatherRenderData(payload){

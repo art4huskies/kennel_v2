@@ -4708,8 +4708,17 @@ function renderTeamLogEntry(l){
 }
 
 function getTeamLogCollapsed(){
+  const resetKey="kennelSledTeamsVisibleV1";
+  try{
+    if(localStorage.getItem(resetKey)!=="1"){
+      localStorage.setItem("kennelTeamLogCollapsed","0");
+      localStorage.setItem(resetKey,"1");
+      return false;
+    }
+  }catch(e){}
   const saved=localStorage.getItem("kennelTeamLogCollapsed");
-  return saved===null ? true : saved !== "0";
+  // Deník necháváme po prvním otevření rozbalený, aby nezmizely Sestavy spřežení A/B/C.
+  return saved===null ? false : saved !== "0";
 }
 function setTeamLogCollapsed(collapsed){
   localStorage.setItem("kennelTeamLogCollapsed", collapsed ? "1" : "0");
@@ -4905,7 +4914,20 @@ function renderTeamLogList(){
 }
 function deleteTeamLog(id){ ensureTeamLogData(); if(!confirm(currentLang==='en'?'Delete team log? Dog card records will stay.':'Smazat team log? Záznamy z karet psů zůstanou zachované.')) return; data.teamLogs=data.teamLogs.filter(l=>l.id!==id); save();
  }
-function renderTeamLog(){ renderTeamMusherSelect(); renderTeamDogPicker(); renderSledTeamManager(); renderTeamLogList(); renderTeamLogCompact(); renderSeasonButton(); applyTeamLogCollapsedState(); }
+function renderTeamLog(){
+  renderTeamMusherSelect();
+  renderTeamDogPicker();
+  try{
+    renderSledTeamManager();
+  }catch(err){
+    console.error('Sled team render failed', err);
+    renderSledTeamQuickButtons();
+  }
+  renderTeamLogList();
+  renderTeamLogCompact();
+  renderSeasonButton();
+  applyTeamLogCollapsedState();
+}
 
 function setTheme(theme){ data.settings.theme=theme; localStorage.setItem("kennelAuroraTheme", theme); applyTheme(); saveData(); }
 function applyTheme(){ const theme=(data.settings&&data.settings.theme)||localStorage.getItem("kennelAuroraTheme")||"classic"; document.body.dataset.theme=theme; const sel=document.getElementById("kennelThemeSelectClean"); if(sel) sel.value=theme; }

@@ -1171,8 +1171,12 @@ body.auth-locked .team-log-panel,
 body.auth-locked .app{
   display:none!important;
 }
-body.auth-locked #authGate{
+body.auth-locked #authGate:not([hidden]){
   display:grid;
+}
+#welcomeGate[hidden],
+#authGate[hidden]{
+  display:none!important;
 }
 .auth-card{
   width:min(460px,96vw);

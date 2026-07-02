@@ -1202,6 +1202,30 @@ body.auth-locked #authGate:not([hidden]){
 .auth-form-grid input{
   min-height:46px;
 }
+.password-field-wrap{
+  position:relative;
+}
+.password-field-wrap input{
+  padding-right:52px;
+}
+.password-eye-btn{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;
+  height:34px;
+  min-height:34px;
+  padding:0;
+  border-radius:12px;
+  background:rgba(255,255,255,.08)!important;
+  color:var(--ice)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  font-weight:600;
+  font-size:17px;
+  line-height:1;
+}
+.password-eye-btn:hover{background:rgba(255,255,255,.14)!important}
 .auth-actions{
   display:grid;
   grid-template-columns:1fr;
@@ -1952,7 +1976,10 @@ body.auth-locked #welcomeGate:not([hidden]){
     <p id="authGateIntro">Přihlaste se do Kennel Book. Přístup je chráněný a schvaluje ho správce.</p>
     <div class="auth-form-grid">
       <input id="authEmail" type="email" autocomplete="email" placeholder="E-mail">
-      <input id="authPassword" type="password" autocomplete="current-password" placeholder="Heslo">
+      <div class="password-field-wrap">
+        <input id="authPassword" type="password" autocomplete="current-password" placeholder="Heslo">
+        <button type="button" id="authPasswordToggle" class="password-eye-btn" onclick="toggleAuthPasswordVisibility()" aria-label="Zobrazit heslo">👁</button>
+      </div>
     </div>
     <div class="auth-actions">
       <button type="button" id="authSignInBtn" onclick="signInCloud()">Přihlásit se</button>
@@ -2499,10 +2526,27 @@ function showWelcomeGate(){
 function hideWelcomeGate(){
   const welcome=document.getElementById('welcomeGate'); if(welcome) welcome.hidden=true;
 }
-function enterWelcomeScreen(){
+async function enterWelcomeScreen(){
   hideWelcomeGate();
-  sessionStorage.setItem('kennelWelcomeEntered','1');
+  // Pokud si Firebase už pamatuje přihlášeného uživatele, přeskočíme login
+  // a po kliknutí na Vstoupit rovnou načteme jeho kennel.
+  if(isFirebaseMode() && firebaseReady && cloudUser){
+    await handleCloudUserReady(cloudUser);
+    return;
+  }
   showAuthGate(authText('Přihlas se e-mailem a heslem.','Sign in with email and password.'));
+}
+
+function toggleAuthPasswordVisibility(){
+  const input=document.getElementById('authPassword');
+  const btn=document.getElementById('authPasswordToggle');
+  if(!input) return;
+  const show=input.type==='password';
+  input.type = show ? 'text' : 'password';
+  if(btn){
+    btn.textContent = show ? '🙈' : '👁';
+    btn.setAttribute('aria-label', show ? authText('Skrýt heslo','Hide password') : authText('Zobrazit heslo','Show password'));
+  }
 }
 
 function applyAuthTexts(){
@@ -2510,6 +2554,7 @@ function applyAuthTexts(){
   const intro=document.getElementById('authGateIntro'); if(intro) intro.textContent=authText('Přihlaste se do Kennel Book. Přístup je chráněný a schvaluje ho správce.','Sign in to Kennel Book. Access is protected and approved by the administrator.');
   const email=document.getElementById('authEmail'); if(email) email.placeholder='E-mail';
   const pass=document.getElementById('authPassword'); if(pass) pass.placeholder=authText('Heslo','Password');
+  const eye=document.getElementById('authPasswordToggle'); if(eye) eye.setAttribute('aria-label', authText('Zobrazit heslo','Show password'));
   const sign=document.getElementById('authSignInBtn'); if(sign) sign.textContent=authText('Přihlásit se','Sign in');
   const create=document.getElementById('authCreateBtn'); if(create) create.textContent=authText('Požádat o přístup','Request access');
   const reset=document.getElementById('authResetBtn'); if(reset) reset.textContent=authText('Zapomenuté heslo','Forgot password');
@@ -2570,7 +2615,9 @@ async function initFirebaseLayer(){
     renderCloudStatusNote();
     return true;
   }
-  showAuthGate(authText('Připravuji cloudové přihlášení…','Preparing cloud sign-in…'));
+  // Úvodní obrazovka se zobrazí vždy jako první. Firebase si mezitím potichu ověří,
+  // zda je uživatel už přihlášený.
+  showWelcomeGate();
   if(!hasFirebaseConfig()){
     setAuthStatus(authText('Chybí Firebase konfigurace. Doplň APP_CONFIG.firebase.config a přepni storageMode/authMode na "firebase".','Firebase config is missing. Fill APP_CONFIG.firebase.config and switch storageMode/authMode to "firebase".'),'warn');
     renderCloudStatusNote();
@@ -2590,16 +2637,12 @@ async function initFirebaseLayer(){
     firebaseReady = true;
     authMod.onAuthStateChanged(firebaseAuth, async user=>{
       cloudUser = user || null;
-      if(!user){
-        if(sessionStorage.getItem('kennelWelcomeEntered') === '1'){
-          showAuthGate(authText('Přihlas se e-mailem a heslem.','Sign in with email and password.'));
-        }else{
-          showWelcomeGate();
-        }
-        renderCloudStatusNote();
-        return;
-      }
-      await handleCloudUserReady(user);
+      // Ať je uživatel přihlášený nebo ne, při otevření aplikace nejdřív ukážeme
+      // úvodní obrazovku. Pokud už Firebase uživatele zná, tlačítko Vstoupit ho
+      // pustí rovnou do aplikace bez zobrazení loginu.
+      showWelcomeGate();
+      renderCloudStatusNote();
+      return;
     });
     renderCloudStatusNote();
     return true;
@@ -2676,6 +2719,8 @@ async function signOutCloud(){
     cloudUser=null; activeCloudKennelId=null;
     const host=document.getElementById('userSessionHost'); if(host) host.innerHTML='';
     const adminHost=document.getElementById('appAdminButtonHost'); if(adminHost) adminHost.innerHTML='';
+    showWelcomeGate();
+    renderCloudStatusNote();
   }
 }
 

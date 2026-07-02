@@ -2697,17 +2697,56 @@ async function createCloudAccount(){
   }
 }
 async function sendPasswordReset(){
-  if(isLocalLoginPreviewMode()){ setAuthStatus(authText('Reset hesla poběží až po připojení Firebase.','Password reset starts after Firebase is connected.'),'warn'); return; }
+  if(isLocalLoginPreviewMode()){
+    setAuthStatus(authText('Reset hesla poběží až po připojení Firebase.','Password reset starts after Firebase is connected.'),'warn');
+    return;
+  }
   if(!firebaseReady || !firebaseAuth){ await initFirebaseLayer(); }
-  if(!firebaseAuth){ return; }
-  const email=document.getElementById('authEmail')?.value.trim();
-  if(!email){ setAuthStatus(authText('Nejdřív napiš e-mail.','Enter email first.'),'warn'); return; }
+  if(!firebaseAuth || !firebaseApi?.authMod?.sendPasswordResetEmail){
+    setAuthStatus(authText('Firebase Auth se nepodařilo načíst. Zkontroluj internetové připojení a zkus to znovu.','Firebase Auth could not be loaded. Check your internet connection and try again.'),'err');
+    return;
+  }
+
+  const email=(document.getElementById('authEmail')?.value || '').trim().toLowerCase();
+  if(!email){
+    setAuthStatus(authText('Nejdřív napiš e-mail, na který mám poslat obnovu hesla.','Enter the email address for the password reset first.'),'warn');
+    return;
+  }
+
+  const resetBtn=document.getElementById('authResetBtn');
+  if(resetBtn) resetBtn.disabled=true;
+  setAuthStatus(authText('Odesílám e-mail pro obnovu hesla…','Sending password reset email…'),'warn');
+
   try{
-    await firebaseApi.authMod.sendPasswordResetEmail(firebaseAuth, email);
-    setAuthStatus(authText('Poslala jsem e-mail pro obnovu hesla.','Password reset email sent.'),'ok');
+    const actionCodeSettings = {
+      url: window.location.origin + window.location.pathname,
+      handleCodeInApp: false
+    };
+    await firebaseApi.authMod.sendPasswordResetEmail(firebaseAuth, email, actionCodeSettings);
+    setAuthStatus(authText(
+      'Pokud je tento e-mail v Kennel Booku registrovaný, přišel na něj odkaz pro obnovu hesla. Zkontroluj i spam / hromadnou poštu.',
+      'If this email is registered in Kennel Book, a password reset link has been sent. Please also check spam / promotions.'
+    ),'ok');
   }catch(err){
-    console.error(err);
-    setAuthStatus(authText('Obnovu hesla se nepodařilo odeslat.','Could not send password reset email.'),'err');
+    console.error('Password reset failed', err);
+    const code=String(err?.code || '');
+    if(code.includes('unauthorized-continue-uri') || code.includes('unauthorized-domain')){
+      setAuthStatus(authText(
+        'Firebase odmítl doménu aplikace pro obnovu hesla. Ve Firebase Authentication → Settings → Authorized domains přidej art4huskies.github.io a zkus to znovu.',
+        'Firebase rejected this app domain for password reset. In Firebase Authentication → Settings → Authorized domains, add art4huskies.github.io and try again.'
+      ),'err');
+    }else if(code.includes('invalid-email')){
+      setAuthStatus(authText('E-mail nemá správný formát.','The email address is not valid.'),'err');
+    }else if(code.includes('too-many-requests')){
+      setAuthStatus(authText('Příliš mnoho pokusů. Chvíli počkej a zkus to znovu.','Too many attempts. Wait a moment and try again.'),'err');
+    }else{
+      setAuthStatus(authText(
+        'Obnovu hesla se nepodařilo odeslat. Zkus to znovu a případně zkontroluj nastavení Firebase Authentication.',
+        'Could not send the password reset email. Try again and check Firebase Authentication settings if needed.'
+      ),'err');
+    }
+  }finally{
+    if(resetBtn) resetBtn.disabled=false;
   }
 }
 async function signOutCloud(){

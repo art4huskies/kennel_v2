@@ -4988,6 +4988,10 @@ async function initKennelWeather(force=false){
   if(!panel) return;
   kennelWeatherLoaded = true;
 
+  const allowBtn = (currentLang==='en')
+    ? '<button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Allow</button>'
+    : '<button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Povolit</button>';
+
   const cachedRaw=localStorage.getItem(KENNEL_WEATHER_CACHE_KEY);
   if(cachedRaw){
     try{
@@ -5004,6 +5008,18 @@ async function initKennelWeather(force=false){
     return;
   }
 
+  // On mobile browsers, the permission prompt is most reliable after a real user tap.
+  // Therefore the automatic run only shows a button. The button calls this function with force=true.
+  if(!force){
+    weatherSetLines(
+      (currentLang==='en' ? `📍 Weather by current location. ${allowBtn}` : `📍 Počasí podle aktuální polohy. ${allowBtn}`),
+      (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'),
+      'ok'
+    );
+    return;
+  }
+
+  kennelWeatherLoaded = false;
   weatherSetLines((currentLang==='en'?'📍 Loading weather from current location…':'📍 Načítám počasí podle aktuální polohy…'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
   navigator.geolocation.getCurrentPosition(async pos=>{
     try{
@@ -5014,15 +5030,23 @@ async function initKennelWeather(force=false){
       if(!res.ok) throw new Error('weather fetch failed');
       const payload=await res.json();
       localStorage.setItem(KENNEL_WEATHER_CACHE_KEY, JSON.stringify({ts:Date.now(), payload}));
+      kennelWeatherLoaded = true;
       weatherRenderData(payload);
     }catch(err){
       console.warn('Weather load failed', err);
-      weatherSetLines((currentLang==='en'?'🌡 Weather could not be loaded right now.':'🌡 Počasí se teď nepodařilo načíst.'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
+      weatherSetLines((currentLang==='en'?'🌡 Weather could not be loaded right now.':'🌡 Počasí se teď nepodařilo načíst.'), (currentLang==='en'?'Try again later, or check the connection.':'Zkus to později, případně zkontroluj připojení.'), 'warn');
     }
   }, err=>{
     console.warn('Geolocation denied/unavailable', err);
-    weatherSetLines((currentLang==='en'?'📍 Location weather is not allowed. <button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Allow</button>':'📍 Počasí podle polohy není povoleno. <button type="button" class="secondary weather-allow-btn" onclick="initKennelWeather(true)">Povolit</button>'), (currentLang==='en'?'✔️ No significant weather warnings.':'✔️ Žádná významná meteorologická upozornění.'), 'ok');
-  }, {enableHighAccuracy:false, timeout:9000, maximumAge:30*60*1000});
+    kennelWeatherLoaded = false;
+    const deniedText = currentLang==='en'
+      ? `📍 Location is blocked. ${allowBtn}`
+      : `📍 Poloha je blokovaná. ${allowBtn}`;
+    const helpText = currentLang==='en'
+      ? 'Enable location access for this site in the browser settings, then tap Allow again.'
+      : 'Povol polohu pro tento web v nastavení prohlížeče a potom klepni znovu na Povolit.';
+    weatherSetLines(deniedText, helpText, 'warn');
+  }, {enableHighAccuracy:false, timeout:12000, maximumAge:30*60*1000});
 }
 function weatherRenderData(payload){
   const current=payload?.current || {};
